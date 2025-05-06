@@ -19,6 +19,7 @@
 
 ## commit
 - [Qiita | 【Git】コミットメッセージの先頭につけた方が良い単語リスト- prefix集 -](https://qiita.com/muranakar/items/20a7927ffa63a5ca226a)
+- [Qiita | コミット時にIssueをCloseする](https://qiita.com/maeda_t/items/d9ef98bf651bd491b16d)
 
 ## push
 - [Qiita | 【初心者向け】git pull, git fetch, git pushで何が起きているか図解してみた](https://qiita.com/hiroaki-u/items/4e97f338ad18fca142b8)
@@ -37,7 +38,7 @@
 
 
 ## reset
-
+- [YouTube | git reset 再入門！ soft,mixed,hard の違い理解している？ 特定ファイルだけリセットできる？](https://www.youtube.com/watch?v=vXoYb71ZXV8)
 
 ## clean
 
@@ -64,6 +65,7 @@
 
 ### checkout
 - [Zenn | gitのcheckoutコマンドには3つ使い方がある](https://zenn.dev/gibjapan/articles/bbdaf8173f21c9)
+- [みどりがめのIT秘密基地 | 【Git・Github】ローカルにないリモートブランチを取り込む方法](https://midorigame-jo.com/git-fetch-branch/)
 
 ### switch
 - [Zenn | え？まだgit checkoutしてるの？](https://zenn.dev/gmomedia/articles/d9366fa84aadfd)
