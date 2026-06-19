@@ -8,4 +8,3 @@
 
 # Contributors
 - [suzuki](https://github.com/suzuyuyuyu/)
-- [nagase](https://github.com/soheinagase/)
