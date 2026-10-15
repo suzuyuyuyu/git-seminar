@@ -1,0 +1,38 @@
+/* Native CSS nesting; Markdown uses the surrounding lesson typography. */
+.markdown-content {
+  min-width: 0;
+  overflow-wrap: anywhere;
+
+  & p { white-space: normal; }
+  & h2, & h3, & h4 { line-height: 1.6; margin-block: 1.5em 0.6em; }
+  & h2 { font-size: 1.25em; }
+  & h3 { font-size: 1.125em; }
+  & h4 { font-size: 1em; }
+  & ul, & ol { padding-left: 1.5em; margin-block: 0.8em; }
+  & li + li { margin-top: 0.3em; }
+  & blockquote {
+    margin: 1em 0;
+    padding: 0.4em 1em;
+    border-left: 3px solid var(--line, #d8e1da);
+    color: var(--muted, #526357);
+  }
+  & code { font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.9em; }
+  & :not(pre) > code {
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+    background: var(--code-bg, #edf2ec);
+  }
+  & pre {
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 1em;
+    border: 1px solid var(--line, #d8e1da);
+    border-radius: 4px;
+    background: var(--code-bg, #edf2ec);
+    white-space: pre;
+    overflow-wrap: normal;
+
+    & code { white-space: inherit; }
+  }
+  & a { text-underline-offset: 0.15em; }
+}

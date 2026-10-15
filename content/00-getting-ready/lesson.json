@@ -1,0 +1,50 @@
+{
+  "chapter": {
+    "id": "prepare",
+    "number": "00",
+    "title": "学習の準備",
+    "description": "Gitの導入、アカウント、接続設定を確認します。",
+    "goal": "手元でGitを使い、リモートに接続できる。"
+  },
+  "id": "getting-ready",
+  "title": "学習の準備",
+  "description": "GitとGitHubの接続を準備します。WindowsはGit Bash、macOS・Linuxはbash/zshのターミナルを使う例です。コマンド中の名前・メール・パスは自分の値に置き換えます。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/foundations-prepare.svg"
+  },
+  "sources": [
+    {
+      "label": "Gitのインストール",
+      "url": "https://git-scm.com/install/"
+    },
+    {
+      "label": "Gitの初期設定",
+      "url": "https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup"
+    },
+    {
+      "label": "SSH鍵の生成とOS別の手順",
+      "url": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent"
+    },
+    {
+      "label": "公開鍵をGitHubに登録",
+      "url": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account"
+    },
+    {
+      "label": "SSH接続の確認",
+      "url": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection"
+    },
+    {
+      "label": "GitHubのSSHホスト鍵の指紋",
+      "url": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints"
+    },
+    {
+      "label": "RFC 4252 §7：SSH公開鍵認証の署名と検証",
+      "url": "https://www.rfc-editor.org/rfc/rfc4252#section-7"
+    },
+    {
+      "label": "RFC 8709：SSHでのEd25519署名",
+      "url": "https://www.rfc-editor.org/rfc/rfc8709.html"
+    }
+  ]
+}

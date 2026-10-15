@@ -1,0 +1,42 @@
+{
+  "chapter": {
+    "id": "integrate",
+    "number": "07",
+    "title": "Pull Requestと競合の解消",
+    "description": "変更をレビューして統合し、重なった編集を自分で解決します。",
+    "goal": "変更を提案し、競合を解消して統合できる。"
+  },
+  "id": "review-and-resolve",
+  "title": "Pull Requestと競合解消",
+  "description": "ブランチの変更をレビューして統合し、同じ場所を変更したときの解消手順を学びます。実行確認にはPython 3を使います。コマンド名がpython3の環境では、例のpythonを読み替えてください。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/collaboration-integration.svg"
+  },
+  "sources": [
+    {
+      "label": "Git：push",
+      "url": "https://git-scm.com/docs/git-push"
+    },
+    {
+      "label": "GitHub Docs：Pull Request",
+      "url": "https://docs.github.com/en/pull-requests/reference/pull-requests"
+    },
+    {
+      "label": "GitLab Docs：Merge Request",
+      "url": "https://docs.gitlab.com/user/project/merge_requests/"
+    },
+    {
+      "label": "Git：pull",
+      "url": "https://git-scm.com/docs/git-pull"
+    },
+    {
+      "label": "Git：mergeと競合解消",
+      "url": "https://git-scm.com/docs/git-merge"
+    },
+    {
+      "label": "GitHub Docs：ブラウザで競合を解消する",
+      "url": "https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/resolving-a-merge-conflict-on-github"
+    }
+  ]
+}

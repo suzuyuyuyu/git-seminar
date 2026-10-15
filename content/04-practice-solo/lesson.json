@@ -1,0 +1,38 @@
+{
+  "chapter": {
+    "id": "practice",
+    "number": "04",
+    "title": "自分のコードで試す",
+    "description": "リポジトリの作成から、変更を記録し共有するまでを実践します。",
+    "goal": "自分のコードで履歴を作り、共有された記録を確認できる。"
+  },
+  "id": "practice-solo",
+  "title": "自分のコードで試す",
+  "description": "Chapter 00〜03を使う小さな演習です。研究コードとは別の新しい練習フォルダーと、自分専用の空のGitHubリポジトリを用意します。Git Bash・bash/zsh向けの例です。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/foundations-practice.svg"
+  },
+  "sources": [
+    {
+      "label": "git init",
+      "url": "https://git-scm.com/docs/git-init"
+    },
+    {
+      "label": "変更を記録する",
+      "url": "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository"
+    },
+    {
+      "label": "GitHubに新しいリポジトリを作る",
+      "url": "https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository"
+    },
+    {
+      "label": "git remote",
+      "url": "https://git-scm.com/docs/git-remote"
+    },
+    {
+      "label": "git push",
+      "url": "https://git-scm.com/docs/git-push"
+    }
+  ]
+}

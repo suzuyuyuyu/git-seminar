@@ -1,0 +1,250 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="collaboration-integration" viewBox="0 0 520 500" role="img" aria-labelledby="collaboration-integration-title collaboration-integration-desc" data-current-state="publish">
+<title id="collaboration-integration-title">変更の統合と競合解消</title>
+<desc id="collaboration-integration-desc">PRでの共有とレビュー、手元の更新、main更新前後、共通コードから分かれた双方の挨拶、予定の合流とmerge失敗の出力、マーカーの編集、解消の記録を示します。履歴の緑の丸はコミット、灰色の線は親子関係で古いものが下です。四角は一つのコミットを指すブランチ、赤いHEADは現在のmainを指します。競合は左右の変更を読み、人が完成形を決めます。現在読んでいる節だけを表示します。</desc>
+<style>
+<![CDATA[
+svg.collaboration-integration {
+ background:#fbfcf9; font-family:"Noto Sans JP","Yu Gothic",Meiryo,sans-serif;
+ text {fill:#24352e; font-size:22px; white-space:pre;}
+ .strong {font-weight:700; fill:#31664b;}
+ .heading {font-size:26px; font-weight:700;}
+ .mono {font-family:Consolas,"Yu Gothic",monospace; font-size:22px;}
+ .muted {fill:#65736a;}
+ .red {fill:#a74238;}
+ .card {fill:#edf3eb;stroke:#c4d3c5;stroke-width:2;}
+ .note {fill:#f5eac8;stroke:#dfd2a4;stroke-width:1.5;}
+ .link {fill:none;stroke:#a2ada5;stroke-width:3;}
+ .arrow {fill:none;stroke:#31664b;stroke-width:2.5;}
+ .commit {fill:#6f9e78;stroke:#31664b;stroke-width:2;}
+ .branch {fill:none;stroke:#31664b;stroke-width:2;}
+ .ancestor-code {fill:#f3f3ef;stroke:#7184bd;stroke-width:2;}
+ .incoming-code {fill:#faf0e9;stroke:#bc6c5b;stroke-width:2;}
+ .planned {fill:#f5eac8;stroke:#b59842;stroke-width:2;stroke-dasharray:5 4;}
+ .terminal {fill:#343d37;}
+ .terminal-text {fill:#faf9f4;font-family:Consolas,monospace;font-size:22px;}
+ .terminal-error {fill:#f7c69b;font-family:Consolas,monospace;font-size:22px;}
+ .focus {fill:none;stroke:#a74238;stroke-width:3;}
+ [data-state] {display:none;}
+ &[data-current-state="publish"] [data-state="publish"],
+&[data-current-state="review"] [data-state="review"],
+&[data-current-state="sync"] [data-state="sync"],
+&[data-current-state="conflict-setup"] [data-state="conflict-setup"],
+&[data-current-state="conflict-history"] [data-state="conflict-history"],
+&[data-current-state="diverge"] [data-state="diverge"],
+&[data-current-state="conflict-choice"] [data-state="conflict-choice"],
+&[data-current-state="conflict-merge"] [data-state="conflict-merge"],
+&[data-current-state="markers"] [data-state="markers"],
+&[data-current-state="resolve"] [data-state="resolve"],
+&[data-current-state="record"] [data-state="record"],
+&[data-current-state="alternatives"] [data-state="alternatives"] {display:block;}
+}
+]]>
+</style>
+<g data-state="publish">
+<text x="28" y="48" class="heading">作業ブランチを共有する</text>
+<rect class="card" x="34" y="92" width="452" height="112" rx="12"/>
+<text x="52" y="126" class="strong">手元：feature/pr-demo</text>
+<text x="52" y="161" class="">コミットした変更</text>
+<path class="arrow" d="M 260 216 v 35 m -6 -7 l 6 7 l 6 -7"/>
+<text x="292" y="246" class="strong">push</text>
+<rect class="card" x="34" y="278" width="452" height="112" rx="12"/>
+<text x="52" y="312" class="strong">origin：feature/pr-demo</text>
+<text x="52" y="347" class="">mainへの統合は、まだ先</text>
+<text x="42" y="451" class="">PRの説明にIssueと確認結果を書く</text>
+</g>
+<g data-state="review">
+<text x="28" y="48" class="heading">PR：取り込み先と変更元</text>
+<rect class="card" x="24" y="94" width="224" height="112" rx="12"/>
+<text x="42" y="128" class="strong">base</text>
+<text x="42" y="163" class="">main</text>
+<rect class="card" x="272" y="94" width="224" height="112" rx="12"/>
+<text x="290" y="128" class="strong">compare</text>
+<text x="290" y="163" class="">feature/pr-demo</text>
+<path class="link" d="M 136 220 V 246 H 384 V 220"/>
+<rect class="card" x="60" y="272" width="400" height="116" rx="12"/>
+<text x="78" y="306" class="strong">差分・目的・動作を確認</text>
+<text x="78" y="341" class="">必要なら同じブランチで修正</text>
+<text x="54" y="450" class="strong">合意した変更をmainへmerge</text>
+</g>
+<g data-state="sync">
+<text x="28" y="48" class="heading">統合後、手元のmainを更新</text>
+<rect class="card" x="34" y="90" width="452" height="112" rx="12"/>
+<text x="52" y="124" class="strong">共有先：origin/main</text>
+<text x="52" y="159" class="">PRの変更が統合済み</text>
+<path class="arrow" d="M 260 213 v 35 m -6 -7 l 6 7 l 6 -7"/>
+<text x="290" y="244" class="strong">pull --ff-only</text>
+<rect class="card" x="34" y="276" width="452" height="112" rx="12"/>
+<text x="52" y="310" class="strong">手元：main</text>
+<text x="52" y="345" class="">前へ進められる場合だけ更新</text>
+<text x="42" y="451" class="">履歴が分かれていたら停止して確認</text>
+</g>
+<g data-state="conflict-setup">
+<text x="28" y="46" class="heading">別フォルダで競合を再現する</text>
+<rect class="card" x="34" y="78" width="452" height="104" rx="12"/>
+<text x="52" y="112" class="strong">初期コミット：hello.py</text>
+<text x="52" y="149">Hello, world!</text>
+<path class="arrow" d="M 260 192 v 28 m -6 -7 l 6 7 l 6 -7"/>
+<rect class="card" x="34" y="230" width="452" height="104" rx="12"/>
+<text x="52" y="264" class="strong">feat/ja で変更・commit</text>
+<text x="52" y="301">こんにちは!</text>
+<path class="arrow" d="M 260 344 v 28 m -6 -7 l 6 7 l 6 -7"/>
+<rect class="card" x="34" y="382" width="452" height="104" rx="12"/>
+<text x="52" y="416" class="strong">main に戻って変更・commit</text>
+<text x="52" y="453">Hello, everyone!</text>
+</g>
+<g data-state="conflict-history">
+<text x="24" y="42" class="heading" >mainも更新された</text>
+<path class="link" d="M116 385 V275 L192 235"/>
+<circle class="commit" cx="116" cy="385" r="11"/>
+<circle class="commit" cx="116" cy="330" r="11"/>
+<circle class="commit" cx="116" cy="275" r="11"/>
+<circle class="commit" cx="192" cy="235" r="11"/>
+<rect class="branch" x="175" y="218" width="34" height="34" rx="4"/>
+<text x="192" y="207" class="strong" text-anchor="middle">feat/ja</text>
+<rect class="branch" x="99" y="258" width="34" height="34" rx="4"/>
+<text x="91" y="252" class="strong" text-anchor="end">main</text>
+<path class="link" d="M370 385 V275 L446 235"/>
+<circle class="commit" cx="370" cy="385" r="11"/>
+<circle class="commit" cx="370" cy="330" r="11"/>
+<circle class="commit" cx="370" cy="275" r="11"/>
+<circle class="commit" cx="446" cy="235" r="11"/>
+<rect class="branch" x="429" y="218" width="34" height="34" rx="4"/>
+<text x="446" y="207" class="strong" text-anchor="middle">feat/ja</text>
+<path class="link" d="M370 275 V180"/>
+<circle class="commit" cx="370" cy="180" r="11"/>
+<rect class="branch" x="353" y="163" width="34" height="34" rx="4"/>
+<text x="370" y="150" class="strong" text-anchor="middle">main</text>
+<text x="100" y="435" class="" text-anchor="middle">分岐した時点</text>
+<text x="378" y="435" class="" text-anchor="middle">main更新後</text>
+<text x="260" y="483" class="" text-anchor="middle">feat/ja のcommitは同じ</text>
+</g>
+<g data-state="diverge">
+<text x="24" y="35" class="heading" >同じ行への、別々の変更</text>
+<rect class="ancestor-code" x="72" y="55" width="376" height="94" rx="10"/>
+<text x="88" y="83" class="muted" >共通のcommit</text>
+<text x="88" y="111" class="mono" >def greet():</text>
+<text x="88" y="137" class="mono" >    print("Hello, world!")</text>
+<path class="link" d="M180 151 L130 178 M340 151 L390 178"/>
+<rect class="card" x="14" y="184" width="240" height="151" rx="10"/>
+<text x="27" y="213" class="strong" >main</text>
+<text x="27" y="245" class="mono" >def greet():</text>
+<text x="27" y="275" class="mono" >    print(</text>
+<text x="39" y="303" class="mono" textLength="192" lengthAdjust="spacingAndGlyphs">&quot;Hello, everyone!&quot;</text>
+<text x="27" y="328" class="mono" >    )</text>
+<rect class="incoming-code" x="266" y="184" width="240" height="151" rx="10"/>
+<text x="279" y="213" class="strong" >feat/ja</text>
+<text x="279" y="245" class="mono" >def greet():</text>
+<text x="279" y="275" class="mono" >    print(</text>
+<text x="291" y="303" class="mono">&quot;こんにちは!&quot;</text>
+<text x="279" y="328" class="mono" >    )</text>
+<path class="link" d="M222 475 V389 L316 367 M222 389 V350"/>
+<circle class="commit" cx="222" cy="475" r="11"/>
+<circle class="commit" cx="222" cy="432" r="11"/>
+<circle class="commit" cx="222" cy="389" r="11"/>
+<circle class="commit" cx="222" cy="350" r="11"/>
+<circle class="commit" cx="316" cy="367" r="11"/>
+<rect class="branch" x="205" y="333" width="34" height="34" rx="4"/>
+<rect class="branch" x="299" y="350" width="34" height="34" rx="4"/>
+<text x="194" y="361" class="strong" text-anchor="end">main</text>
+<text x="344" y="375" class="strong" >feat/ja</text>
+</g>
+<g data-state="conflict-choice">
+<text x="24" y="36" class="heading" >mergeしたいとき…</text>
+<rect class="card" x="14" y="60" width="240" height="151" rx="10"/>
+<text x="27" y="89" class="strong" >main</text>
+<text x="27" y="121" class="mono" >def greet():</text>
+<text x="27" y="151" class="mono" >    print(</text>
+<text x="39" y="179" class="mono" textLength="192" lengthAdjust="spacingAndGlyphs">&quot;Hello, everyone!&quot;</text>
+<text x="27" y="204" class="mono" >    )</text>
+<rect class="incoming-code" x="266" y="60" width="240" height="151" rx="10"/>
+<text x="279" y="89" class="strong" >feat/ja</text>
+<text x="279" y="121" class="mono" >def greet():</text>
+<text x="279" y="151" class="mono" >    print(</text>
+<text x="291" y="179" class="mono">&quot;こんにちは!&quot;</text>
+<text x="279" y="204" class="mono" >    )</text>
+<path class="link" d="M220 372 V320 L318 294 M220 320 V260"/>
+<circle class="commit" cx="220" cy="372" r="11"/>
+<circle class="commit" cx="220" cy="320" r="11"/>
+<circle class="commit" cx="220" cy="260" r="11"/>
+<circle class="commit" cx="318" cy="294" r="11"/>
+<rect class="branch" x="203" y="243" width="34" height="34" rx="4"/>
+<rect class="branch" x="301" y="277" width="34" height="34" rx="4"/>
+<path class="planned" d="M220 260 V224 L318 294"/>
+<circle class="planned" cx="220" cy="224" r="12"/>
+<text x="193" y="263" class="strong" text-anchor="end">main</text>
+<text x="347" y="299" class="strong" >feat/ja</text>
+<text x="355" y="354" class="muted" >未作成</text>
+<text x="22" y="410" class="mono" >git merge feat/ja</text>
+<text x="260" y="452" class="" text-anchor="middle">どちらを採用する？</text>
+<text x="260" y="486" class="red" text-anchor="middle">自動で判断できず、競合へ</text>
+</g>
+<g data-state="conflict-merge">
+<text x="24" y="42" class="heading" >mergeは競合で停止する</text>
+<rect class="terminal" x="18" y="82" width="484" height="318" rx="12"/>
+<text x="34" y="120" class="terminal-text" >(main) ❯ git merge feat/ja</text>
+<text x="34" y="163" class="terminal-text" >Auto-merging hello.py</text>
+<text x="34" y="207" class="terminal-error" >CONFLICT (content):</text>
+<text x="34" y="239" class="terminal-error" >Merge conflict in hello.py</text>
+<text x="34" y="285" class="terminal-text" >Automatic merge failed;</text>
+<text x="34" y="317" class="terminal-text" >fix conflicts and then</text>
+<text x="34" y="349" class="terminal-text" >commit the result.</text>
+<text x="260" y="447" class="" text-anchor="middle">mainの先端はまだ進まない</text>
+<text x="260" y="484" class="" text-anchor="middle">次に、hello.pyを開いて確認</text>
+</g>
+<g data-state="markers">
+<text x="28" y="46" class="heading">hello.py：未解決のマーカー</text>
+<rect class="note" x="24" y="79" width="472" height="326" rx="12"/>
+<text x="42" y="118" class="mono">def greet():</text>
+<text x="42" y="157" class="mono">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</text>
+<text x="42" y="196" class="mono">    print(&quot;Hello, everyone!&quot;)</text>
+<text x="42" y="235" class="mono">=======</text>
+<text x="42" y="274" class="mono">    print(&quot;こんにちは!&quot;)</text>
+<text x="42" y="313" class="mono">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feat/ja</text>
+<text x="42" y="450" class="">HEAD側はmain、下側は取り込み側</text>
+</g>
+<g data-state="resolve">
+<text x="28" y="46" class="heading">双方の意図から完成形を決める</text>
+<rect class="card" x="20" y="80" width="230" height="106" rx="12"/>
+<text x="38" y="114" class="strong">main</text>
+<text x="38" y="149" class="">Hello, everyone!</text>
+<rect class="card" x="270" y="80" width="230" height="106" rx="12"/>
+<text x="288" y="114" class="strong">feat/ja</text>
+<text x="288" y="149" class="">こんにちは!</text>
+<path class="link" d="M 136 202 V 230 H 260 V 264 M 384 202 V 230 H 260"/>
+<rect class="card" x="34" y="282" width="452" height="138" rx="12"/>
+<text x="52" y="316" class="strong">hello.py の完成形</text>
+<text x="52" y="351" class="">def greet():</text>
+<text x="52" y="386" class="">    print(&quot;みなさんこんにちは!&quot;)</text>
+<text x="42" y="470" class="">マーカーを消し、関数を実行して確認</text>
+</g>
+<g data-state="record">
+<text x="28" y="44" class="heading">解消した内容をmerge commitに</text>
+<path class="link" d="M 260 398 L 130 286 L 130 140 M 260 398 L 354 286 L 130 140"/>
+<circle class="commit" cx="260" cy="398" r="16"/>
+<text x="218" y="406" class="" text-anchor="end">C1</text>
+<circle class="commit" cx="130" cy="286" r="16"/>
+<text x="88" y="294" class="" text-anchor="end">M1</text>
+<circle class="commit" cx="354" cy="286" r="16"/>
+<text x="312" y="294" class="" text-anchor="end">F1</text>
+<circle class="commit" cx="130" cy="140" r="16"/>
+<text x="88" y="148" class="" text-anchor="end">M2</text>
+<rect class="branch" x="105" y="115" width="50" height="50" rx="4"/>
+<text x="166" y="147" class="strong">main</text>
+<text x="166" y="177" class="red">HEAD</text>
+<rect class="branch" x="329" y="261" width="50" height="50" rx="4"/>
+<text x="278" y="341" class="strong">feat/ja</text>
+<text x="42" y="461" class="">M2は、M1とF1を親に持つ記録</text>
+</g>
+<g data-state="alternatives">
+<text x="28" y="46" class="heading">中止と、別の解消方法</text>
+<rect class="card" x="34" y="88" width="452" height="134" rx="12"/>
+<text x="52" y="122" class="strong">途中で中止する</text>
+<text x="52" y="157" class="">git merge --abort</text>
+<text x="52" y="192" class="">開始前の状態へ戻す</text>
+<rect class="note" x="34" y="252" width="452" height="134" rx="12"/>
+<text x="52" y="286" class="strong">GitHubで解消する</text>
+<text x="52" y="321" class="">単純な競合に対応</text>
+<text x="52" y="356" class="">baseをhead側へ取り込む</text>
+<text x="42" y="449" class="">解消後もPRの確認と統合が必要</text>
+</g>
+</svg>

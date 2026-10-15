@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="collaboration-planning" viewBox="0 0 520 500" role="img" aria-labelledby="collaboration-planning-title collaboration-planning-desc" data-current-state="readme">
+<title id="collaboration-planning-title">共同開発の準備</title>
+<desc id="collaboration-planning-desc">README、除外設定、利用条件、Markdown、Issue、ブランチとPRの順に共同開発の準備を説明します。現在読んでいる節の図だけを表示します。矢印は作業の順番です。</desc>
+<style><![CDATA[
+svg.collaboration-planning {
+ background:#fbfcf9; font-family:"Noto Sans JP","Yu Gothic",Meiryo,sans-serif;
+ text {fill:#24352e; font-size:22px;}
+ .strong {font-weight:700; fill:#31664b;}
+ .heading {font-size:26px; font-weight:700;}
+ .mono {font-family:Consolas,"Yu Gothic",monospace; font-size:22px;}
+ .muted {fill:#65736a;}
+ .red {fill:#a74238;}
+ .card {fill:#edf3eb;stroke:#c4d3c5;stroke-width:2;}
+ .note {fill:#f5eac8;stroke:#dfd2a4;stroke-width:1.5;}
+ .link {fill:none;stroke:#a2ada5;stroke-width:3;}
+ .arrow {fill:none;stroke:#31664b;stroke-width:2.5;}
+ .commit {fill:#6f9e78;stroke:#31664b;stroke-width:2;}
+ .branch {fill:none;stroke:#31664b;stroke-width:2;}
+ .focus {fill:none;stroke:#a74238;stroke-width:3;}
+ [data-state] {display:none;}
+ &[data-current-state="readme"] [data-state="readme"],
+&[data-current-state="ignore"] [data-state="ignore"],
+&[data-current-state="license"] [data-state="license"],
+&[data-current-state="markdown"] [data-state="markdown"],
+&[data-current-state="issue"] [data-state="issue"],
+&[data-current-state="workflow"] [data-state="workflow"] {display:block;}
+}
+]]></style>
+<g data-state="readme">
+<text x="28" y="48" class="heading">README：実行までの道順</text><rect class="card" x="34" y="88" width="452" height="130" rx="12"/><text x="52" y="122" class="strong">目的：hello.py の挨拶を試す</text><text x="52" y="157" class="">環境：Python の版・依存関係</text><text x="52" y="192" class="">入力：サンプルの入手手順</text><path class="arrow" d="M 260 228 v 35 m -6 -7 l 6 7 l 6 -7"/><rect class="card" x="34" y="278" width="452" height="116" rx="12"/><text x="52" y="312" class="strong">python hello.py</text><text x="52" y="347" class="">期待する出力：Hello, Git!</text><text x="44" y="450" class="">初めて開く人が再実行できる説明</text>
+</g>
+<g data-state="ignore">
+<text x="28" y="48" class="heading">.gitignore：追加する前に整理</text><rect class="card" x="34" y="82" width="452" height="112" rx="12"/><text x="52" y="116" class="strong">追加対象から除く例</text><text x="52" y="151" class="">__pycache__/　　.venv/</text><rect class="note" x="34" y="216" width="452" height="112" rx="12"/><text x="52" y="250" class="strong">すでに追跡したファイル</text><text x="52" y="285" class="">パターンを書くだけでは外れない</text><rect class="card" x="34" y="350" width="452" height="112" rx="12"/><text x="52" y="384" class="strong">研究データの保存方針</text><text x="52" y="419" class="">保存先・サンプル・入手手順を決める</text>
+</g>
+<g data-state="license">
+<text x="28" y="48" class="heading">利用条件を決める前の確認</text><rect class="card" x="34" y="88" width="452" height="105" rx="12"/><text x="52" y="122" class="strong">権限を確認する</text><text x="52" y="157" class="">誰が公開と利用条件を決められるか</text><path class="arrow" d="M 260 204 v 35 m -6 -7 l 6 7 l 6 -7"/><rect class="card" x="34" y="250" width="452" height="105" rx="12"/><text x="52" y="284" class="strong">研究室・共同研究の方針を確認</text><text x="52" y="319" class="">コードとデータの条件を分ける</text><path class="arrow" d="M 260 366 v 35 m -6 -7 l 6 7 l 6 -7"/><text x="54" y="443" class="strong">決まった条件をLICENSE等に示す</text>
+</g>
+<g data-state="markdown">
+<text x="28" y="48" class="heading">Markdown：文章に構造を付ける</text><rect class="card" x="34" y="90" width="452" height="146" rx="12"/><text x="52" y="124" class="strong"># 実行方法</text><text x="52" y="159" class="">- Pythonを用意する</text><text x="52" y="194" class="">python hello.py</text><path class="arrow" d="M 260 248 v 35 m -6 -7 l 6 7 l 6 -7"/><rect class="card" x="34" y="300" width="452" height="116" rx="12"/><text x="52" y="334" class="strong">プレビューで確認</text><text x="52" y="369" class="">見出し・箇条書き・コードを分ける</text><text x="44" y="464" class="">README・Issue・PRで共通に使う</text>
+</g>
+<g data-state="issue">
+<text x="28" y="48" class="heading">Issue：目的と完了条件を共有</text><rect class="card" x="34" y="82" width="452" height="112" rx="12"/><text x="52" y="116" class="strong">目的：参加者が誰かわかる</text><text x="52" y="151" class="">変更：READMEにプロフィール追加</text><rect class="note" x="34" y="216" width="452" height="112" rx="12"/><text x="52" y="250" class="strong">完了条件</text><text x="52" y="285" class="">既存の内容と追加分が読める</text><rect class="card" x="34" y="350" width="452" height="112" rx="12"/><text x="52" y="384" class="strong">不具合なら再現情報も書く</text><text x="52" y="419" class="">手順・環境・期待値・実際の結果</text>
+</g>
+<g data-state="workflow">
+<text x="28" y="48" class="heading">作業の理由と変更をつなぐ</text><rect class="card" x="60" y="78" width="400" height="86" rx="12"/><text x="78" y="112" class="strong">Issue：目的と完了条件</text><path class="arrow" d="M 260 175 v 35 m -6 -7 l 6 7 l 6 -7"/><rect class="card" x="60" y="222" width="400" height="86" rx="12"/><text x="78" y="256" class="strong">branch：変更を記録</text><path class="arrow" d="M 260 319 v 35 m -6 -7 l 6 7 l 6 -7"/><rect class="card" x="60" y="366" width="400" height="86" rx="12"/><text x="78" y="400" class="strong">PR：確認してmainへ統合</text>
+</g>
+</svg>

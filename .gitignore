@@ -3,8 +3,11 @@
 !*.*
 ![M|m]akefile
 ![D|d]ockerfile
+!docs/.nojekyll
 *.exe
-/.github/*
+!/.github/
+!/.github/workflows/
+!/.github/workflows/*.yml
 
 # OS/Editor
 Thumb.db

@@ -1,0 +1,337 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="recovery-diagram" viewBox="0 0 520 500" role="img" aria-labelledby="recovery-title recovery-desc" data-current-state="restore-worktree">
+<title id="recovery-title">復元・退避と発展事項の図解</title>
+<desc id="recovery-desc">節に対応する図だけを表示します。丸はコミット、灰色の線は親子関係、緑の札はブランチの目印です。緑の矢印は復元や適用などの操作、または参照先を示します。restoreの領域、stashの退避先、revertやamendの履歴、resetの対象領域、cleanの未追跡、reflogの救済、cherry-pick、rebase、worktree、submodule、相対参照、detached HEADを比較します。</desc>
+<style>
+<![CDATA[
+svg.recovery-diagram {
+ background:#fbfcf9; font-family:"Noto Sans JP","Yu Gothic",Meiryo,sans-serif;
+ & > g[data-state] { display:none; }
+ .frame { fill:#f2f5ef; stroke:#ccd6cd; stroke-width:2; }
+ .heading { fill:#24352e; font-size:24px; font-weight:700; }
+ .label { fill:#24352e; font-size:22px; }
+ .mono { fill:#24352e; font-size:22px; font-family:ui-monospace,Consolas,monospace; }
+ .graylines { fill:none; stroke:#b4beb5; stroke-width:3; }
+ .rebase-mark {fill:none;stroke:#31664b;stroke-width:2;}
+ .nodecircle.topic-node {fill:#eab5a7;stroke:#ad6a59;}
+ &[data-current-state="rebase"] [data-state="rebase"] .nodecircle:not(.topic-node) {fill:#6f9e78;}
+ .reference { fill:none; stroke:#31664b; stroke-width:2; }
+ .nodecircle { fill:#faf9f4; stroke:#31664b; stroke-width:3; }
+ .branchmark { fill:#31664b; }
+ .branchtext { fill:#fff; font-size:22px; font-family:ui-monospace,Consolas,monospace; }
+ .area { fill:#faf9f4; stroke:#a5bda9; stroke-width:2; }
+ .warm { fill:#f5eac8; }
+ .arrow { fill:none; stroke:#31664b; stroke-width:2.5; }
+ &[data-current-state="restore-worktree"] > g[data-state="restore-worktree"],
+ &[data-current-state="restore-index"] > g[data-state="restore-index"],
+ &[data-current-state="stash"] > g[data-state="stash"],
+ &[data-current-state="revert"] > g[data-state="revert"],
+ &[data-current-state="amend"] > g[data-state="amend"],
+ &[data-current-state="reset"] > g[data-state="reset"],
+ &[data-current-state="clean"] > g[data-state="clean"],
+ &[data-current-state="reflog"] > g[data-state="reflog"],
+ &[data-current-state="cherry-pick"] > g[data-state="cherry-pick"],
+ &[data-current-state="rebase"] > g[data-state="rebase"],
+ &[data-current-state="worktree"] > g[data-state="worktree"],
+ &[data-current-state="submodule"] > g[data-state="submodule"],
+ &[data-current-state="revisions"] > g[data-state="revisions"],
+ &[data-current-state="detached"] > g[data-state="detached"] { display:block; }
+}
+]]>
+</style>
+<defs>
+<marker id="recovery-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+<path d="M1 1 L8 5 L1 9" fill="none" stroke="#31664b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<g data-state="restore-worktree">
+<rect class="frame" x="18" y="18" width="484" height="464" rx="9"/>
+<text class="heading" x="40" y="57" >削除した追跡ファイルを戻す</text>
+<rect class="area" x="48" y="85" width="424" height="88" rx="9"/>
+<text class="label" x="68" y="116" >インデックス</text>
+<text class="mono" x="68" y="151" >hello.py は残っている</text>
+<rect class="warm" x="48" y="205" width="195" height="97" rx="9"/>
+<text class="label" x="62" y="239" >作業ツリー</text>
+<text class="label" x="62" y="275" >hello.py がない</text>
+<rect class="area" x="275" y="205" width="197" height="97" rx="9"/>
+<text class="label" x="289" y="239" >復元後</text>
+<text class="label" x="289" y="275" >hello.py が戻る</text>
+<path class="arrow" d="M246 254 H267" marker-end="url(#recovery-arrow)"/>
+<text class="label" x="260" y="350" text-anchor="middle" textLength="435" lengthAdjust="spacingAndGlyphs">statusで deleted: hello.py を確認</text>
+<text class="mono" x="260" y="394" text-anchor="middle">git restore -- hello.py</text>
+<path class="arrow" d="M370 176 V197" marker-end="url(#recovery-arrow)"/>
+<text class="label" x="260" y="448" text-anchor="middle">削除をまだステージしていない例</text>
+</g>
+<g data-state="restore-index">
+<rect class="frame" x="18" y="18" width="484" height="464" rx="9"/>
+<text class="heading" x="40" y="57" >削除をステージしたときは？</text>
+<rect class="area" x="48" y="84" width="424" height="77" rx="9"/>
+<text class="label" x="68" y="116" >HEAD のスナップショット</text>
+<text class="mono" x="68" y="145" >hello.py がある</text>
+<path class="arrow" d="M260 172 V219" marker-end="url(#recovery-arrow)"/>
+<text class="mono" x="282" y="203" >--staged</text>
+<rect class="area" x="48" y="232" width="424" height="77" rx="9"/>
+<text class="label" x="68" y="265" >インデックスへ戻す</text>
+<text class="mono" x="68" y="294" >hello.py がある</text>
+<path class="arrow" d="M260 320 V365" marker-end="url(#recovery-arrow)"/>
+<text class="mono" x="282" y="348" >restore</text>
+<rect class="area" x="48" y="378" width="424" height="77" rx="9"/>
+<text class="label" x="68" y="410" >作業ツリーへ戻す</text>
+<text class="mono" x="68" y="441" >hello.py が復元される</text>
+</g>
+<g data-state="stash">
+<rect class="frame" x="18" y="18" width="484" height="464" rx="14"/>
+<text class="heading" x="40" y="58" text-anchor="start">変更を退避・再適用</text>
+<rect class="area " x="36" y="140" width="190" height="100" rx="10"/>
+<text class="label" x="131" y="176" text-anchor="middle">作業ツリー</text>
+<rect class="area warm" x="320" y="140" width="164" height="100" rx="10"/>
+<text class="label" x="402" y="176" text-anchor="middle">stash</text>
+<path class="arrow" d="M234 168 L306 168" marker-end="url(#recovery-arrow)"/>
+<text class="mono" x="270" y="127" text-anchor="middle">push</text>
+<path class="arrow" d="M306 215 L234 215" marker-end="url(#recovery-arrow)"/>
+<text class="mono" x="270" y="290" text-anchor="middle">apply / pop</text>
+<text class="label" x="260" y="374" text-anchor="middle">apply：退避を残す</text>
+<text class="label" x="260" y="419" text-anchor="middle">pop：成功時に退避を削除</text>
+</g>
+<g data-state="revert">
+<rect class="frame" x="18" y="18" width="484" height="464" rx="14"/>
+<text class="heading" x="40" y="58" text-anchor="start">取り消す変更も履歴へ</text>
+<path class="graylines" d="M65 218 L450 218" />
+<circle class="nodecircle" cx="65" cy="218" r="18"/>
+<text class="mono" x="65" y="265" text-anchor="middle">A</text>
+<circle class="nodecircle" cx="190" cy="218" r="18"/>
+<text class="mono" x="190" y="265" text-anchor="middle">B</text>
+<circle class="nodecircle" cx="315" cy="218" r="18"/>
+<text class="mono" x="315" y="265" text-anchor="middle">C</text>
+<circle class="nodecircle" cx="450" cy="218" r="18"/>
+<text class="mono" x="450" y="265" text-anchor="middle">R</text>
+<rect class="branchmark" x="407" y="148" width="86" height="34" rx="5"/>
+<text class="branchtext" x="450" y="173" text-anchor="middle">main</text>
+<text class="label" x="260" y="332" text-anchor="middle">B を消さずに R を追加</text>
+<text class="label" x="260" y="383" text-anchor="middle">R：B の変更を打ち消す</text>
+</g>
+<g data-state="amend">
+<rect class="frame" x="18" y="18" width="484" height="464" rx="14"/>
+<text class="heading" x="40" y="58" text-anchor="start">直近のコミットを作り直す</text>
+<text class="label" x="40" y="114" text-anchor="start">前</text>
+<path class="graylines" d="M160 145 L390 145" />
+<circle class="nodecircle" cx="160" cy="145" r="18"/>
+<text class="mono" x="160" y="192" text-anchor="middle">A</text>
+<circle class="nodecircle" cx="390" cy="145" r="18"/>
+<text class="mono" x="390" y="192" text-anchor="middle">B</text>
+<rect class="branchmark" x="347" y="83" width="86" height="34" rx="5"/>
+<text class="branchtext" x="390" y="108" text-anchor="middle">main</text>
+<text class="label" x="40" y="299" text-anchor="start">後</text>
+<path class="graylines" d="M160 330 L390 330" />
+<circle class="nodecircle" cx="160" cy="330" r="18"/>
+<text class="mono" x="160" y="377" text-anchor="middle">A</text>
+<circle class="nodecircle" cx="390" cy="330" r="18"/>
+<text class="mono" x="390" y="377" text-anchor="middle">B′</text>
+<rect class="branchmark" x="347" y="268" width="86" height="34" rx="5"/>
+<text class="branchtext" x="390" y="293" text-anchor="middle">main</text>
+<text class="label" x="260" y="443" text-anchor="middle">B′ は別のコミット</text>
+</g>
+<g data-state="reset">
+<rect class="frame" x="18" y="18" width="484" height="464" rx="14"/>
+<text class="heading" x="40" y="58" text-anchor="start">先端と、戻す領域の違い</text>
+<path class="graylines" d="M100 125 L420 125" />
+<circle class="nodecircle" cx="100" cy="125" r="18"/>
+<text class="mono" x="100" y="172" text-anchor="middle">A</text>
+<circle class="nodecircle" cx="260" cy="125" r="18"/>
+<text class="mono" x="260" y="172" text-anchor="middle">B</text>
+<circle class="nodecircle" cx="420" cy="125" r="18"/>
+<text class="mono" x="420" y="172" text-anchor="middle">C</text>
+<rect class="branchmark" x="217" y="72" width="86" height="34" rx="5"/>
+<text class="branchtext" x="260" y="97" text-anchor="middle">main</text>
+<path class="arrow" d="M410 191 L278 191" marker-end="url(#recovery-arrow)"/>
+<text class="label" x="260" y="229" text-anchor="middle">先端を C から B へ</text>
+<text class="label" x="157" y="281" text-anchor="start">先端</text>
+<text class="label" x="266" y="281" text-anchor="start">index</text>
+<text class="label" x="374" y="281" text-anchor="start">作業</text>
+<text class="mono" x="40" y="329" text-anchor="start">soft</text>
+<text class="label" x="157" y="329" text-anchor="start">B へ</text>
+<text class="label" x="266" y="329" text-anchor="start">保持</text>
+<text class="label" x="374" y="329" text-anchor="start">保持</text>
+<text class="mono" x="40" y="380" text-anchor="start">mixed</text>
+<text class="label" x="157" y="380" text-anchor="start">B へ</text>
+<text class="label" x="266" y="380" text-anchor="start">B へ</text>
+<text class="label" x="374" y="380" text-anchor="start">保持</text>
+<text class="mono" x="40" y="431" text-anchor="start">hard</text>
+<text class="label" x="157" y="431" text-anchor="start">B へ</text>
+<text class="label" x="266" y="431" text-anchor="start">B へ</text>
+<text class="label" x="374" y="431" text-anchor="start">B へ</text>
+</g>
+<g data-state="clean">
+<rect class="frame" x="18" y="18" width="484" height="464" rx="14"/>
+<text class="heading" x="40" y="58" text-anchor="start">削除するのは未追跡</text>
+<rect class="area " x="40" y="118" width="190" height="115" rx="10"/>
+<text class="label" x="135" y="154" text-anchor="middle">追跡済み</text>
+<text class="mono" x="135" y="202" text-anchor="middle">report.txt</text>
+<rect class="area warm" x="290" y="118" width="190" height="115" rx="10"/>
+<text class="label" x="385" y="154" text-anchor="middle">未追跡</text>
+<text class="mono" x="385" y="202" text-anchor="middle">scratch/</text>
+<path class="arrow" d="M385 249 L385 315" marker-end="url(#recovery-arrow)"/>
+<text class="mono" x="260" y="362" text-anchor="middle">-n / -nd：候補を見る</text>
+<text class="mono" x="260" y="416" text-anchor="middle">-fd：候補を実際に削除</text>
+</g>
+<g data-state="reflog">
+<rect class="frame" x="18" y="18" width="484" height="464" rx="14"/>
+<text class="heading" x="40" y="58" text-anchor="start">参照の履歴から目印を戻す</text>
+<path class="graylines" d="M70 180 L430 180" />
+<circle class="nodecircle" cx="70" cy="180" r="18"/>
+<text class="mono" x="70" y="227" text-anchor="middle">A</text>
+<circle class="nodecircle" cx="250" cy="180" r="18"/>
+<text class="mono" x="250" y="227" text-anchor="middle">B</text>
+<circle class="nodecircle" cx="430" cy="180" r="18"/>
+<text class="mono" x="430" y="227" text-anchor="middle">C</text>
+<rect class="branchmark" x="207" y="114" width="86" height="34" rx="5"/>
+<text class="branchtext" x="250" y="139" text-anchor="middle">main</text>
+<rect class="branchmark" x="376" y="273" width="108" height="34" rx="5"/>
+<text class="branchtext" x="430" y="298" text-anchor="middle">rescue</text>
+<path class="reference" d="M430 273 L430 199"/>
+<text class="label" x="260" y="368" text-anchor="middle">reflog で C を探す</text>
+<text class="label" x="260" y="416" text-anchor="middle">残るコミットに名前を付ける</text>
+</g>
+<g data-state="cherry-pick">
+<rect class="frame" x="18" y="18" width="484" height="464" rx="14"/>
+<text class="heading" x="40" y="58" text-anchor="start">選んだ変更を別の枝へ</text>
+<path class="graylines" d="M75 150 L420 150" />
+<circle class="nodecircle" cx="75" cy="150" r="18"/>
+<text class="mono" x="75" y="197" text-anchor="middle">A</text>
+<circle class="nodecircle" cx="250" cy="150" r="18"/>
+<text class="mono" x="250" y="197" text-anchor="middle">X</text>
+<circle class="nodecircle" cx="420" cy="150" r="18"/>
+<text class="mono" x="420" y="197" text-anchor="middle">Y</text>
+<rect class="branchmark" x="364" y="90" width="112" height="34" rx="5"/>
+<text class="branchtext" x="420" y="115" text-anchor="middle">feature</text>
+<path class="graylines" d="M75 150 L75 335" />
+<path class="graylines" d="M75 335 L330 335" />
+<circle class="nodecircle" cx="75" cy="335" r="18"/>
+<text class="mono" x="75" y="382" text-anchor="middle">B</text>
+<circle class="nodecircle" cx="330" cy="335" r="18"/>
+<text class="mono" x="330" y="382" text-anchor="middle">X′</text>
+<rect class="branchmark" x="274" y="395" width="112" height="34" rx="5"/>
+<text class="branchtext" x="330" y="420" text-anchor="middle">release</text>
+<path class="arrow" d="M258 173 Q330 218 330 308" marker-end="url(#recovery-arrow)"/>
+<text class="label" x="376" y="258" text-anchor="middle">変更だけ</text>
+</g>
+<g data-state="rebase">
+<rect class="frame" x="18" y="18" width="484" height="464" rx="9"/>
+<text class="heading" x="40" y="54" >同じ出発点から2通りを比較</text>
+<text class="label" x="40" y="97" >前</text>
+<path class="graylines" d="M65 165 H330 M165 165 L220 116 H360"/>
+<circle class="nodecircle " cx="65" cy="165" r="9"/>
+<circle class="nodecircle " cx="115" cy="165" r="9"/>
+<circle class="nodecircle " cx="165" cy="165" r="9"/>
+<circle class="nodecircle " cx="245" cy="165" r="9"/>
+<circle class="nodecircle " cx="330" cy="165" r="9"/>
+<circle class="nodecircle topic-node" cx="220" cy="116" r="9"/>
+<circle class="nodecircle topic-node" cx="290" cy="116" r="9"/>
+<circle class="nodecircle topic-node" cx="360" cy="116" r="9"/>
+<rect class="rebase-mark" x="315" y="150" width="30" height="30" rx="4"/>
+<rect class="rebase-mark" x="345" y="101" width="30" height="30" rx="4"/>
+<text class="mono" x="355" y="173" >main</text>
+<text class="mono" x="360" y="86" text-anchor="middle">feat/popup</text>
+<text class="mono" x="40" y="222" >rebase</text>
+<path class="graylines" d="M65 288 H165 L220 250 H470"/>
+<circle class="nodecircle " cx="65" cy="288" r="9"/>
+<circle class="nodecircle " cx="115" cy="288" r="9"/>
+<circle class="nodecircle " cx="165" cy="288" r="9"/>
+<circle class="nodecircle topic-node" cx="220" cy="250" r="9"/>
+<circle class="nodecircle topic-node" cx="290" cy="250" r="9"/>
+<circle class="nodecircle topic-node" cx="360" cy="250" r="9"/>
+<circle class="nodecircle " cx="420" cy="250" r="9"/>
+<circle class="nodecircle " cx="470" cy="250" r="9"/>
+<rect class="rebase-mark" x="345" y="235" width="30" height="30" rx="4"/>
+<rect class="rebase-mark" x="455" y="235" width="30" height="30" rx="4"/>
+<text class="mono" x="350" y="219" text-anchor="middle">feat/popup</text>
+<text class="mono" x="470" y="205" text-anchor="middle">main</text>
+<text class="mono" x="40" y="362" >merge</text>
+<path class="graylines" d="M65 432 H470 M165 432 L220 381 H360 L470 432"/>
+<circle class="nodecircle " cx="65" cy="432" r="9"/>
+<circle class="nodecircle " cx="115" cy="432" r="9"/>
+<circle class="nodecircle " cx="165" cy="432" r="9"/>
+<circle class="nodecircle " cx="245" cy="432" r="9"/>
+<circle class="nodecircle " cx="330" cy="432" r="9"/>
+<circle class="nodecircle " cx="470" cy="432" r="9"/>
+<circle class="nodecircle topic-node" cx="220" cy="381" r="9"/>
+<circle class="nodecircle topic-node" cx="290" cy="381" r="9"/>
+<circle class="nodecircle topic-node" cx="360" cy="381" r="9"/>
+<rect class="rebase-mark" x="345" y="366" width="30" height="30" rx="4"/>
+<rect class="rebase-mark" x="455" y="417" width="30" height="30" rx="4"/>
+<text class="mono" x="360" y="352" text-anchor="middle">feat/popup</text>
+<text class="mono" x="470" y="402" text-anchor="middle">main</text>
+</g>
+<g data-state="worktree">
+<rect class="frame" x="18" y="18" width="484" height="464" rx="14"/>
+<text class="heading" x="40" y="58" text-anchor="start">履歴を共有して並行作業</text>
+<rect class="area " x="65" y="100" width="390" height="74" rx="10"/>
+<text class="label" x="260" y="136" text-anchor="middle">共通のリポジトリ</text>
+<path class="reference" d="M170 174 L130 265"/>
+<path class="reference" d="M350 174 L390 265"/>
+<rect class="area " x="36" y="270" width="212" height="120" rx="10"/>
+<text class="label" x="142" y="306" text-anchor="middle">./analysis</text>
+<rect class="branchmark" x="99" y="326" width="86" height="34" rx="5"/>
+<text class="branchtext" x="142" y="351" text-anchor="middle">main</text>
+<rect class="area " x="272" y="270" width="212" height="120" rx="10"/>
+<text class="label" x="378" y="306" text-anchor="middle">../analysis-fix</text>
+<rect class="branchmark" x="295" y="326" width="166" height="34" rx="5"/>
+<text class="branchtext" x="378" y="351" text-anchor="middle">fix/analysis</text>
+<text class="label" x="260" y="445" text-anchor="middle">作業ツリー・index は別々</text>
+</g>
+<g data-state="submodule">
+<rect class="frame" x="18" y="18" width="484" height="464" rx="14"/>
+<text class="heading" x="40" y="58" text-anchor="start">別リポジトリの版を指定</text>
+<rect class="area " x="46" y="95" width="428" height="120" rx="10"/>
+<text class="label" x="260" y="131" text-anchor="middle">親リポジトリ</text>
+<text class="mono" x="260" y="182" text-anchor="middle">lib/ → 子の C2</text>
+<path class="arrow" d="M260 230 L260 280" marker-end="url(#recovery-arrow)"/>
+<rect class="area " x="46" y="296" width="428" height="145" rx="10"/>
+<text class="label" x="260" y="332" text-anchor="middle">独立した子リポジトリ</text>
+<path class="graylines" d="M125 365 L395 365" />
+<circle class="nodecircle" cx="125" cy="365" r="18"/>
+<text class="mono" x="125" y="412" text-anchor="middle">C1</text>
+<circle class="nodecircle" cx="260" cy="365" r="18"/>
+<text class="mono" x="260" y="412" text-anchor="middle">C2</text>
+<circle class="nodecircle" cx="395" cy="365" r="18"/>
+<text class="mono" x="395" y="412" text-anchor="middle">C3</text>
+</g>
+<g data-state="revisions">
+<rect class="frame" x="18" y="18" width="484" height="464" rx="14"/>
+<text class="heading" x="40" y="58" text-anchor="start">親をたどって版を指定</text>
+<path class="graylines" d="M75 180 L435 180" />
+<circle class="nodecircle" cx="75" cy="180" r="18"/>
+<text class="mono" x="75" y="227" text-anchor="middle">A</text>
+<circle class="nodecircle" cx="255" cy="180" r="18"/>
+<text class="mono" x="255" y="227" text-anchor="middle">B</text>
+<circle class="nodecircle" cx="435" cy="180" r="18"/>
+<text class="mono" x="435" y="227" text-anchor="middle">M</text>
+<path class="graylines" d="M75 180 L255 330" />
+<path class="graylines" d="M255 330 L435 180" />
+<circle class="nodecircle" cx="255" cy="330" r="18"/>
+<text class="mono" x="255" y="377" text-anchor="middle">X</text>
+<rect class="branchmark" x="392" y="112" width="86" height="34" rx="5"/>
+<text class="branchtext" x="435" y="137" text-anchor="middle">main</text>
+<text class="mono" x="70" y="125" text-anchor="start">HEAD~2</text>
+<text class="mono" x="200" y="125" text-anchor="start">HEAD~1</text>
+<text class="mono" x="435" y="254" text-anchor="middle">HEAD</text>
+<text class="mono" x="255" y="407" text-anchor="middle">HEAD^2</text>
+<text class="mono" x="76" y="430" text-anchor="start">v1.0 → A</text>
+</g>
+<g data-state="detached">
+<rect class="frame" x="18" y="18" width="484" height="464" rx="14"/>
+<text class="heading" x="40" y="58" text-anchor="start">HEAD が直接コミットを指す</text>
+<path class="graylines" d="M80 196 L440 196" />
+<circle class="nodecircle" cx="80" cy="196" r="18"/>
+<text class="mono" x="80" y="243" text-anchor="middle">A</text>
+<circle class="nodecircle" cx="260" cy="196" r="18"/>
+<text class="mono" x="260" y="243" text-anchor="middle">B</text>
+<circle class="nodecircle" cx="440" cy="196" r="18"/>
+<text class="mono" x="440" y="243" text-anchor="middle">C</text>
+<rect class="branchmark" x="397" y="129" width="86" height="34" rx="5"/>
+<text class="branchtext" x="440" y="154" text-anchor="middle">main</text>
+<rect class="area warm" x="170" y="305" width="180" height="66" rx="10"/>
+<text class="label" x="260" y="341" text-anchor="middle">HEAD</text>
+<path class="arrow" d="M260 294 L260 225" marker-end="url(#recovery-arrow)"/>
+<text class="label" x="260" y="434" text-anchor="middle">続けるならブランチを作る</text>
+</g>
+</svg>

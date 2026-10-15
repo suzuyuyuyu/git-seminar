@@ -1,0 +1,16 @@
+{
+  "chapter": {
+    "id": "why-git",
+    "number": "01",
+    "title": "履歴管理をはじめる",
+    "description": "ファイルのコピーによる管理とGitを比べ、GitとGitHubの役割を整理します。",
+    "goal": "履歴を残す意味と、ローカル・リモートの違いを説明できる。"
+  },
+  "id": "why-version-control",
+  "title": "履歴管理をはじめる",
+  "description": "Gitをセーブデータにたとえるところから始め、共有先の役割、Gitの3つの用途、ファイルの版管理、導入前後の違いへ進みます。元の講義資料7〜11ページに沿った導入です。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/version-history.svg"
+  }
+}

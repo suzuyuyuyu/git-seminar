@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="ssh-authentication" viewBox="0 0 900 680" role="img" aria-labelledby="ssh-auth-title ssh-auth-desc" data-current-state="authentication">
+  <title id="ssh-auth-title">SSH公開鍵認証：秘密鍵で署名し、公開鍵で検証する</title>
+  <desc id="ssh-auth-desc">左はPC、右はサーバー。事前にPCで鍵ペアを生成し、公開鍵だけを登録する。接続時はPCで今回の接続に結び付く認証情報へ秘密鍵で署名し、署名をサーバーへ送る。サーバーは登録公開鍵で署名を検証する。秘密鍵そのものは送らない。接続先認証や通信路確立の詳細は省略した概念図。</desc>
+  <defs><marker id="ssh-auth-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#858d89"/></marker></defs>
+  <style><![CDATA[
+    svg.ssh-authentication {
+      background:#fff; font-family:"Noto Sans JP","Yu Gothic",Meiryo,sans-serif;
+      [data-state] { display:none; }
+      &[data-current-state="authentication"] [data-state="authentication"] { display:block; }
+      text { fill:#24332b; font-size:22px; }
+      .title { font-size:28px; font-weight:700; }
+      .column { font-size:25px; font-weight:700; }
+      .step { font-size:24px; font-weight:600; }
+      .panel { fill:#f2f3f1; }
+      .box { fill:white; stroke:#bfcac1; stroke-width:2; }
+      .signed { fill:#e6eafb; stroke:#6a80dc; stroke-width:2; }
+      .verified { fill:#e4f3e7; stroke:#419452; stroke-width:2; }
+      .divider { stroke:#c5cdc7; stroke-width:1; }
+      .arrow { fill:none; stroke:#858d89; stroke-width:3; marker-end:url(#ssh-auth-arrow); }
+      .private { fill:#cb261b; }
+      .public { fill:#398a47; }
+      .emphasis { font-weight:700; }
+    }
+  ]]></style>
+  <g data-state="authentication">
+    <text x="24" y="38" class="title">SSH公開鍵認証（Ed25519の例）</text>
+    <image x="45" y="64" width="52" height="40" href="illustrations/computer.svg"/>
+    <text x="112" y="94" class="column">PC / ローカル</text>
+    <image x="530" y="62" width="42" height="46" href="illustrations/server.svg"/>
+    <text x="589" y="94" class="column">サーバー / リモート</text>
+    <rect x="24" y="118" width="365" height="488" rx="18" class="panel"/>
+    <rect x="510" y="118" width="366" height="488" rx="18" class="panel"/>
+    <text x="44" y="151">事前の準備</text>
+    <text x="44" y="188" class="step">① 鍵ペアを作成</text>
+    <image x="99" y="208" width="65" height="65" href="illustrations/private-key.svg"/>
+    <image x="237" y="208" width="65" height="65" href="illustrations/public-key.svg"/>
+    <text x="98" y="297" class="private emphasis">秘密鍵</text>
+    <text x="237" y="297" class="public emphasis">公開鍵</text>
+    <text x="532" y="188" class="step">② 公開鍵を登録</text>
+    <path d="M314 240L634 240" class="arrow"/>
+    <rect x="415" y="207" width="74" height="36" fill="white"/>
+    <text x="420" y="231">コピー</text>
+    <image x="653" y="208" width="65" height="65" href="illustrations/public-key.svg"/>
+    <text x="647" y="297" class="public emphasis">登録公開鍵</text>
+    <path d="M44 320H369M530 320H856" class="divider"/>
+    <text x="44" y="357" class="step">③ 接続を要求</text>
+    <path d="M260 350L699 350" class="arrow"/>
+    <text x="529" y="389">接続先を確認した後の認証</text>
+    <text x="44" y="422" class="step">④ 秘密鍵で署名</text>
+    <image x="50" y="446" width="49" height="49" href="illustrations/private-key.svg"/>
+    <rect x="112" y="438" width="248" height="64" rx="8" class="box"/>
+    <text x="128" y="463">今回の接続に結び付く</text>
+    <text x="128" y="490">認証情報</text>
+    <path d="M219 507V525" class="arrow"/>
+    <rect x="102" y="536" width="216" height="49" rx="8" class="signed"/>
+    <text x="179" y="568" class="emphasis">署名</text>
+    <text x="532" y="422" class="step">⑥ 登録公開鍵で検証</text>
+    <image x="548" y="447" width="49" height="49" href="illustrations/public-key.svg"/>
+    <rect x="617" y="438" width="238" height="64" rx="8" class="box"/>
+    <text x="634" y="463">署名と認証情報を確認</text>
+    <text x="634" y="490">この鍵で認証できるか</text>
+    <text x="365" y="527" class="emphasis">⑤ 署名を送信</text>
+    <path d="M322 560H617" class="arrow"/>
+    <rect x="627" y="536" width="216" height="49" rx="8" class="verified"/>
+    <text x="649" y="568" class="emphasis">検証成功 → 認証</text>
+    <text x="29" y="638" class="private emphasis">秘密鍵そのものは、ネットワークへ送らない</text>
+    <text x="29" y="671">概念図：サーバー認証・通信路確立・セッションの詳細は省略</text>
+  </g>
+</svg>

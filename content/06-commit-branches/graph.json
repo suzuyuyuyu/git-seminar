@@ -1,0 +1,731 @@
+{
+  "viewBox": "0 0 640 640",
+  "nodes": [
+    {
+      "id": "c1",
+      "x": 130,
+      "y": 550,
+      "parents": []
+    },
+    {
+      "id": "c2",
+      "x": 130,
+      "y": 460,
+      "parents": [
+        "c1"
+      ]
+    },
+    {
+      "id": "c3",
+      "x": 130,
+      "y": 370,
+      "parents": [
+        "c2"
+      ]
+    },
+    {
+      "id": "c4",
+      "x": 130,
+      "y": 280,
+      "parents": [
+        "c3"
+      ]
+    },
+    {
+      "id": "f1",
+      "x": 350,
+      "y": 280,
+      "parents": [
+        "c3"
+      ]
+    },
+    {
+      "id": "m1",
+      "x": 130,
+      "y": 570,
+      "parents": []
+    },
+    {
+      "id": "m2",
+      "x": 130,
+      "y": 500,
+      "parents": [
+        "m1"
+      ]
+    },
+    {
+      "id": "m3",
+      "x": 130,
+      "y": 430,
+      "parents": [
+        "m2"
+      ]
+    },
+    {
+      "id": "m4",
+      "x": 130,
+      "y": 360,
+      "parents": [
+        "m3"
+      ]
+    },
+    {
+      "id": "m5",
+      "x": 130,
+      "y": 235,
+      "parents": [
+        "m4",
+        "b2"
+      ]
+    },
+    {
+      "id": "m6",
+      "x": 130,
+      "y": 165,
+      "parents": [
+        "m5"
+      ]
+    },
+    {
+      "id": "m7",
+      "x": 130,
+      "y": 95,
+      "parents": [
+        "m6"
+      ]
+    },
+    {
+      "id": "b1",
+      "x": 350,
+      "y": 460,
+      "parents": [
+        "m2"
+      ]
+    },
+    {
+      "id": "b2",
+      "x": 350,
+      "y": 390,
+      "parents": [
+        "b1"
+      ]
+    },
+    {
+      "id": "b3",
+      "x": 350,
+      "y": 320,
+      "parents": [
+        "b2"
+      ]
+    },
+    {
+      "id": "q0",
+      "x": 150,
+      "y": 580,
+      "parents": [],
+      "label": ""
+    },
+    {
+      "id": "q1",
+      "x": 150,
+      "y": 544,
+      "parents": [
+        "q0"
+      ],
+      "label": ""
+    },
+    {
+      "id": "q2",
+      "x": 150,
+      "y": 508,
+      "parents": [
+        "q1"
+      ],
+      "label": ""
+    },
+    {
+      "id": "q3",
+      "x": 150,
+      "y": 472,
+      "parents": [
+        "q2"
+      ],
+      "label": ""
+    },
+    {
+      "id": "q4",
+      "x": 150,
+      "y": 436,
+      "parents": [
+        "q3"
+      ],
+      "label": ""
+    },
+    {
+      "id": "q5",
+      "x": 150,
+      "y": 400,
+      "parents": [
+        "q4"
+      ],
+      "label": ""
+    },
+    {
+      "id": "q6",
+      "x": 150,
+      "y": 364,
+      "parents": [
+        "q5"
+      ],
+      "label": ""
+    },
+    {
+      "id": "q7",
+      "x": 150,
+      "y": 328,
+      "parents": [
+        "q6"
+      ],
+      "label": ""
+    },
+    {
+      "id": "q8",
+      "x": 150,
+      "y": 274,
+      "parents": [
+        "q7"
+      ],
+      "label": ""
+    },
+    {
+      "id": "q9",
+      "x": 150,
+      "y": 224,
+      "parents": [
+        "q8"
+      ],
+      "label": ""
+    },
+    {
+      "id": "q10",
+      "x": 150,
+      "y": 120,
+      "parents": [
+        "q9"
+      ],
+      "label": ""
+    },
+    {
+      "id": "r1",
+      "x": 290,
+      "y": 264,
+      "parents": [
+        "r2"
+      ],
+      "label": ""
+    },
+    {
+      "id": "r2",
+      "x": 290,
+      "y": 318,
+      "parents": [
+        "r3",
+        "s1"
+      ],
+      "label": ""
+    },
+    {
+      "id": "r3",
+      "x": 290,
+      "y": 400,
+      "parents": [
+        "q4"
+      ],
+      "label": "B"
+    },
+    {
+      "id": "s1",
+      "x": 430,
+      "y": 360,
+      "parents": [
+        "s2"
+      ],
+      "label": ""
+    },
+    {
+      "id": "s2",
+      "x": 430,
+      "y": 402,
+      "parents": [
+        "s3"
+      ],
+      "label": ""
+    },
+    {
+      "id": "s3",
+      "x": 430,
+      "y": 444,
+      "parents": [
+        "s4"
+      ],
+      "label": "G"
+    },
+    {
+      "id": "s4",
+      "x": 430,
+      "y": 486,
+      "parents": [
+        "q2"
+      ],
+      "label": ""
+    }
+  ],
+  "states": {
+    "objects": {
+      "visible": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "branches": {
+        "main": "c4"
+      },
+      "head": {
+        "branch": "main"
+      },
+      "focus": [
+        "c3",
+        "c2"
+      ],
+      "annotations": [
+        {
+          "x": 260,
+          "y": 450,
+          "text": "c3の親はc2"
+        },
+        {
+          "x": 260,
+          "y": 510,
+          "text": "IDと親のIDを記録"
+        }
+      ]
+    },
+    "head": {
+      "visible": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "branches": {
+        "main": "c4"
+      },
+      "head": {
+        "branch": "main"
+      },
+      "annotations": [
+        {
+          "x": 265,
+          "y": 430,
+          "text": "HEAD → main → c4"
+        }
+      ]
+    },
+    "detached": {
+      "visible": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "branches": {
+        "main": "c4"
+      },
+      "head": {
+        "commit": "c2"
+      },
+      "focus": [
+        "c2"
+      ],
+      "annotations": [
+        {
+          "x": 260,
+          "y": 535,
+          "text": "HEADがc2を直接指す"
+        }
+      ]
+    },
+    "branch-growth": {
+      "visible": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "b1",
+        "b2",
+        "b3"
+      ],
+      "parents": {
+        "m5": [
+          "m4"
+        ]
+      },
+      "branches": {
+        "main": "m5",
+        "add/new-algorithm": "b3"
+      },
+      "branchPositions": {
+        "add/new-algorithm": {
+          "x": 385,
+          "y": 300,
+          "width": 235
+        }
+      },
+      "annotations": [
+        {
+          "x": 180,
+          "y": 90,
+          "text": "別々にcommitを重ねる"
+        }
+      ],
+      "head": null
+    },
+    "merge-model": {
+      "visible": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "b1",
+        "b2",
+        "m6",
+        "m7"
+      ],
+      "branches": {
+        "main": "m7",
+        "add/new-algorithm": "b2"
+      },
+      "head": {
+        "branch": "main"
+      },
+      "branchPositions": {
+        "main": {
+          "x": 176,
+          "y": 80
+        },
+        "add/new-algorithm": {
+          "x": 385,
+          "y": 370,
+          "width": 235
+        }
+      },
+      "focus": [
+        "m5"
+      ],
+      "annotations": [
+        {
+          "x": 210,
+          "y": 245,
+          "text": "m5：merge commit"
+        },
+        {
+          "x": 180,
+          "y": 575,
+          "text": "作業側の目印はb2のまま"
+        }
+      ]
+    },
+    "first-parent": {
+      "visible": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "b1",
+        "b2",
+        "m6"
+      ],
+      "branches": {
+        "main": "m6",
+        "branch": "b2"
+      },
+      "head": {
+        "branch": "main"
+      },
+      "branchPositions": {
+        "main": {
+          "x": 175,
+          "y": 145
+        },
+        "branch": {
+          "x": 390,
+          "y": 370
+        }
+      },
+      "focus": [
+        "m5",
+        "m4"
+      ],
+      "annotations": [
+        {
+          "x": 210,
+          "y": 240,
+          "text": "HEAD~1 = m5"
+        },
+        {
+          "x": 210,
+          "y": 335,
+          "text": "HEAD~2 = m4"
+        },
+        {
+          "x": 210,
+          "y": 300,
+          "text": "m5^1"
+        },
+        {
+          "x": 210,
+          "y": 550,
+          "text": "~2 は ^2 ではない"
+        }
+      ],
+      "paths": [
+        {
+          "nodes": [
+            "m6",
+            "m5",
+            "m4"
+          ],
+          "color": "#31664b"
+        }
+      ]
+    },
+    "second-parent": {
+      "visible": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "b1",
+        "b2",
+        "m6"
+      ],
+      "branches": {
+        "main": "m6",
+        "branch": "b2"
+      },
+      "head": {
+        "branch": "main"
+      },
+      "branchPositions": {
+        "main": {
+          "x": 175,
+          "y": 145
+        },
+        "branch": {
+          "x": 390,
+          "y": 370
+        }
+      },
+      "focus": [
+        "m4",
+        "b2"
+      ],
+      "focusColors": {
+        "m4": "#31664b",
+        "b2": "#6b83d0"
+      },
+      "nodeColors": {
+        "b2": "#6b83d0"
+      },
+      "annotations": [
+        {
+          "x": 205,
+          "y": 295,
+          "text": "m5^1 → m4"
+        },
+        {
+          "x": 385,
+          "y": 445,
+          "text": "m5^2 → b2",
+          "color": "#6b83d0"
+        }
+      ],
+      "paths": [
+        {
+          "nodes": [
+            "m5",
+            "m4"
+          ],
+          "color": "#31664b"
+        },
+        {
+          "nodes": [
+            "m5",
+            "b2"
+          ],
+          "color": "#6b83d0"
+        }
+      ]
+    },
+    "quiz": {
+      "visible": [
+        "q0",
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10",
+        "r1",
+        "r2",
+        "r3",
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "parents": {
+        "q9": [
+          "q8",
+          "r1"
+        ]
+      },
+      "branches": {
+        "main": "q10"
+      },
+      "head": {
+        "branch": "main"
+      },
+      "focus": [
+        "r3",
+        "s3"
+      ],
+      "nodeColors": {
+        "r3": "#6b83d0",
+        "s3": "#00bc83"
+      },
+      "focusColors": {
+        "r3": "#6b83d0",
+        "s3": "#00bc83"
+      },
+      "showTimeAxis": false,
+      "legend": "青Bと緑Gを、HEADからの相対位置で表す",
+      "branchPositions": {
+        "main": {
+          "x": 200,
+          "y": 100
+        }
+      }
+    },
+    "clone": {
+      "visible": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "branches": {
+        "main": "c3"
+      },
+      "head": {
+        "branch": "main"
+      }
+    },
+    "create": {
+      "visible": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "branches": {
+        "main": "c3",
+        "feature/name": "c3"
+      },
+      "head": {
+        "branch": "main"
+      },
+      "focus": [
+        "c3"
+      ]
+    },
+    "switch": {
+      "visible": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "branches": {
+        "main": "c3",
+        "feature/name": "c3"
+      },
+      "head": {
+        "branch": "feature/name"
+      }
+    },
+    "edit": {
+      "visible": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "branches": {
+        "main": "c3",
+        "feature/name": "c3"
+      },
+      "head": {
+        "branch": "feature/name"
+      }
+    },
+    "feature-commit": {
+      "visible": [
+        "c1",
+        "c2",
+        "c3",
+        "f1"
+      ],
+      "branches": {
+        "main": "c3",
+        "feature/name": "f1"
+      },
+      "head": {
+        "branch": "feature/name"
+      },
+      "focus": [
+        "f1"
+      ]
+    },
+    "push-pr": {
+      "visible": [
+        "c1",
+        "c2",
+        "c3",
+        "f1"
+      ],
+      "branches": {
+        "main": "c3",
+        "feature/name": "f1"
+      },
+      "head": {
+        "branch": "feature/name"
+      },
+      "focus": [
+        "f1"
+      ],
+      "annotations": [
+        {
+          "x": 260,
+          "y": 520,
+          "text": "pushで目印は動かない"
+        }
+      ]
+    }
+  }
+}

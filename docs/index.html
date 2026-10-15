@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="図と実践で学ぶ、研究室のためのGitゼミ。自学習と講義で共通の教材を使います。">
+    <title>Gitゼミ — 履歴を残し、共同でつくる</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="markdown.css">
+    <script src="markdown.js" defer></script>
+    <script src="commit-graph.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">本文へ移動</a>
+    <header class="site-header">
+      <a class="site-brand" href="#toc"><span class="brand-mark" aria-hidden="true">G</span><span>Gitゼミ<span class="brand-subtitle">研究室のためのGit入門</span></span></a>
+      <nav id="mode-links" aria-label="教材の表示モード"></nav>
+    </header>
+
+    <main id="main">
+      <section id="toc-view" class="toc-view" aria-labelledby="toc-title">
+        <div class="toc-intro">
+          <p class="eyebrow">LECTURE GUIDE</p>
+          <h1 id="toc-title">履歴を残し、<br>共同でつくる。</h1>
+          <p class="intro-description">Gitのしくみを図で確かめながら、個人の作業から共同開発までを学びます。講義で使う図を、あとから自分のペースで読み返せます。</p>
+        </div>
+        <div class="course-guide">
+          <div><span class="guide-label">学び方</span><p>Chapterの順に読み、図とコマンドを確かめながら手を動かしましょう。</p></div>
+          <div><span class="guide-label">2つの表示</span><p><strong>自学習</strong>は説明と補足をじっくり読むために。<strong>講義</strong>は図と要点を大きく見るために。</p></div>
+        </div>
+        <div class="toc-section-heading"><h2>Chapter</h2><span>上から順に学ぶ</span></div>
+        <div id="chapter-list" class="chapter-list"></div>
+        <p id="course-status" class="toc-footnote"></p>
+      </section>
+
+      <section id="study-view" class="study-view" hidden aria-labelledby="lesson-title">
+        <div class="lesson-heading">
+          <p class="eyebrow">SELF STUDY</p>
+          <h1 id="lesson-title"></h1>
+          <p id="lesson-description" class="lesson-description"></p>
+          <details class="lesson-outline">
+            <summary>この章で学ぶこと</summary>
+            <nav id="lesson-outline" aria-label="この章の目次"></nav>
+          </details>
+        </div>
+        <div class="study-layout">
+          <aside class="diagram-panel" aria-label="説明に対応する図">
+            <div class="diagram-label"><span>しくみを図で見る</span><span class="diagram-follow-hint">説明に合わせて表示</span></div>
+            <div id="study-diagram" class="diagram-container"></div>
+            <p id="study-diagram-caption" class="diagram-caption" aria-live="polite"></p>
+            <button id="enlarge-study-diagram" class="diagram-enlarge" type="button">図を大きく見る</button>
+          </aside>
+          <div id="lesson-steps" class="lesson-steps"></div>
+        </div>
+        <aside id="lesson-sources" class="lesson-sources" aria-label="この章の参考資料"></aside>
+        <div class="lesson-end"><span>図と要点を大きく表示する</span><a id="lesson-present-link" href="#present/record-changes">この節を講義表示で開く <span aria-hidden="true">→</span></a></div>
+        <nav id="chapter-navigation" aria-label="読める教材の前後"></nav>
+      </section>
+
+      <section id="present-view" class="present-view" hidden aria-labelledby="present-title">
+        <div class="present-heading"><p class="eyebrow">LECTURE</p><h1 id="present-title"></h1><button id="enlarge-present-diagram" class="diagram-enlarge" type="button">図を大きく見る</button></div>
+        <div class="present-content">
+          <div id="present-diagram" class="present-diagram"></div>
+          <div class="present-copy"><p id="present-takeaway" class="present-takeaway" aria-live="polite"></p><div id="present-command" class="present-command"></div><div id="present-notes" class="present-notes"></div></div>
+        </div>
+        <footer class="present-controls">
+          <a id="back-to-study" href="#study/record-changes">説明を読む</a>
+          <div class="step-navigation"><button id="previous-step" type="button" aria-label="前の説明へ">← <span>前へ</span></button><span id="present-progress" aria-live="polite"></span><button id="next-step" type="button" aria-label="次の説明へ"><span>次へ</span> →</button></div>
+          <span class="keyboard-hint">← → キーで切り替え</span>
+        </footer>
+      </section>
+    </main>
+    <dialog id="diagram-dialog" aria-label="図の拡大表示">
+      <button id="close-diagram-dialog" type="button" autofocus>閉じる（Esc）</button>
+      <div id="large-diagram"></div>
+      <p id="large-diagram-caption"></p>
+    </dialog>
+    <footer class="site-footer"><span>Gitゼミ　<a href="credits.html">素材と出典</a></span><span>図・説明・講義の要点を、ひとつの教材から。</span></footer>
+  </body>
+</html>

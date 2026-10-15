@@ -1,0 +1,38 @@
+{
+  "chapter": {
+    "id": "collaborate",
+    "number": "05",
+    "title": "共同開発の準備とIssue",
+    "description": "README・.gitignoreなどを整え、Issueで作業の目的を共有します。",
+    "goal": "読み手に伝わるリポジトリと、作業の出発点となるIssueを作れる。"
+  },
+  "id": "plan-collaboration",
+  "title": "共同開発の準備とIssue",
+  "description": "READMEで入口を整え、Issueで目的と完了条件を共有してから作業を分けます。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/collaboration-planning.svg"
+  },
+  "sources": [
+    {
+      "label": "GitHub Docs：README",
+      "url": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes"
+    },
+    {
+      "label": "Git：gitignore",
+      "url": "https://git-scm.com/docs/gitignore"
+    },
+    {
+      "label": "GitHub Docs：リポジトリのライセンス",
+      "url": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository"
+    },
+    {
+      "label": "GitHub Docs：Markdownの基本",
+      "url": "https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax"
+    },
+    {
+      "label": "GitHub Docs：Issue",
+      "url": "https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/about-issues"
+    }
+  ]
+}

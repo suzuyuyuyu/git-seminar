@@ -1,0 +1,42 @@
+{
+  "chapter": {
+    "id": "inspect",
+    "number": "03",
+    "title": "状態を確認し、履歴を取得する",
+    "description": "statusで状況を読み取り、clone・fetch・pullの役割を整理します。",
+    "goal": "作業前後に状態を確認し、リモートの履歴を取得できる。"
+  },
+  "id": "inspect-and-sync",
+  "title": "状態を確認し、履歴を取得する",
+  "description": "Chapter 02の4つの領域を踏まえ、状態・変更内容・履歴を読み分けます。取得の例ではmainを使い、未記録の変更がない状態から進めます。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/foundations-inspect.svg"
+  },
+  "sources": [
+    {
+      "label": "git clone",
+      "url": "https://git-scm.com/docs/git-clone"
+    },
+    {
+      "label": "git status",
+      "url": "https://git-scm.com/docs/git-status"
+    },
+    {
+      "label": "git diff",
+      "url": "https://git-scm.com/docs/git-diff"
+    },
+    {
+      "label": "git log",
+      "url": "https://git-scm.com/docs/git-log"
+    },
+    {
+      "label": "git fetch",
+      "url": "https://git-scm.com/docs/git-fetch"
+    },
+    {
+      "label": "git pullと--ff-only",
+      "url": "https://git-scm.com/docs/git-pull"
+    }
+  ]
+}

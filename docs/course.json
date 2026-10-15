@@ -1,0 +1,2738 @@
+{
+  "title": "0から学ぶ Gitと共同開発",
+  "subtitle": "個人の変更を記録し、チームの変更をつなぐ。図を見ながら学ぶ研究室のGitゼミ。",
+  "chapters": [
+    {
+      "id": "prepare",
+      "number": "00",
+      "title": "学習の準備",
+      "description": "Gitの導入、アカウント、接続設定を確認します。",
+      "goal": "手元でGitを使い、リモートに接続できる。",
+      "status": "ready",
+      "lessonId": "getting-ready"
+    },
+    {
+      "id": "why-git",
+      "number": "01",
+      "title": "履歴管理をはじめる",
+      "description": "ファイルのコピーによる管理とGitを比べ、GitとGitHubの役割を整理します。",
+      "goal": "履歴を残す意味と、ローカル・リモートの違いを説明できる。",
+      "status": "ready",
+      "lessonId": "why-version-control"
+    },
+    {
+      "id": "record",
+      "number": "02",
+      "title": "変更を記録して共有する",
+      "description": "ひとつの変更を追いながら、working tree・index・repositoryの関係を学びます。",
+      "goal": "add・commit・pushで、どこに何が反映されるか説明できる。",
+      "status": "ready",
+      "lessonId": "record-changes"
+    },
+    {
+      "id": "inspect",
+      "number": "03",
+      "title": "状態を確認し、履歴を取得する",
+      "description": "statusで状況を読み取り、clone・fetch・pullの役割を整理します。",
+      "goal": "作業前後に状態を確認し、リモートの履歴を取得できる。",
+      "status": "ready",
+      "lessonId": "inspect-and-sync"
+    },
+    {
+      "id": "practice",
+      "number": "04",
+      "title": "自分のコードで試す",
+      "description": "リポジトリの作成から、変更を記録し共有するまでを実践します。",
+      "goal": "自分のコードで履歴を作り、共有された記録を確認できる。",
+      "status": "ready",
+      "lessonId": "practice-solo"
+    },
+    {
+      "id": "collaborate",
+      "number": "05",
+      "title": "共同開発の準備とIssue",
+      "description": "README・.gitignoreなどを整え、Issueで作業の目的を共有します。",
+      "goal": "読み手に伝わるリポジトリと、作業の出発点となるIssueを作れる。",
+      "status": "ready",
+      "lessonId": "plan-collaboration"
+    },
+    {
+      "id": "branches",
+      "number": "06",
+      "title": "commit・branch・HEAD",
+      "description": "履歴と現在地を図で整理し、作業用のブランチを作ります。",
+      "goal": "ブランチの作成・切り替えと、commitによる移動を説明できる。",
+      "status": "ready",
+      "lessonId": "commit-branches"
+    },
+    {
+      "id": "integrate",
+      "number": "07",
+      "title": "Pull Requestと競合の解消",
+      "description": "変更をレビューして統合し、重なった編集を自分で解決します。",
+      "goal": "変更を提案し、競合を解消して統合できる。",
+      "status": "ready",
+      "lessonId": "review-and-resolve"
+    },
+    {
+      "id": "recover",
+      "number": "08",
+      "title": "復元・退避と発展事項",
+      "description": "restore・reset・stash・rebase・worktreeなどを必要に応じて学びます。",
+      "goal": "困った状態を整理し、適切な操作を調べて選べる。",
+      "status": "ready",
+      "lessonId": "recover-and-extend"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "getting-ready",
+      "title": "学習の準備",
+      "description": "GitとGitHubの接続を準備します。WindowsはGit Bash、macOS・Linuxはbash/zshのターミナルを使う例です。コマンド中の名前・メール・パスは自分の値に置き換えます。",
+      "diagram": {
+        "type": "svg",
+        "src": "assets/foundations-prepare.svg"
+      },
+      "sources": [
+        {
+          "label": "Gitのインストール",
+          "url": "https://git-scm.com/install/"
+        },
+        {
+          "label": "Gitの初期設定",
+          "url": "https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup"
+        },
+        {
+          "label": "SSH鍵の生成とOS別の手順",
+          "url": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent"
+        },
+        {
+          "label": "公開鍵をGitHubに登録",
+          "url": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account"
+        },
+        {
+          "label": "SSH接続の確認",
+          "url": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection"
+        },
+        {
+          "label": "GitHubのSSHホスト鍵の指紋",
+          "url": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints"
+        },
+        {
+          "label": "RFC 4252 §7：SSH公開鍵認証の署名と検証",
+          "url": "https://www.rfc-editor.org/rfc/rfc4252#section-7"
+        },
+        {
+          "label": "RFC 8709：SSHでのEd25519署名",
+          "url": "https://www.rfc-editor.org/rfc/rfc8709.html"
+        }
+      ],
+      "chapterId": "prepare",
+      "sections": [
+        {
+          "id": "tools",
+          "title": "01 Gitとターミナルを用意する",
+          "body": [
+            "WindowsはGit for Windowsを導入し、Git Bashを開きます。macOS・Linuxは公式のOS別手順でGitを導入します。git --versionでバージョンが表示されれば、コマンドを呼び出せています。\n\nこの教材のSSH関連コマンドはGit Bash・bash/zsh向けです。PowerShellでは一部のコマンドやパス表現が異なります。ターミナルに表示される❯や$は入力せず、コマンドだけ実行します。"
+          ],
+          "command": "git --version\npwd",
+          "takeaway": "使うシェルと、今いるフォルダーを確認する。",
+          "notes": [
+            {
+              "id": "prepare-shell",
+              "body": "pwdは現在の場所、cdは移動です。以降のGit操作では対象のリポジトリ内にいるか確認します。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "tools"
+        },
+        {
+          "id": "identity",
+          "title": "02 commitに記録する名前を設定する",
+          "body": [
+            "user.nameとuser.emailはcommitの作者情報です。GitHubへのログイン名やパスワードを設定するコマンドではありません。下の値を自分の情報に置き換えます。\n\nメールを公開したくない場合は、GitHubのSettings → Emailsに表示される自分専用のnoreplyアドレスを使えます。--globalは、このユーザーの各リポジトリに共通する既定値の設定です。"
+          ],
+          "command": "git config --global user.name \"Your Name\"\ngit config --global user.email \"your-email@example.com\"\ngit config --get user.name\ngit config --get user.email",
+          "takeaway": "作者情報と、接続の認証は別の設定。",
+          "notes": [
+            {
+              "id": "prepare-email",
+              "body": "例のメールをそのまま使わず、自分のアドレスへ置き換えましょう。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "identity"
+        },
+        {
+          "id": "authentication",
+          "title": "03 SSH公開鍵認証のしくみ",
+          "body": [
+            "事前に手元のPCで秘密鍵と公開鍵のペアを作り、公開鍵だけをGitHubへ登録します。接続するときは、今回の接続に結び付いた認証情報に手元の秘密鍵で署名し、署名を送ります。サーバーは登録された公開鍵で、その署名が正しいかを検証します。\n\nこれによって、秘密鍵そのものを送らずに、その鍵を持つことを証明できます。図は利用者の認証に絞った概念図で、接続先のサーバー認証、暗号化された通信路の確立、セッションやメッセージの詳細は抽象化しています。実際の接続では接続先の指紋の確認も必要です。"
+          ],
+          "command": null,
+          "takeaway": "秘密鍵で署名し、登録公開鍵で検証する。秘密鍵は送らない。",
+          "notes": [
+            {
+              "id": "prepare-signature-correction",
+              "body": "原資料15ページの「公開鍵で暗号化→秘密鍵で復号」は、今回のEd25519によるSSH公開鍵認証に合わせて「署名→検証」へ修正しました。",
+              "showInPresentation": true
+            },
+            {
+              "id": "prepare-signature-session",
+              "body": "署名は今回の接続の識別情報などを含む認証情報に対して作ります。以前の署名をそのまま使い回す仕組みではありません。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "authentication",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/ssh-authentication.svg",
+            "wide": true
+          }
+        },
+        {
+          "id": "keys",
+          "title": "04 SSH鍵のペアを作る",
+          "body": [
+            "GitHubにブラウザーでログインできることを確認します。SSHは、手元の秘密鍵を使って接続先へ自分を証明する方式です。公開鍵と秘密鍵のペアを作ります。\n\nまず既存の鍵を確認します。新規作成時は保存先として ~/.ssh/id_ed25519_github を指定し、既存ファイルを上書きしません。パスフレーズの設定を推奨します。入力中に文字が表示されなくても正常です。"
+          ],
+          "command": "mkdir -p ~/.ssh\nls -la ~/.ssh\nssh-keygen -t ed25519 -C \"your-email@example.com\" -f ~/.ssh/id_ed25519_github",
+          "takeaway": "公開鍵は登録する。秘密鍵は手元に保つ。",
+          "notes": [
+            {
+              "id": "prepare-no-overwrite",
+              "body": "同名の鍵がある場合は作り直さず、既存鍵を使うか別名を選びます。",
+              "showInPresentation": true
+            },
+            {
+              "id": "prepare-agent",
+              "body": "パスフレーズの入力を省くssh-agentの設定はOSで異なります。必要なら末尾の公式OS別手順を参照してください。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "keys"
+        },
+        {
+          "id": "register",
+          "title": "05 .pubだけをGitHubに登録する",
+          "body": [
+            "公開鍵はid_ed25519_github.pub、秘密鍵は拡張子なしのid_ed25519_githubです。既存の鍵や別名の鍵を使う場合は、下のパスも自分が選んだ鍵名に置き換え、末尾の.pubを付けます。公開鍵を表示し、ssh-ed25519で始まる1行全体をコピーします。\n\nGitHubのSettings → SSH and GPG keys → New SSH keyで、認証用の鍵として登録します。秘密鍵の中身はGitHub、チャット、リポジトリに貼り付けません。"
+          ],
+          "command": "cat ~/.ssh/id_ed25519_github.pub",
+          "takeaway": "登録するのは、末尾が.pubの公開鍵だけ。",
+          "notes": [
+            {
+              "id": "prepare-private-key",
+              "body": "BEGIN OPENSSH PRIVATE KEYと表示されたら秘密鍵です。コピーや共有をしないでください。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "register"
+        },
+        {
+          "id": "config",
+          "title": "06 接続に使う鍵を指定する",
+          "body": [
+            "エディターで ~/.ssh/config を開きます。なければ拡張子なしで作成し、下の設定を記入します。これはシェルで実行するコマンドではなく、設定ファイルの内容です。\n\nIdentityFileは秘密鍵へのパスです。生成した鍵名と一致させます。既にHost github.comの設定がある場合は、重複して追記せず内容を確認します。"
+          ],
+          "command": "Host github.com\n  HostName github.com\n  User git\n  IdentityFile ~/.ssh/id_ed25519_github\n  IdentitiesOnly yes",
+          "takeaway": "鍵の名前と、IdentityFileのパスを揃える。",
+          "notes": [
+            {
+              "id": "prepare-config-file",
+              "body": "config.txtにならないように注意。WindowsのGit Bashでは通常、~はWindowsユーザーのホームを指します。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "config"
+        },
+        {
+          "id": "connect",
+          "title": "07 GitHubとの接続を確認する",
+          "body": [
+            "ssh -T git@github.comを実行します。初回に接続先の指紋が表示されたら、末尾の公式「SSHホスト鍵の指紋」と照合してから承認します。求められるパスフレーズは手元の鍵に設定したものです。\n\nHi USERNAME! You've successfully authenticated...と自分のアカウント名が表示されれば認証成功です。GitHubはシェルへのログインを提供しないため、その旨が続きます。終了コード1でも、この成功メッセージなら問題ありません。"
+          ],
+          "command": "ssh -T git@github.com",
+          "takeaway": "成功メッセージと、自分のアカウント名を確認する。",
+          "notes": [
+            {
+              "id": "prepare-no-password",
+              "body": "GitHubのアカウントパスワードをSSH認証に入力する手順ではありません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "prepare-multiple-ssh",
+              "body": "Windowsには複数のSSH実装がある場合があります。Git操作だけ失敗するなら、同じGit Bashで再確認し公式のOS別手順を参照します。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "connect"
+        }
+      ]
+    },
+    {
+      "id": "why-version-control",
+      "title": "履歴管理をはじめる",
+      "description": "Gitをセーブデータにたとえるところから始め、共有先の役割、Gitの3つの用途、ファイルの版管理、導入前後の違いへ進みます。元の講義資料7〜11ページに沿った導入です。",
+      "diagram": {
+        "type": "svg",
+        "src": "assets/version-history.svg"
+      },
+      "chapterId": "why-git",
+      "sections": [
+        {
+          "id": "save-data",
+          "title": "01 Gitはコードの履歴を管理する",
+          "body": [
+            "ゲームのセーブデータを残すように、コードにも「この時点の状態」を記録しておくと、以前の状態を確認できます。元の図ではセーブデータ1・2・3と、記録を積み重ねる様子を表しています。\n\nGitでこの記録を作る操作をcommitと呼びます。ファイルの状態に加え、作者やメッセージ、前の記録とのつながりも残ります。エディターで保存しただけではcommitは増えません。"
+          ],
+          "command": null,
+          "takeaway": "コードのセーブデータにあたる記録がcommit。",
+          "notes": [
+            {
+              "id": "intro-save-metaphor",
+              "body": "「セーブデータ」は導入の比喩です。記録する内容を準備してからcommitする手順は次の章で学びます。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "save-data"
+        },
+        {
+          "id": "sharing",
+          "title": "02 GitHubは記録を共有する場所",
+          "body": [
+            "図の中央は共有先のリモートリポジトリ、周りは各自のPCにあるローカルリポジトリです。GitHub・GitLab・Bitbucketなどのサービスに履歴を置き、手元から送ったり、コピーを取得したりできます。\n\nそれぞれのPCで独立して変更し、完成した変更を共有して統合できます。同じ部分を別々に編集すると競合することがあり、意図に合わせて解消します。branchで作業を分け、mergeで統合する考え方を後の章で学びます。"
+          ],
+          "command": null,
+          "takeaway": "各自のローカルと、共有先のリモートをつなぐ。",
+          "notes": [
+            {
+              "id": "intro-git-github",
+              "body": "GitとGitHubは別のものです。Gitは履歴管理の仕組み、GitHubは共有と共同開発を支えるサービスです。",
+              "showInPresentation": true
+            },
+            {
+              "id": "intro-backup-limit",
+              "body": "共有先に残るのは送信した履歴です。手元で保存・commitしただけの内容まで、自動でバックアップされるわけではありません。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "sharing"
+        },
+        {
+          "id": "dvcs",
+          "title": "03 Gitの3つの役割",
+          "body": [
+            "Gitは分散型バージョン管理システム（DVCS）です。元の講義では用途を「バージョン管理」「状態の復元」「共同開発」の3つに分けています。各自が手元に履歴を持ち、必要な記録を交換します。\n\ncommitで過去の状態を保持し、記録済みの版を確認・復元できます。branchで作業を分け、変更をmergeできます。これらの機能を組み合わせることで、自分の試行錯誤と複数人の作業を管理します。"
+          ],
+          "command": null,
+          "takeaway": "履歴を残す・記録した状態を戻す・変更を統合する。",
+          "notes": [
+            {
+              "id": "intro-recovery-limit",
+              "body": "復元できる範囲は、Gitに残した記録に依存します。commitしていない編集まで必ず戻せるわけではありません。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "dvcs"
+        },
+        {
+          "id": "copies",
+          "title": "04 変更ごとにファイルを残す方法",
+          "body": [
+            "バージョン管理は変更の履歴を記録することです。まず「挨拶.txt」に「おはようございます」「こんにちわ」の2行を書いたとします。これを残したまま、編集した版を別名で保存する方法も、素朴なバージョン管理です。\n\n図の「挨拶_修正版.txt」では、2行目を「こんにちは」に直し、3行目に「こんばんは」を追加しています。変更前後のファイルを残せば見比べられますが、変更を繰り返すほどファイル名と内容の対応を自分で管理する必要があります。"
+          ],
+          "command": null,
+          "takeaway": "修正前と修正後の状態を、別々のファイルに残す。",
+          "notes": [
+            {
+              "id": "intro-greeting-typo",
+              "body": "最初の「こんにちわ」は原図の修正例です。誤字の修正と、1行の追加を見比べてください。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "copies"
+        },
+        {
+          "id": "repository",
+          "title": "05 履歴をrepositoryにまとめる",
+          "body": [
+            "Git導入前の図にはCode_origin、Code_v01、Code_v02_editなど、8つのフォルダーが並んでいます。履歴をフォルダー名で管理すると、どの版を使うか、何を変えたかを読み取るのが難しくなります。\n\nGitではrepository（リポジトリ）単位で履歴を管理します。図の右側は、コード作成・繰り返し処理・新しいアルゴリズム・不要ファイル削除・例外処理をcommitとして記録したものです。ひとつの作業フォルダーで、いつ何を変えたかと、その説明をたどれます。"
+          ],
+          "command": null,
+          "takeaway": "履歴をひとつにまとめ、commit messageで変更を説明する。",
+          "notes": [
+            {
+              "id": "intro-messages",
+              "body": "原図のinit:・feat:・remove:・fix:はメッセージの例です。接頭辞そのものがGitの必須条件ではありません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "intro-folder-repository",
+              "body": "通常の作業用リポジトリでは、履歴などの管理情報は.gitに置かれます。図の円筒はその管理されたまとまりの記号です。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "repository"
+        }
+      ]
+    },
+    {
+      "id": "record-changes",
+      "title": "変更を記録して共有する",
+      "diagram": {
+        "type": "svg",
+        "src": "assets/record-flow.svg",
+        "wide": true
+      },
+      "description": "clone済みのリポジトリで、hello.pyの挨拶を「Hello, world!」から「Hello, everyone!」へ変更します。mainブランチで作業し、originに共有する例です。",
+      "chapterId": "record",
+      "sections": [
+        {
+          "id": "working-tree",
+          "title": "01 ファイルを編集する",
+          "body": [
+            "working treeは、エディターで開いて編集するファイルがある場所です。hello.pyの挨拶を変更して保存すると、まずここが変わります。\n\nエディターで保存することと、Gitの履歴を記録することは別の操作です。この時点ではindexも、ローカルとリモートの記録も、変更前のままです。"
+          ],
+          "command": "git status",
+          "takeaway": "編集と保存で変わるのは、working tree。",
+          "notes": [
+            {
+              "id": "save-is-not-commit",
+              "body": "ファイルを保存しただけではcommitは増えません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "status-before-stage",
+              "body": "既に追跡されているhello.pyなら、statusに「Changes not staged for commit」と表示されます。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "working-tree"
+        },
+        {
+          "id": "stage",
+          "title": "02 次の記録に含める内容を選ぶ",
+          "body": [
+            "git add hello.pyを実行すると、実行した時点のhello.pyの内容がindexに反映されます。indexは、次のcommitに含める状態を準備する場所です。staging areaとも呼びます。\n\naddしても履歴はまだ増えません。今回の挨拶の変更を記録する準備ができた状態です。"
+          ],
+          "command": "git add hello.py",
+          "takeaway": "addは、次のcommitに含める状態を準備する。",
+          "notes": [
+            {
+              "id": "add-snapshot",
+              "body": "add後にさらに編集した内容は、もう一度addするまでindexに入りません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "status-staged",
+              "body": "git statusで「Changes to be committed」を確認できます。ファイルを移動する操作ではないので、working treeのファイルはそのまま残ります。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "stage"
+        },
+        {
+          "id": "commit",
+          "title": "03 手元に履歴を記録する",
+          "body": [
+            "git commitは、indexに準備した状態を新しいcommitとしてローカルリポジトリに記録します。commitには、ファイルの状態に加え、親commitや作者、メッセージなどの情報が残ります。\n\n今回の記録は「挨拶を変更した」というひとつのまとまりです。メッセージを付けておくと、あとで履歴を読む人が変更の意図を理解しやすくなります。"
+          ],
+          "command": "git commit -m \"Change greeting\"",
+          "takeaway": "commitは、indexの状態を手元の履歴に記録する。",
+          "notes": [
+            {
+              "id": "commit-is-local",
+              "body": "commitはローカルの操作です。まだリモートには届いていません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "commit-includes-index",
+              "body": "commitが記録するのはindexの状態です。addしていない編集は今回のcommitに含まれません。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "commit"
+        },
+        {
+          "id": "push",
+          "title": "04 記録した履歴を共有する",
+          "body": [
+            "git push origin mainは、手元のmainにあるcommitをoriginという名前のリモートへ送り、リモートのmainを更新します。ここで初めて、挨拶の変更を含む履歴が共有先に届きます。\n\nGitHubやGitLabはリモートリポジトリを置くサービスです。共有先の履歴を確認すると、送ったcommitと変更したファイルを見ることができます。"
+          ],
+          "command": "git push origin main",
+          "takeaway": "pushは、記録済みの履歴をリモートに送る。",
+          "notes": [
+            {
+              "id": "push-only-commits",
+              "body": "commitしていない編集はpushされません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "push-precondition",
+              "body": "この例は、originが設定済みで、mainへ送信できる場合です。リモート側に別の更新があるとpushが拒否されることがあります。その扱いは後の章で学びます。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "push"
+        },
+        {
+          "id": "operation-map",
+          "title": "05 全体図で操作の位置を確認する",
+          "body": [
+            "原資料の全体図では、共有先のrepo Aとそのfork、手元のリモート追跡branch、作業するbranch、index、working tree、stashを分けています。ローカルリポジトリという言葉を、作業ファイルだけの場所と取り違えないようにしましょう。\n\nまずはadd・commit・pushがどこからどこへ反映するかを確認します。cloneは共有先から手元への複製、fetchは手元の追跡情報の更新、pullは取得に続く統合です。forkやstashは後の章で扱い、この同じ図へ戻って位置を確かめます。"
+          ],
+          "command": null,
+          "takeaway": "領域と矢印を分けて、コマンドが更新する場所を読む。",
+          "notes": [
+            {
+              "id": "operation-map-scope",
+              "body": "今はadd・commit・pushを中心に確認します。すべての矢印を一度に覚える必要はありません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "operation-map-pull",
+              "body": "原資料のpullはfetchとmergeのまとまりです。実際のpullは指定・設定で統合方法が変わります。この教材の基本手順では--ff-onlyを明示します。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "overview",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/operation-map.svg",
+            "wide": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "inspect-and-sync",
+      "title": "状態を確認し、履歴を取得する",
+      "description": "Chapter 02の4つの領域を踏まえ、状態・変更内容・履歴を読み分けます。取得の例ではmainを使い、未記録の変更がない状態から進めます。",
+      "diagram": {
+        "type": "svg",
+        "src": "assets/foundations-inspect.svg"
+      },
+      "sources": [
+        {
+          "label": "git clone",
+          "url": "https://git-scm.com/docs/git-clone"
+        },
+        {
+          "label": "git status",
+          "url": "https://git-scm.com/docs/git-status"
+        },
+        {
+          "label": "git diff",
+          "url": "https://git-scm.com/docs/git-diff"
+        },
+        {
+          "label": "git log",
+          "url": "https://git-scm.com/docs/git-log"
+        },
+        {
+          "label": "git fetch",
+          "url": "https://git-scm.com/docs/git-fetch"
+        },
+        {
+          "label": "git pullと--ff-only",
+          "url": "https://git-scm.com/docs/git-pull"
+        }
+      ],
+      "chapterId": "inspect",
+      "sections": [
+        {
+          "id": "clone",
+          "title": "01 既存リポジトリを手元に複製する",
+          "body": [
+            "既存のリポジトリから始めるときはcloneを使います。GitHubのCodeからSSH URLをコピーし、下のYOUR_ACCOUNTとYOUR_REPOSITORYを置き換えます。コピーを置きたい親フォルダーで実行します。\n\ncloneは新しい作業フォルダーとローカルの履歴を作ります。ここでは取得先のフォルダー名をgit-seminar-copyと指定しています。同名の作業フォルダーがない場所で行い、完了したらその中へ移動します。"
+          ],
+          "command": "git clone git@github.com:YOUR_ACCOUNT/YOUR_REPOSITORY.git git-seminar-copy\ncd git-seminar-copy",
+          "takeaway": "cloneは、既存の履歴と作業用フォルダーを手元に用意する。",
+          "notes": [
+            {
+              "id": "inspect-clone-init",
+              "body": "clone済みのフォルダーでinitを実行する必要はありません。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "clone",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/operation-map.svg",
+            "wide": true
+          }
+        },
+        {
+          "id": "status",
+          "title": "02 statusで作業の状態を読む",
+          "body": [
+            "statusは、現在のbranch、indexに準備した変更、まだ準備していない変更、未追跡のファイルなどを表示します。何か操作する前後に確認する習慣を付けましょう。\n\nChanges not staged for commitは未ステージ、Changes to be committedは記録の準備済みです。Untracked filesはまだGitが追跡していないファイルです。cleanは未記録の変更がないことを示し、push済みという意味ではありません。"
+          ],
+          "command": "git status",
+          "takeaway": "状態を確認してから、次の操作を選ぶ。",
+          "notes": [
+            {
+              "id": "inspect-status-offline",
+              "body": "statusはネットワークに問い合わせません。ahead/behindは手元の追跡情報との比較です。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "status"
+        },
+        {
+          "id": "diff",
+          "title": "03 何が変わったかをdiffで読む",
+          "body": [
+            "git diffはworking treeとindexを比べ、まだaddしていない編集を表示します。git diff --stagedはindexと現在のcommitを比べ、次のcommitに入る変更を表示します。\n\n同じファイルでもaddの前後で表示先が変わります。未追跡ファイルの中身は通常のdiffには出ません。ファイルをエディターで確認してからaddします。"
+          ],
+          "command": "git diff\ngit diff --staged",
+          "takeaway": "diffとdiff --stagedは、比較する場所が違う。",
+          "notes": [
+            {
+              "id": "inspect-diff-pager",
+              "body": "長い表示がページャーで開いたらqで戻れます。−は削除側、+は追加側の行です。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "diff"
+        },
+        {
+          "id": "log",
+          "title": "04 commitのつながりを読む",
+          "body": [
+            "logは記録済みのcommitを表示します。--onelineで1件を短く、--graphで親子関係を線で、--decorateでbranchなどの目印を表示します。\n\n--allを付けると、複数のbranchなどの参照からたどれる履歴をまとめて見られます。未commitの編集はこの図には出ません。HEADやbranchの詳しい関係はChapter 06で学びます。"
+          ],
+          "command": "git log --oneline --graph --decorate --all",
+          "takeaway": "logに並ぶのは、記録済みのcommit。",
+          "notes": [
+            {
+              "id": "inspect-log-order",
+              "body": "通常は新しいcommitが上に表示されます。図の線は親子関係で、単なる時刻の順番ではありません。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "log"
+        },
+        {
+          "id": "fetch",
+          "title": "05 共有先の履歴だけを取得する",
+          "body": [
+            "git fetch originは、originからcommitなどを取得し、origin/mainなどのリモート追跡branchを更新します。origin/mainは、最後に取得した共有先のmainの状態を手元で表す目印です。\n\nfetchだけでは作業中のmainやworking treeのファイルを切り替えません。取得後にstatusやlogを見て、手元と共有先の違いを確認できます。"
+          ],
+          "command": "git fetch origin\ngit status\ngit log --oneline --graph --decorate --all",
+          "takeaway": "fetchは追跡情報を更新し、作業ファイルは変えない。",
+          "notes": [
+            {
+              "id": "inspect-origin-local",
+              "body": "mainとorigin/mainは別の目印です。origin/mainも自分のPCにある追跡情報です。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "fetch",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/operation-map.svg",
+            "wide": true
+          }
+        },
+        {
+          "id": "pull",
+          "title": "06 分岐していなければmainを進める",
+          "body": [
+            "ここではmainにいて、git statusで未記録の変更がないことを確認します。git pull --ff-only origin mainは取得に続けて、手元のmainを単純に進められる場合だけ更新します。更新されると作業ファイルにも反映されます。\n\n手元と共有先で履歴が分岐していると、この方法では拒否されます。forceで押し通さず状態を確認し、Chapter 06・07の統合へ進みましょう。pullの統合方法は指定や設定で異なるため、この教材では--ff-onlyを明示します。"
+          ],
+          "command": "git status\ngit pull --ff-only origin main",
+          "takeaway": "pullは取得と統合。今回は単純に進められる場合だけ。",
+          "notes": [
+            {
+              "id": "inspect-pull-reject",
+              "body": "拒否されたときは、履歴を消す操作をせずに止まって確認します。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "pull",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/operation-map.svg",
+            "wide": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "practice-solo",
+      "title": "自分のコードで試す",
+      "description": "Chapter 00〜03を使う小さな演習です。研究コードとは別の新しい練習フォルダーと、自分専用の空のGitHubリポジトリを用意します。Git Bash・bash/zsh向けの例です。",
+      "diagram": {
+        "type": "svg",
+        "src": "assets/foundations-practice.svg"
+      },
+      "sources": [
+        {
+          "label": "git init",
+          "url": "https://git-scm.com/docs/git-init"
+        },
+        {
+          "label": "変更を記録する",
+          "url": "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository"
+        },
+        {
+          "label": "GitHubに新しいリポジトリを作る",
+          "url": "https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository"
+        },
+        {
+          "label": "git remote",
+          "url": "https://git-scm.com/docs/git-remote"
+        },
+        {
+          "label": "git push",
+          "url": "https://git-scm.com/docs/git-push"
+        }
+      ],
+      "chapterId": "practice",
+      "sections": [
+        {
+          "id": "init",
+          "title": "01 新しい練習場所を作る",
+          "body": [
+            "既存のリポジトリの外にある、書き込み可能な親フォルダーへ移動して始めます。pwdで場所を確認し、新しいgit-seminar-practiceを作成して中に入ります。同名のものがあれば別名を使います。\n\ngit init -b mainで、最初のbranch名をmainとしてGit管理を始めます。.gitに管理情報が作られますが、この時点ではまだcommitはありません。-bが使えない古いGitは、事前に更新します。"
+          ],
+          "command": "pwd\nmkdir git-seminar-practice\ncd git-seminar-practice\ngit init -b main\ngit status",
+          "takeaway": "新しい場所でinitし、まだ空の履歴から始める。",
+          "notes": [
+            {
+              "id": "practice-no-nested",
+              "body": "研究コードの中や別のリポジトリ内で始めないよう、最初に場所を確認します。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "init"
+        },
+        {
+          "id": "edit",
+          "title": "02 hello.pyをエディターで作る",
+          "body": [
+            "練習フォルダーをエディターで開き、hello.pyを作成します。内容を print(\"Hello, world!\") の1行にして保存してください。Pythonの実行環境がなくてもGitの演習は進められます。\n\ngit statusにhello.pyがUntracked filesとして表示されることを確認します。エディターで保存できても、まだGitの履歴には記録されていません。"
+          ],
+          "command": "git status",
+          "takeaway": "まずファイルを保存し、Gitからどう見えるか確認する。",
+          "notes": [
+            {
+              "id": "practice-file-name",
+              "body": "hello.py.txtになっていないか、ファイル名も確認しましょう。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "edit"
+        },
+        {
+          "id": "record",
+          "title": "03 最初のcommitを作る",
+          "body": [
+            "hello.pyをaddし、diff --stagedで記録する内容を確認してからcommitします。Chapter 02で見た「準備してから記録する」を実際に行います。\n\nlogにInitial greetingが表示され、statusがcleanになることを確認します。作者情報のエラーが出た場合はChapter 00の設定を済ませてから再実行します。"
+          ],
+          "command": "git add hello.py\ngit diff --staged\ngit commit -m \"Initial greeting\"\ngit log --oneline\ngit status",
+          "takeaway": "内容を確認してから、最初の記録を残す。",
+          "notes": [
+            {
+              "id": "practice-first-parent",
+              "body": "最初のcommitには親commitがありません。ここから履歴が始まります。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "record"
+        },
+        {
+          "id": "remote",
+          "title": "04 自分専用の空の共有先を用意する",
+          "body": [
+            "GitHubで自分のアカウントに新しいリポジトリを作ります。公開範囲を選び、README・.gitignore・ライセンスの初期追加は選ばず、空のリポジトリにしてください。手元の最初の履歴を送るためです。\n\n作成後のSSH URLをコピーし、下のYOUR_ACCOUNTとYOUR_REPOSITORYを置き換えます。remote addは共有先にoriginという名前を付ける操作で、まだファイルは送信しません。"
+          ],
+          "command": "git remote add origin git@github.com:YOUR_ACCOUNT/YOUR_REPOSITORY.git\ngit remote -v",
+          "takeaway": "空の共有先に、originという名前を付ける。",
+          "notes": [
+            {
+              "id": "practice-own-remote",
+              "body": "他の人のリポジトリではなく、自分の練習用URLを指定します。",
+              "showInPresentation": true
+            },
+            {
+              "id": "practice-existing-origin",
+              "body": "origin already existsなら登録済みです。上書きせず、remote -vと現在のフォルダーを確認します。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "remote"
+        },
+        {
+          "id": "publish",
+          "title": "05 最初の履歴を送って確認する",
+          "body": [
+            "git push -u origin mainでmainの履歴を送ります。-uは、今後のpush・pullで使う追跡先を関連付けます。設定できれば、通常は次回からgit pushだけで同じ共有先に送れます。\n\nGitHubのページを更新し、hello.pyとInitial greetingのcommitが見えることを確認します。pushが拒否されたら先へ進まず、空のリポジトリを選んだか、URL・認証・権限を確認します。"
+          ],
+          "command": "git push -u origin main\ngit status",
+          "takeaway": "送った履歴を、ブラウザーでも確かめる。",
+          "notes": [
+            {
+              "id": "practice-no-force",
+              "body": "ここでforce pushは使いません。拒否の理由を確認しましょう。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "publish"
+        },
+        {
+          "id": "exercise",
+          "title": "06 もう一度、自分で記録する",
+          "body": [
+            "小演習：hello.pyを print(\"Hello, everyone!\") に変えて保存します。statusとdiffはどう変わるでしょうか。確認してからadd・commit・pushし、GitHubで2つの記録を見つけてください。\n\n確認の答え：保存直後は未ステージの変更です。add後はdiff --stagedに変更が出て、commit後はlogに2件の記録が並びます。push後に共有先にも2件が見えれば完了です。下の操作例は、自分で考えた後に照合してください。"
+          ],
+          "command": "git status\ngit diff\ngit add hello.py\ngit diff --staged\ngit commit -m \"Change greeting\"\ngit log --oneline\ngit push",
+          "takeaway": "保存・準備・記録・共有を、自分で繰り返す。",
+          "notes": [
+            {
+              "id": "practice-unsent-answer",
+              "body": "commit後にpushしなければ、2件目の記録は手元だけにあります。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "overview",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/operation-map.svg",
+            "wide": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plan-collaboration",
+      "title": "共同開発の準備とIssue",
+      "description": "READMEで入口を整え、Issueで目的と完了条件を共有してから作業を分けます。",
+      "diagram": {
+        "type": "svg",
+        "src": "assets/collaboration-planning.svg"
+      },
+      "sources": [
+        {
+          "label": "GitHub Docs：README",
+          "url": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes"
+        },
+        {
+          "label": "Git：gitignore",
+          "url": "https://git-scm.com/docs/gitignore"
+        },
+        {
+          "label": "GitHub Docs：リポジトリのライセンス",
+          "url": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository"
+        },
+        {
+          "label": "GitHub Docs：Markdownの基本",
+          "url": "https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax"
+        },
+        {
+          "label": "GitHub Docs：Issue",
+          "url": "https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/about-issues"
+        }
+      ],
+      "chapterId": "collaborate",
+      "sections": [
+        {
+          "id": "readme",
+          "title": "READMEに実行までの道順を書く",
+          "body": [
+            "初めてリポジトリを開いた人は、どのファイルを実行すればよいか、何を準備すればよいかを知りません。README.mdに研究コードの目的、必要な言語やライブラリの版、環境の準備、実行コマンド、期待する出力を書きます。自分が数か月後に再実行するための手順にもなります。\n\nこの教材のhello.pyなら、Pythonの確認方法と実行方法、表示される挨拶があれば試せます。実データが別の保存先にある場合は、その入手手順とアクセス条件を説明し、共有してはいけない内容そのものをREADMEへ貼り付けないようにします。"
+          ],
+          "command": "python --version\npython hello.py",
+          "takeaway": "READMEは、他の人が実行できる入口にする。",
+          "notes": [
+            {
+              "id": "readme-fresh",
+              "body": "書いた手順を、まだ環境がない人に試してもらうと抜けに気づけます。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "readme"
+        },
+        {
+          "id": "ignore",
+          "title": ".gitignoreで記録しないものを決める",
+          "body": [
+            ".gitignoreには、生成されるキャッシュや個人の仮想環境など、まだ追跡していないファイルをGitの追加対象から除くパターンを書きます。例えば__pycache__/や.venv/を指定します。すでに追跡しているファイルは、あとからパターンを書くだけでは追跡対象から外れません。\n\n研究データはすべて一律に除外するのではなく、容量、再現に必要な範囲、共同研究の取り決めに合わせて保存先を決めます。公開できる小さなサンプルと、大きな実験データを分ける方法もあります。.gitignoreはアクセス制御ではなく、過去に記録した内容を消す機能でもありません。"
+          ],
+          "command": "# .gitignore の例\n__pycache__/\n.venv/",
+          "takeaway": "追加前に整理する。既存の追跡や履歴は別に扱う。",
+          "notes": [
+            {
+              "id": "ignore-tracked",
+              "body": "すでに追跡したものを外す作業は、必要なファイルを確認してから別途行います。この例では削除コマンドは実行しません。",
+              "showInPresentation": false
+            },
+            {
+              "id": "ignore-data",
+              "body": "データの保存方針とREADMEの入手手順をセットで決めます。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "ignore"
+        },
+        {
+          "id": "license",
+          "title": "コードの利用条件を確認する",
+          "body": [
+            "LICENSEなどのライセンス文書は、他の人がコードをどの条件で利用・変更・再配布できるかを示します。公開されているコードだから自由に使える、と判断することはできません。外部のコードを利用するときは、そのライセンスと出典を確認します。\n\n研究室のコードを公開するときは、自分に公開やライセンス設定の権限があるか、研究室・所属機関・共同研究の方針と矛盾しないかを確認します。コードに設定する条件と、データ・画像・論文に設定する条件が同じとは限りません。決まった内容をREADMEから参照できるようにします。"
+          ],
+          "command": null,
+          "takeaway": "公開と利用条件は、権限と研究室の方針を確認して決める。",
+          "notes": [
+            {
+              "id": "license-scope",
+              "body": "この章では特定のライセンスを選ぶ演習はしません。既存の方針があれば、その文書へのリンクを残します。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "license"
+        },
+        {
+          "id": "markdown",
+          "title": "Markdownで読める説明を書く",
+          "body": [
+            "Markdownは、プレーンテキストに見出しや箇条書き、コードブロックの印を付ける記法です。READMEだけでなく、IssueやPull Requestの説明にも使えます。文章を書くために専用のソフトを入れる必要はありません。\n\n見出しには#、箇条書きには-、コードの前後にはバッククォートを3つ使います。コマンドとその出力、説明文を分けると読みやすくなります。GitHubやエディタのプレビューで、改行やコードの範囲が意図どおりか確認しましょう。"
+          ],
+          "command": "# 実行方法\n\n- Pythonを用意する\n\n```sh\npython hello.py\n```",
+          "takeaway": "説明と実行例を分け、プレビューで確認する。",
+          "notes": [
+            {
+              "id": "markdown-copy",
+              "body": "プロンプトの記号までコードに含めると、コピーした人が実行しにくくなります。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "markdown"
+        },
+        {
+          "id": "issue",
+          "title": "Issueに目的と完了条件を書く",
+          "body": [
+            "Issueは、問題や提案を共有し、作業の方針を話し合う場所です。タイトルで対象を示し、本文に目的、現状、期待する動作、完了と判断する条件を書きます。不具合なら、再現する手順、入力、環境、実際の結果もあると調べやすくなります。\n\n例えば「READMEにプロフィールを追加する」なら、追加する場所と項目、表示を確認する方法を決めます。Issueを立てた人が一人で全部を実装する必要はありません。コメントで相談し、担当や範囲を決めてから作業へ進めます。"
+          ],
+          "command": "## 目的\n参加者が誰かわかるようにする\n\n## 変更内容\nREADMEに名前と研究テーマを追加する\n\n## 完了条件\nプレビューで既存の内容と追加分が読める",
+          "takeaway": "何をするかと、どうなれば終わりかを共有する。",
+          "notes": [
+            {
+              "id": "issue-small",
+              "body": "不具合の報告は、原因や修正方法がまだわからなくても役立ちます。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "issue"
+        },
+        {
+          "id": "workflow",
+          "title": "Issue・ブランチ・PRをつなぐ",
+          "body": [
+            "Issueで決めた作業ごとにブランチを用意し、変更を小さなコミットに分けて記録します。mainを直接変更する代わりに作業を分けると、何のための変更かを追いかけやすくなります。ブランチの作成と切り替えは次の章で扱います。\n\n変更を共有したらPull Requestで差分を確認してもらい、合意した内容をmainへ統合します。説明にIssueへの参照を残すと、目的・実装・議論がつながります。GitHubではPull Request、GitLabではMerge Requestと呼びます。これは今回の練習の流れであり、チームによって運用は変わります。"
+          ],
+          "command": null,
+          "takeaway": "目的はIssue、作業はブランチ、確認と統合はPR。",
+          "notes": [
+            {
+              "id": "workflow-git",
+              "body": "IssueとPRはGitHubなどのサービスの機能です。Gitのコミットやブランチとは役割が違います。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "workflow"
+        }
+      ]
+    },
+    {
+      "id": "commit-branches",
+      "title": "Gitの仕組みとbranch・HEAD",
+      "description": "commitと親子関係からブランチの意味を読み、相対位置のクイズ、READMEの編集・共有へ進みます。概念図は説明用の履歴、後半の演習は別のcloneで行います。",
+      "diagram": {
+        "type": "commit-graph"
+      },
+      "sources": [
+        {
+          "label": "Git：オブジェクトの構造",
+          "url": "https://git-scm.com/book/en/v2/Git-Internals-Git-Objects"
+        },
+        {
+          "label": "Git：branch",
+          "url": "https://git-scm.com/docs/git-branch"
+        },
+        {
+          "label": "Git：switchとdetached HEAD",
+          "url": "https://git-scm.com/docs/git-switch"
+        },
+        {
+          "label": "Git：相対位置の~と^",
+          "url": "https://git-scm.com/docs/gitrevisions"
+        },
+        {
+          "label": "Git：merge",
+          "url": "https://git-scm.com/docs/git-merge"
+        },
+        {
+          "label": "Git：clone",
+          "url": "https://git-scm.com/docs/git-clone"
+        },
+        {
+          "label": "Git：push",
+          "url": "https://git-scm.com/docs/git-push"
+        }
+      ],
+      "chapterId": "branches",
+      "graph": {
+        "viewBox": "0 0 640 640",
+        "nodes": [
+          {
+            "id": "c1",
+            "x": 130,
+            "y": 550,
+            "parents": []
+          },
+          {
+            "id": "c2",
+            "x": 130,
+            "y": 460,
+            "parents": [
+              "c1"
+            ]
+          },
+          {
+            "id": "c3",
+            "x": 130,
+            "y": 370,
+            "parents": [
+              "c2"
+            ]
+          },
+          {
+            "id": "c4",
+            "x": 130,
+            "y": 280,
+            "parents": [
+              "c3"
+            ]
+          },
+          {
+            "id": "f1",
+            "x": 350,
+            "y": 280,
+            "parents": [
+              "c3"
+            ]
+          },
+          {
+            "id": "m1",
+            "x": 130,
+            "y": 570,
+            "parents": []
+          },
+          {
+            "id": "m2",
+            "x": 130,
+            "y": 500,
+            "parents": [
+              "m1"
+            ]
+          },
+          {
+            "id": "m3",
+            "x": 130,
+            "y": 430,
+            "parents": [
+              "m2"
+            ]
+          },
+          {
+            "id": "m4",
+            "x": 130,
+            "y": 360,
+            "parents": [
+              "m3"
+            ]
+          },
+          {
+            "id": "m5",
+            "x": 130,
+            "y": 235,
+            "parents": [
+              "m4",
+              "b2"
+            ]
+          },
+          {
+            "id": "m6",
+            "x": 130,
+            "y": 165,
+            "parents": [
+              "m5"
+            ]
+          },
+          {
+            "id": "m7",
+            "x": 130,
+            "y": 95,
+            "parents": [
+              "m6"
+            ]
+          },
+          {
+            "id": "b1",
+            "x": 350,
+            "y": 460,
+            "parents": [
+              "m2"
+            ]
+          },
+          {
+            "id": "b2",
+            "x": 350,
+            "y": 390,
+            "parents": [
+              "b1"
+            ]
+          },
+          {
+            "id": "b3",
+            "x": 350,
+            "y": 320,
+            "parents": [
+              "b2"
+            ]
+          },
+          {
+            "id": "q0",
+            "x": 150,
+            "y": 580,
+            "parents": [],
+            "label": ""
+          },
+          {
+            "id": "q1",
+            "x": 150,
+            "y": 544,
+            "parents": [
+              "q0"
+            ],
+            "label": ""
+          },
+          {
+            "id": "q2",
+            "x": 150,
+            "y": 508,
+            "parents": [
+              "q1"
+            ],
+            "label": ""
+          },
+          {
+            "id": "q3",
+            "x": 150,
+            "y": 472,
+            "parents": [
+              "q2"
+            ],
+            "label": ""
+          },
+          {
+            "id": "q4",
+            "x": 150,
+            "y": 436,
+            "parents": [
+              "q3"
+            ],
+            "label": ""
+          },
+          {
+            "id": "q5",
+            "x": 150,
+            "y": 400,
+            "parents": [
+              "q4"
+            ],
+            "label": ""
+          },
+          {
+            "id": "q6",
+            "x": 150,
+            "y": 364,
+            "parents": [
+              "q5"
+            ],
+            "label": ""
+          },
+          {
+            "id": "q7",
+            "x": 150,
+            "y": 328,
+            "parents": [
+              "q6"
+            ],
+            "label": ""
+          },
+          {
+            "id": "q8",
+            "x": 150,
+            "y": 274,
+            "parents": [
+              "q7"
+            ],
+            "label": ""
+          },
+          {
+            "id": "q9",
+            "x": 150,
+            "y": 224,
+            "parents": [
+              "q8"
+            ],
+            "label": ""
+          },
+          {
+            "id": "q10",
+            "x": 150,
+            "y": 120,
+            "parents": [
+              "q9"
+            ],
+            "label": ""
+          },
+          {
+            "id": "r1",
+            "x": 290,
+            "y": 264,
+            "parents": [
+              "r2"
+            ],
+            "label": ""
+          },
+          {
+            "id": "r2",
+            "x": 290,
+            "y": 318,
+            "parents": [
+              "r3",
+              "s1"
+            ],
+            "label": ""
+          },
+          {
+            "id": "r3",
+            "x": 290,
+            "y": 400,
+            "parents": [
+              "q4"
+            ],
+            "label": "B"
+          },
+          {
+            "id": "s1",
+            "x": 430,
+            "y": 360,
+            "parents": [
+              "s2"
+            ],
+            "label": ""
+          },
+          {
+            "id": "s2",
+            "x": 430,
+            "y": 402,
+            "parents": [
+              "s3"
+            ],
+            "label": ""
+          },
+          {
+            "id": "s3",
+            "x": 430,
+            "y": 444,
+            "parents": [
+              "s4"
+            ],
+            "label": "G"
+          },
+          {
+            "id": "s4",
+            "x": 430,
+            "y": 486,
+            "parents": [
+              "q2"
+            ],
+            "label": ""
+          }
+        ],
+        "states": {
+          "objects": {
+            "visible": [
+              "c1",
+              "c2",
+              "c3",
+              "c4"
+            ],
+            "branches": {
+              "main": "c4"
+            },
+            "head": {
+              "branch": "main"
+            },
+            "focus": [
+              "c3",
+              "c2"
+            ],
+            "annotations": [
+              {
+                "x": 260,
+                "y": 450,
+                "text": "c3の親はc2"
+              },
+              {
+                "x": 260,
+                "y": 510,
+                "text": "IDと親のIDを記録"
+              }
+            ]
+          },
+          "head": {
+            "visible": [
+              "c1",
+              "c2",
+              "c3",
+              "c4"
+            ],
+            "branches": {
+              "main": "c4"
+            },
+            "head": {
+              "branch": "main"
+            },
+            "annotations": [
+              {
+                "x": 265,
+                "y": 430,
+                "text": "HEAD → main → c4"
+              }
+            ]
+          },
+          "detached": {
+            "visible": [
+              "c1",
+              "c2",
+              "c3",
+              "c4"
+            ],
+            "branches": {
+              "main": "c4"
+            },
+            "head": {
+              "commit": "c2"
+            },
+            "focus": [
+              "c2"
+            ],
+            "annotations": [
+              {
+                "x": 260,
+                "y": 535,
+                "text": "HEADがc2を直接指す"
+              }
+            ]
+          },
+          "branch-growth": {
+            "visible": [
+              "m1",
+              "m2",
+              "m3",
+              "m4",
+              "m5",
+              "b1",
+              "b2",
+              "b3"
+            ],
+            "parents": {
+              "m5": [
+                "m4"
+              ]
+            },
+            "branches": {
+              "main": "m5",
+              "add/new-algorithm": "b3"
+            },
+            "branchPositions": {
+              "add/new-algorithm": {
+                "x": 385,
+                "y": 300,
+                "width": 235
+              }
+            },
+            "annotations": [
+              {
+                "x": 180,
+                "y": 90,
+                "text": "別々にcommitを重ねる"
+              }
+            ],
+            "head": null
+          },
+          "merge-model": {
+            "visible": [
+              "m1",
+              "m2",
+              "m3",
+              "m4",
+              "m5",
+              "b1",
+              "b2",
+              "m6",
+              "m7"
+            ],
+            "branches": {
+              "main": "m7",
+              "add/new-algorithm": "b2"
+            },
+            "head": {
+              "branch": "main"
+            },
+            "branchPositions": {
+              "main": {
+                "x": 176,
+                "y": 80
+              },
+              "add/new-algorithm": {
+                "x": 385,
+                "y": 370,
+                "width": 235
+              }
+            },
+            "focus": [
+              "m5"
+            ],
+            "annotations": [
+              {
+                "x": 210,
+                "y": 245,
+                "text": "m5：merge commit"
+              },
+              {
+                "x": 180,
+                "y": 575,
+                "text": "作業側の目印はb2のまま"
+              }
+            ]
+          },
+          "first-parent": {
+            "visible": [
+              "m1",
+              "m2",
+              "m3",
+              "m4",
+              "m5",
+              "b1",
+              "b2",
+              "m6"
+            ],
+            "branches": {
+              "main": "m6",
+              "branch": "b2"
+            },
+            "head": {
+              "branch": "main"
+            },
+            "branchPositions": {
+              "main": {
+                "x": 175,
+                "y": 145
+              },
+              "branch": {
+                "x": 390,
+                "y": 370
+              }
+            },
+            "focus": [
+              "m5",
+              "m4"
+            ],
+            "annotations": [
+              {
+                "x": 210,
+                "y": 240,
+                "text": "HEAD~1 = m5"
+              },
+              {
+                "x": 210,
+                "y": 335,
+                "text": "HEAD~2 = m4"
+              },
+              {
+                "x": 210,
+                "y": 300,
+                "text": "m5^1"
+              },
+              {
+                "x": 210,
+                "y": 550,
+                "text": "~2 は ^2 ではない"
+              }
+            ],
+            "paths": [
+              {
+                "nodes": [
+                  "m6",
+                  "m5",
+                  "m4"
+                ],
+                "color": "#31664b"
+              }
+            ]
+          },
+          "second-parent": {
+            "visible": [
+              "m1",
+              "m2",
+              "m3",
+              "m4",
+              "m5",
+              "b1",
+              "b2",
+              "m6"
+            ],
+            "branches": {
+              "main": "m6",
+              "branch": "b2"
+            },
+            "head": {
+              "branch": "main"
+            },
+            "branchPositions": {
+              "main": {
+                "x": 175,
+                "y": 145
+              },
+              "branch": {
+                "x": 390,
+                "y": 370
+              }
+            },
+            "focus": [
+              "m4",
+              "b2"
+            ],
+            "focusColors": {
+              "m4": "#31664b",
+              "b2": "#6b83d0"
+            },
+            "nodeColors": {
+              "b2": "#6b83d0"
+            },
+            "annotations": [
+              {
+                "x": 205,
+                "y": 295,
+                "text": "m5^1 → m4"
+              },
+              {
+                "x": 385,
+                "y": 445,
+                "text": "m5^2 → b2",
+                "color": "#6b83d0"
+              }
+            ],
+            "paths": [
+              {
+                "nodes": [
+                  "m5",
+                  "m4"
+                ],
+                "color": "#31664b"
+              },
+              {
+                "nodes": [
+                  "m5",
+                  "b2"
+                ],
+                "color": "#6b83d0"
+              }
+            ]
+          },
+          "quiz": {
+            "visible": [
+              "q0",
+              "q1",
+              "q2",
+              "q3",
+              "q4",
+              "q5",
+              "q6",
+              "q7",
+              "q8",
+              "q9",
+              "q10",
+              "r1",
+              "r2",
+              "r3",
+              "s1",
+              "s2",
+              "s3",
+              "s4"
+            ],
+            "parents": {
+              "q9": [
+                "q8",
+                "r1"
+              ]
+            },
+            "branches": {
+              "main": "q10"
+            },
+            "head": {
+              "branch": "main"
+            },
+            "focus": [
+              "r3",
+              "s3"
+            ],
+            "nodeColors": {
+              "r3": "#6b83d0",
+              "s3": "#00bc83"
+            },
+            "focusColors": {
+              "r3": "#6b83d0",
+              "s3": "#00bc83"
+            },
+            "showTimeAxis": false,
+            "legend": "青Bと緑Gを、HEADからの相対位置で表す",
+            "branchPositions": {
+              "main": {
+                "x": 200,
+                "y": 100
+              }
+            }
+          },
+          "clone": {
+            "visible": [
+              "c1",
+              "c2",
+              "c3"
+            ],
+            "branches": {
+              "main": "c3"
+            },
+            "head": {
+              "branch": "main"
+            }
+          },
+          "create": {
+            "visible": [
+              "c1",
+              "c2",
+              "c3"
+            ],
+            "branches": {
+              "main": "c3",
+              "feature/name": "c3"
+            },
+            "head": {
+              "branch": "main"
+            },
+            "focus": [
+              "c3"
+            ]
+          },
+          "switch": {
+            "visible": [
+              "c1",
+              "c2",
+              "c3"
+            ],
+            "branches": {
+              "main": "c3",
+              "feature/name": "c3"
+            },
+            "head": {
+              "branch": "feature/name"
+            }
+          },
+          "edit": {
+            "visible": [
+              "c1",
+              "c2",
+              "c3"
+            ],
+            "branches": {
+              "main": "c3",
+              "feature/name": "c3"
+            },
+            "head": {
+              "branch": "feature/name"
+            }
+          },
+          "feature-commit": {
+            "visible": [
+              "c1",
+              "c2",
+              "c3",
+              "f1"
+            ],
+            "branches": {
+              "main": "c3",
+              "feature/name": "f1"
+            },
+            "head": {
+              "branch": "feature/name"
+            },
+            "focus": [
+              "f1"
+            ]
+          },
+          "push-pr": {
+            "visible": [
+              "c1",
+              "c2",
+              "c3",
+              "f1"
+            ],
+            "branches": {
+              "main": "c3",
+              "feature/name": "f1"
+            },
+            "head": {
+              "branch": "feature/name"
+            },
+            "focus": [
+              "f1"
+            ],
+            "annotations": [
+              {
+                "x": 260,
+                "y": 520,
+                "text": "pushで目印は動かない"
+              }
+            ]
+          }
+        }
+      },
+      "sections": [
+        {
+          "id": "dotgit",
+          "title": ".gitが履歴と目印を管理する",
+          "body": [
+            "通常のリポジトリでは、作業フォルダの中に.gitディレクトリがあります。編集するソースファイルとは別に、commitの履歴、HEAD、branch、remoteの設定など、Gitが管理する情報がここに保存されています。\n\n図の.gitから履歴・現在地・目印・共有先の情報へ線をたどってください。.gitを削除すると、その場所の履歴情報が失われます。ソースファイルが残っていても、そのフォルダのGit管理は元どおりにはなりません。仕組みの説明であり、削除を試す演習ではありません。"
+          ],
+          "command": null,
+          "takeaway": "作業ファイルと、履歴を管理する.gitを分けて考える。",
+          "notes": [
+            {
+              "id": "dotgit-note",
+              "body": "worktreeなどでは.gitがディレクトリではなく、管理場所を指すファイルになる場合もあります。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "dotgit",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/branch-model.svg"
+          }
+        },
+        {
+          "id": "objects",
+          "title": "commitは状態と親を覚えている",
+          "body": [
+            "Gitはファイルの内容をオブジェクトとして保存し、その時点のファイル構成をスナップショットとしてたどれるようにします。commitには、ツリーへの参照、親commitのID、作者やメッセージなどが含まれ、内容から計算したハッシュ値で識別します。図のc1〜c4は、長い実際のIDに代わる説明用の名前です。\n\n図のc3の親はc2です。丸は記録、灰色線は記録のつながり、左の点線は時間の方向です。Gitを「毎回差分だけを保存する仕組み」と捉えると、この親子関係を読み違えます。実際の保存では同じ内容の再利用や圧縮も行います。リモートとの送受信は別の操作です。"
+          ],
+          "command": null,
+          "takeaway": "commitはスナップショットを指し、親commitのIDを持つ。",
+          "notes": [
+            {
+              "id": "objects-note",
+              "body": "原資料の「変更ファイルを圧縮して保存」は入口の説明です。毎回すべてのファイルを丸ごと複製する、という意味ではありません。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "objects"
+        },
+        {
+          "id": "head",
+          "title": "HEADは作業している場所を表す",
+          "body": [
+            "現在の作業の基準を表すのがHEADです。通常は、HEADが現在のブランチを指し、そのブランチが一つのcommitを指します。図の左列はHEAD → main → 先端のcommitという関係です。ファイルを編集して保存しただけでは、まだこの関係は変わりません。\n\n右の四列は、mainの位置を保ったまま、HEADがそれぞれ異なる過去のcommitを直接指す比較です。原資料ではHEADを「commitの現在地」と説明しています。到達するcommitだけでなく、間にブランチがあるかにも注目しましょう。ブランチの切り替えと、commitを直接読む操作では、次に記録するときの挙動が違います。"
+          ],
+          "command": "git status",
+          "takeaway": "通常はHEAD → branch → commitという関係。",
+          "notes": [
+            {
+              "id": "head-note",
+              "body": "図のHEADは赤、ブランチは一つの丸を囲む四角です。HEAD自体が履歴の線ではありません。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "head",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/branch-model.svg"
+          }
+        },
+        {
+          "id": "detached",
+          "title": "commitを直接見るとdetached HEADになる",
+          "body": [
+            "過去のcommitを直接指定すると、HEADはブランチを介さずcommitを指します。この状態がdetached HEADです。図ではmainはc4を指したまま、HEADだけがc2を直接指しています。元資料の小さな比較図が示すように、現在地は必ずしも最新のcommitとは限りません。\n\n過去の状態を調べるためには使えますが、ここで作った新しいcommitは既存のmainを進めません。変更を続けるなら新しいブランチで保持する必要があります。下のHEAD~2はこの図のc2に相当します。状態を見るだけなら、確認後にgit switch mainで戻れます。"
+          ],
+          "command": "git switch --detach HEAD~2\ngit status\ngit switch main",
+          "takeaway": "HEADがbranchを介さずcommitを指す状態を区別する。",
+          "notes": [
+            {
+              "id": "detached-note",
+              "body": "原資料の「どのcommitへもswitchできる」は、直接指定する場合には--detachが必要です。図はコマンド途中の状態を示します。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "detached"
+        },
+        {
+          "id": "commit-change",
+          "title": "commitの前後で何が増え、何が動くか",
+          "body": [
+            "左はc3で作業している状態、右は変更をadd・commitしてc4ができた状態です。新しいcommitはc3を親として記録されます。commitが増えることと、現在地が移ることを分けて見てください。\n\nHEADがmainを指す通常の作業では、mainの目印がc4へ進みます。HEADはmainを指したままなので、結果として作業の基準もc4になります。元資料55のcommit追加・現在地移動に、58の「branchも移動する」を重ねた比較図です。"
+          ],
+          "command": "git add README.md\ngit commit -m \"Update README\"",
+          "takeaway": "新しいcommitができ、作業中のbranchがそのcommitへ進む。",
+          "notes": [
+            {
+              "id": "commit-change-note",
+              "body": "比較図の左右を同じ履歴の前後として見ます。二つのリポジトリができるわけではありません。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "commit-change",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/branch-model.svg"
+          }
+        },
+        {
+          "id": "branch-growth",
+          "title": "branchはcommitに付けた名前付きの目印",
+          "body": [
+            "mainとadd/new-algorithmが、それぞれ一つのcommitを指しています。左はm2から分岐し、mainがm3、作業側がb1の状態です。その後それぞれでcommitを重ねると、右のmainがm5、作業側がb3へ進んだ状態になります。作業したブランチの目印だけが進みます。HEADは原資料56に合わせて省略しています。\n\nbranchはフォルダ一式のコピーでも、履歴の線全体でもありません。名前にはfeature/improve-uiやfix/typo-in-outputのように、目的のわかる短い名前を付けます。prefixと内容を/で区切る流儀はよくありますが、命名や分け方はチームの方針に合わせます。"
+          ],
+          "command": null,
+          "takeaway": "commitを作ったbranchだけが進み、他のbranchはそのまま。",
+          "notes": [
+            {
+              "id": "branch-growth-note",
+              "body": "原資料56は作業側にb2が重複表示されています。順序を明確にするため、図では下からb1・b2・b3と表記しています。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "branch-growth",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/branch-model.svg"
+          }
+        },
+        {
+          "id": "merge-model",
+          "title": "二つの親を持つmerge commit",
+          "body": [
+            "別々に進んだ作業をmainへ統合した例です。mainへ切り替えてgit merge add/new-algorithmを実行し、m5で作業側を取り込みました。m5の第一親は取り込み先だったm4、第二親は作業側のb2です。その後mainにはm6、m7も記録されています。\n\n図のadd/new-algorithmはb2のままです。mergeしたからといって、取り込まれた側のブランチまでmainへ移動しません。ここでは競合せずmerge commitを作る例を示しています。履歴が分岐していない場合は、目印を進めるfast-forwardになり、新しいmerge commitを作らないこともあります。"
+          ],
+          "command": "git switch main\ngit merge add/new-algorithm",
+          "takeaway": "merge commitは、統合前の二つのcommitを親として残す。",
+          "notes": [
+            {
+              "id": "merge-model-note",
+              "body": "この図は概念説明です。後半のREADME演習ではローカルmainへこのmergeを実行しません。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "merge-model"
+        },
+        {
+          "id": "misconception",
+          "title": "branchを線全体で囲むと読み違える",
+          "body": [
+            "左右は同じcommitと親子関係です。左は誤解しやすい描き方で、branchが線上のcommit一式を包んでいます。右が今回の読み方で、ブランチの四角は一つの先端commitだけを囲みます。上段は別々に進んだ例、下段は統合後の例です。\n\n過去のcommitは親をたどって到達できるため、ブランチから履歴を読むことができます。しかし過去のcommitが、そのブランチにだけ所有されているわけではありません。明示的に統合するまでは、作業ブランチのcommitでmainの目印が自動的に進むこともありません。"
+          ],
+          "command": null,
+          "takeaway": "branchは線ではなく、あくまでも一つのcommitを指す。",
+          "notes": [
+            {
+              "id": "misconception-note",
+              "body": "誤解の比較は原資料59・64・65の要点です。左右の丸と線の形を保ち、四角の範囲だけを比較します。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "misconception",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/branch-model.svg"
+          }
+        },
+        {
+          "id": "first-parent",
+          "title": "~は第一親を何回たどるかを表す",
+          "body": [
+            "commit IDを長く入力する代わりに、HEADなどを基準にした相対位置も使えます。~、~1、^、^1はいずれも第一親を一つたどる指定です。この図のHEADはmainのm6なので、HEAD~1はm5、HEAD~2はm4を指します。~2は~~や^^とも書けます。\n\n~2は、第一親を二回たどるという意味です。^2は「二つ前」ではなく「第二親」なので、同じではありません。m6は親が一つしかないため、HEAD^2でm4へは行けません。図で第一親の道を確認してから、読み取り用のgit showで内容を調べてみましょう。"
+          ],
+          "command": "git show HEAD~1\ngit show HEAD~2",
+          "takeaway": "~2は第一親を二回。^2とは意味が違う。",
+          "notes": [
+            {
+              "id": "first-parent-note",
+              "body": "原資料61はcheckoutを例にしています。ここでは現在地を動かさずに内容を読むgit showを使います。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "first-parent"
+        },
+        {
+          "id": "second-parent",
+          "title": "^2はmerge commitの第二親を選ぶ",
+          "body": [
+            "m5には二つの親があります。main側のm4が第一親、取り込んだ作業側のb2が第二親です。m5^1はm4、m5^2はb2を指します。線の傾きではなく、merge commitに記録された親の順番が基準です。\n\nこの図のHEADはm6なので、HEAD~1でm5へ進み、さらに^2でb2を選びます。つまりHEAD~1^2です。^2を使えるのは、その基準commitが第二親を持つときです。図のm5などは説明用の名前で、実際に実行するときは実在するIDや相対位置に読み替えます。"
+          ],
+          "command": "git show HEAD~1^1\ngit show HEAD~1^2",
+          "takeaway": "第一親は取り込み先側、第二親は取り込んだ側。",
+          "notes": [
+            {
+              "id": "second-parent-note",
+              "body": "原資料62の緑m4と青b2を、同じmerge commitの第一親・第二親として比較します。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "second-parent"
+        },
+        {
+          "id": "quiz",
+          "title": "Quiz：青Bと緑GをHEADから表す",
+          "body": [
+            "元資料63と同じ三列の履歴です。左上のHEADを出発点に、青Bと緑Gを相対位置で表してみましょう。斜めの線はmergeの第二親へつながり、下へ続く線が第一親です。まず一段だけ第一親へ進み、そのcommitで第二親を選ぶところから始めます。\n\n青BはHEAD~^2~2です。第一親を一回、第二親を一回、第一親を二回の順にたどります。緑GはHEAD~^2~^2~2です。青へ向かう途中のmergeで第二親を選び、さらに第一親を二回たどります。HEAD^^2^^のような同値な書き方もあります。図のB・Gは色の対象を読みやすくするために追加した記号です。"
+          ],
+          "command": null,
+          "takeaway": "~と^を左から順に読み、一段ずつ親を選ぶ。",
+          "notes": [
+            {
+              "id": "quiz-note",
+              "body": "最初から答えを暗記せず、どのmergeで第二親へ曲がるかを線で説明してもらいます。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "quiz"
+        },
+        {
+          "id": "summary",
+          "title": "commit・branch・HEADを整理する",
+          "body": [
+            "commitはある瞬間のスナップショットを参照する記録で、IDと親子関係を持ちます。branchはそのcommitを一つ指す名前付きの目印です。HEADは通常、現在作業しているbranchを指し、commitを直接指すとdetached HEADになります。\n\n記録を増やす操作と、目印を付ける操作と、現在地を変える操作を区別できれば、次の実習を図で追えます。原資料64で触れるtagもcommitを指す目印ですが、branchのように新しいcommitに自動で追従させるためのものではありません。"
+          ],
+          "command": null,
+          "takeaway": "記録・名前付きの目印・現在地を分けて読む。",
+          "notes": [
+            {
+              "id": "summary-note",
+              "body": "図の丸、四角、赤いHEADがそれぞれどの役割かを確認してから実習へ進みます。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "summary",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/branch-model.svg"
+          }
+        },
+        {
+          "id": "clone",
+          "title": "実習用のリポジトリをcloneする",
+          "body": [
+            "ここからは概念図とは別の実習です。書き込み権限のある練習用リポジトリを、まだ存在しない新しい作業フォルダへcloneします。先生が案内する実際のURLを使ってください。READMEにプロフィールを追加するIssueは、第05章で用意したものを使います。\n\nclone後にmainへ切り替え、git statusで未記録の変更がないことを確認します。ここでは共有先のデフォルトブランチがmainで、README.mdがある前提です。概念図のm5などのmerge済み履歴を手元で作ってから、この演習を始める必要はありません。"
+          ],
+          "command": "# 練習用リポジトリの実際のURLに置き換える\ngit clone <練習用URL> git-seminar-branch-practice\ncd git-seminar-branch-practice\ngit switch main\ngit status",
+          "takeaway": "mainを直接編集する前に、別の作業ブランチを用意する。",
+          "notes": [
+            {
+              "id": "clone-note",
+              "body": "URLの山括弧は入力しません。ここではコマンドは教材として表示しており、自動でcloneや投稿はしません。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "clone",
+          "presentationCommandLines": [
+            1,
+            3,
+            4
+          ]
+        },
+        {
+          "id": "create",
+          "title": "feature/nameを作成する",
+          "body": [
+            "git branch feature/nameで、現在のcommitに新しい目印を付けます。mainとfeature/nameは同じcommitを指します。新しいcommitは増えず、HEADはmainを指したままです。図ではclone後の先端を便宜上c3と呼んでいます。\n\ngit branchの一覧では、現在のブランチに*が付きます。作業内容のわかる名前を付けましょう。feature/やfix/などのprefix、Issue番号を含める流儀もあります。/はよく使う区切りですが、必須ではありません。元資料67の.git/refs/headsの例は、名前を管理する内部の仕組みの一例です。"
+          ],
+          "command": "git branch feature/name\ngit branch",
+          "takeaway": "branchの作成だけではHEADはmainのまま。",
+          "notes": [
+            {
+              "id": "create-note",
+              "body": "右側のrefs階層は、loose refsで名前を管理する概念図です。packed-refsなどでは、そのままのファイル配置にならない場合もあります。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "create",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/branch-model.svg"
+          }
+        },
+        {
+          "id": "switch",
+          "title": "feature/nameへ切り替える",
+          "body": [
+            "git switch feature/nameで、HEADがfeature/nameを指すようになります。元資料68のgit checkout feature/nameも、同じブランチ切り替えに使えます。ここでは用途が明確なswitchで進めます。\n\ngit statusにOn branch feature/nameと表示されることを確認します。二つのbranchはまだ同じcommitを指すので、この切り替えでREADMEの内容は変わりません。working tree cleanは、追跡対象に未記録の変更がない状態を示します。"
+          ],
+          "command": "git switch feature/name\ngit status",
+          "takeaway": "HEADがfeature/nameを指したことを確認する。",
+          "notes": [
+            {
+              "id": "switch-note",
+              "body": "切り替え前に未記録の変更があれば、まずその扱いを整理します。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "switch"
+        },
+        {
+          "id": "edit",
+          "title": "READMEを編集してstatusを読む",
+          "body": [
+            "README.mdの指定された場所へ、自分の名前と研究テーマを追加して保存します。既存のプロフィールや説明を消さず、Markdownのプレビューでも見ておきます。保存後にgit statusでmodified: README.mdを確認します。\n\nChanges not staged for commitは、編集した内容がまだ次のcommitの準備に入っていない状態です。この時点では変わったのはworking treeだけです。図のcommitは増えず、main、feature/name、HEADの関係も変わりません。"
+          ],
+          "command": "git status\ngit diff -- README.md",
+          "takeaway": "編集だけではcommitもbranchの位置も変わらない。",
+          "notes": [
+            {
+              "id": "edit-note",
+              "body": "元資料69のターミナルと同じく、statusの文言と、変わっていない履歴図を見比べます。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "edit"
+        },
+        {
+          "id": "feature-commit",
+          "title": "add・commitして作業ブランチを進める",
+          "body": [
+            "git add README.mdのあと、statusでChanges to be committedになったことを確認します。続いてgit commitでプロフィール追加を記録します。コミットメッセージは何を変えたかわかる内容にします。\n\n図では新しいf1が作られ、feature/nameだけがf1へ進みます。HEADはfeature/nameを指したままなので、作業の現在地もf1になります。mainはc3のままです。最後にstatusでworking tree cleanを確認します。"
+          ],
+          "command": "git add README.md\ngit status\ngit commit -m \"docs: add my profile\"\ngit status",
+          "takeaway": "commitが増え、現在作業しているbranchだけが進む。",
+          "notes": [
+            {
+              "id": "feature-commit-note",
+              "body": "元資料70の出力には別名branch/cも混じります。教材では実行したfeature/nameに名前を統一しています。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "feature-commit"
+        },
+        {
+          "id": "push-pr",
+          "title": "pushして、PRで統合を提案する",
+          "body": [
+            "git branch -vvで追跡先を確認します。作成直後のfeature/nameに共有先がなければ、git push -u origin feature/nameで送信し、追跡先も設定します。pushでローカルのcommitやbranchの位置が変わるわけではありません。commitしていない編集も送られません。\n\nmainへ反映するには、GitHubのPull Requestでfeature/nameからmainへの統合を提案します。GitLabではMerge Requestと呼びます。比較図はpushの前後ではなく、その後の共有先でのmerge前後です。origin/HEADは共有先のデフォルトブランチを表す参照で、いま作業中のHEADとは別です。レビューと競合解消は次章で扱い、この演習ではローカルmainへmergeしません。"
+          ],
+          "command": "git branch -vv\ngit push -u origin feature/name",
+          "takeaway": "pushで共有し、PRでmainへの統合を提案する。",
+          "notes": [
+            {
+              "id": "push-pr-note",
+              "body": "比較図は共有先のmerge前後です。ローカルのHEADとは別に、origin/HEADはデフォルトブランチへの参照を示します。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "push-pr",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/branch-model.svg"
+          }
+        }
+      ]
+    },
+    {
+      "id": "review-and-resolve",
+      "title": "Pull Requestと競合解消",
+      "description": "ブランチの変更をレビューして統合し、同じ場所を変更したときの解消手順を学びます。実行確認にはPython 3を使います。コマンド名がpython3の環境では、例のpythonを読み替えてください。",
+      "diagram": {
+        "type": "svg",
+        "src": "assets/collaboration-integration.svg"
+      },
+      "sources": [
+        {
+          "label": "Git：push",
+          "url": "https://git-scm.com/docs/git-push"
+        },
+        {
+          "label": "GitHub Docs：Pull Request",
+          "url": "https://docs.github.com/en/pull-requests/reference/pull-requests"
+        },
+        {
+          "label": "GitLab Docs：Merge Request",
+          "url": "https://docs.gitlab.com/user/project/merge_requests/"
+        },
+        {
+          "label": "Git：pull",
+          "url": "https://git-scm.com/docs/git-pull"
+        },
+        {
+          "label": "Git：mergeと競合解消",
+          "url": "https://git-scm.com/docs/git-merge"
+        },
+        {
+          "label": "GitHub Docs：ブラウザで競合を解消する",
+          "url": "https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/resolving-a-merge-conflict-on-github"
+        }
+      ],
+      "chapterId": "integrate",
+      "sections": [
+        {
+          "id": "publish",
+          "title": "作業ブランチをpushする",
+          "body": [
+            "第06章の図で使った履歴とは別に、書き込み権限のある練習用リポジトリを新しい場所へcloneして使います。手元のmainをorigin/mainに同期し、作業ツリーに変更がないことを確認してから、新しいfeature/pr-demoブランチを作ります。READMEへ自分のプロフィールを追加してコミットし、git push -u origin feature/pr-demoで共有先へ送ります。-uは、成功したブランチの追跡先を設定する指定です。\n\npushしただけではmainへ統合されません。GitHubでPull Requestを開き、取り込み先のbaseをmain、変更元のcompareをfeature/pr-demoにします。タイトルと説明には、変更の目的、関連するIssue、動作確認の結果を書きます。第06章でローカルmainに作ったmerge commitは、このPRの作業には持ち込みません。"
+          ],
+          "command": "# 別の場所にclone済みの練習用リポジトリで実行\ngit switch main\ngit pull --ff-only\ngit status\ngit switch -c feature/pr-demo\n# README.md にプロフィールを追加して保存\ngit add README.md\ngit commit -m \"Add my profile to README\"\ngit push -u origin feature/pr-demo",
+          "takeaway": "同期済みのmainから作業を分け、pushしてPRを開く。",
+          "notes": [
+            {
+              "id": "publish-terms",
+              "body": "GitHubのbase／compareは、GitLabではtarget／sourceに相当します。Pull RequestはGitLabではMerge Requestです。",
+              "showInPresentation": true
+            },
+            {
+              "id": "publish-precondition",
+              "body": "mainはorigin/mainを追跡し、手元だけのコミットがない前提です。--ff-onlyが止まった場合、そのまま先へ進まず状態を確認します。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "publish",
+          "presentationCommandLines": [
+            1,
+            2,
+            4,
+            8
+          ]
+        },
+        {
+          "id": "review",
+          "title": "差分と目的を確認してからmergeする",
+          "body": [
+            "レビューでは、PRに含まれるファイルと差分を読み、Issueで決めた目的に合っているかを確認します。不要なファイルの追加や説明との食い違いがないかを見て、必要な実行確認も行います。変更を小さくすると、作成者も確認する人も判断しやすくなります。\n\n指摘を受けたら、同じ作業ブランチで修正をコミットし、再びpushします。その変更は既存のPRに反映されます。レビューと必要なチェックを終え、チームの手順に沿ってmergeします。merge commit・squash・rebaseなど統合方式によって履歴の形は変わります。この教材の履歴図はmerge commitを残す例です。"
+          ],
+          "command": null,
+          "takeaway": "目的・差分・動作を確認し、合意した変更を統合する。",
+          "notes": [
+            {
+              "id": "review-no-pull",
+              "body": "Pull Requestという名前ですが、PRを作る操作はgit pullコマンドの実行ではありません。",
+              "showInPresentation": false
+            },
+            {
+              "id": "review-policy",
+              "body": "mainが保護されている場合、レビューやチェックが揃うまで統合できません。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "review"
+        },
+        {
+          "id": "sync",
+          "title": "統合後のmainを手元へ取り込む",
+          "body": [
+            "GitHubでPRをmergeしても、手元のmainは自動では更新されません。作業中の変更を整理したうえでmainへ切り替え、git pull --ff-onlyで追跡先から更新を取り込みます。ここではmainがorigin/mainを追跡している前提です。\n\n--ff-onlyは、手元のmainをそのまま前へ進められる場合だけ更新する指定です。手元にも別のコミットがあって履歴が分かれていると停止します。そのときは無理に進めずgit statusやgit logで状態を確認します。最新のmainで動作確認を行うところまでが、共有した変更の確認です。"
+          ],
+          "command": "git switch main\ngit pull --ff-only\ngit status",
+          "takeaway": "共有先の統合と、手元のmainの更新は別の操作。",
+          "notes": [
+            {
+              "id": "sync-tracking",
+              "body": "mainに追跡先がない場合は設定を確認します。意図しないブランチを取り込まないようにしましょう。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "sync"
+        },
+        {
+          "id": "conflict-setup",
+          "title": "別の練習用フォルダに競合の履歴を用意する",
+          "body": [
+            "PRの練習とは別の、新しいローカル専用フォルダーを使います。初期のhello.pyはdef greet():の次の行を4スペース字下げし、print(\"Hello, world!\")と書きます。挨拶の追加、READMEの追加、READMEへの実行手順追記をそれぞれcommitすると、図にある3つの共通commitができます。\n\nmainからfeat/jaを作り、挨拶だけを「こんにちは!」へ変えてcommitします。これが前章で見た「mainから枝を分けた」時点です。その後mainへ戻り、同じ行の挨拶を「Hello, everyone!」に変えてcommitします。PR統合済みの履歴を再利用せず、独立した履歴で比較します。remoteやpushは不要です。"
+          ],
+          "command": "mkdir git-seminar-conflict-demo\ncd git-seminar-conflict-demo\ngit init -b main\n# hello.py を本文の初期コードで作成\ngit add hello.py\ngit commit -m \"Add original greeting\"\n# README.md に教材名を書いて保存\ngit add README.md\ngit commit -m \"Add README\"\n# README.md に関数の実行手順を追記して保存\ngit add README.md\ngit commit -m \"Document how to run greeting\"\ngit switch -c feat/ja\n# 挨拶を こんにちは! へ変更して保存\ngit add hello.py\ngit commit -m \"Translate greeting\"\ngit switch main\n# 同じ行を Hello, everyone! へ変更して保存\ngit add hello.py\ngit commit -m \"Greet everyone\"\ngit status",
+          "takeaway": "別のローカル履歴で、同じ行への二つの変更を作る。",
+          "notes": [
+            {
+              "id": "setup-separate",
+              "body": "PR統合済みのブランチをもう一度mergeしても、この競合例にはなりません。ここでは別の履歴を初めから作ります。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "conflict-setup",
+          "presentationCommandLines": [
+            2,
+            12,
+            16,
+            19
+          ]
+        },
+        {
+          "id": "conflict-history",
+          "title": "枝を分けた後、mainも更新された",
+          "body": [
+            "前章ではmainの先端から作業用の枝を分けました。左の図はその時点で、mainは共通のcommit、feat/jaはそこから作った別のcommitを指しています。\n\nその間にmainでも作業が進むと、右の図のようにmainの先端も新しくなります。feat/jaのcommitは変わらず、2つの枝が共通のcommitから分かれた状態です。この時点だけでは競合すると決まったわけではありません。次にファイルの中身を比べます。"
+          ],
+          "command": null,
+          "takeaway": "枝を分けている間に、main側も更新される。",
+          "notes": [
+            {
+              "id": "conflict-history-lecture",
+              "body": "図は左が分岐直後、右がmain更新後です。",
+              "showInPresentation": true
+            },
+            {
+              "id": "conflict-history-study",
+              "body": "PDF73では枝名が@feat/nameですが、続くPDF74〜76のfeat/jaに統一しています。練習のフォルダーはPR演習とは独立しています。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "conflict-history"
+        },
+        {
+          "id": "diverge",
+          "title": "共通の挨拶から、同じ行を別々に変えた",
+          "body": [
+            "共通のcommitにあるhello.pyでは、greet関数がHello, world!を表示していました。そこからmainはHello, everyone!へ、feat/jaはこんにちは!へ、それぞれ同じprintの行を変えてcommitしています。図の上は共通のコード、下の左右は現在の各ブランチのコードです。\n\n3つのコードと履歴の分岐を対応させて見ます。別のファイルや離れた行の変更なら自動統合できることもありますが、この例は同じ行に異なる変更を入れているため、人の判断が必要になります。"
+          ],
+          "command": null,
+          "takeaway": "共通のHello, world!から、同じ行に2つの変更がある。",
+          "notes": [
+            {
+              "id": "diverge-lecture",
+              "body": "mainは英語の対象を、feat/jaは挨拶の言語を変えました。",
+              "showInPresentation": true
+            },
+            {
+              "id": "diverge-study",
+              "body": "PDF74の共通コード→左右の変更と中央の分岐履歴を、縦長画面でも追える配置へ移しています。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "diverge"
+        },
+        {
+          "id": "conflict-choice",
+          "title": "mergeしたいとき、どちらを残す？",
+          "body": [
+            "mainでgit merge feat/jaを実行しようとしています。main側のHello, everyone!と、取り込む側のこんにちは!のどちらを完成形にするか、Gitは変更の意図から判断できません。\n\nどちらかを選ぶ、両方を組み合わせる、新しく書き直すという判断が必要です。図の点線で描いた合流点は「これから作りたいmerge commit」で、競合中にはまだ作成されていません。mainも取り込む側も元のcommitを指したままです。"
+          ],
+          "command": null,
+          "takeaway": "どちらの挨拶を残すか、Gitには判断できない。",
+          "notes": [
+            {
+              "id": "conflict-choice-lecture",
+              "body": "競合した段階では、merge commitはまだありません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "conflict-choice-study",
+              "body": "PDF75の黄色い合流点は完成済みcommitと誤読しないよう、予定の合流点として点線で表示します。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "conflict-choice"
+        },
+        {
+          "id": "conflict-merge",
+          "title": "mergeは停止し、競合箇所が示される",
+          "body": [
+            "練習用フォルダーでmainにいることと、作業ツリーがきれいなことを確認してgit merge feat/jaを実行します。この例ではAuto-mergingに続いてCONFLICT (content)が出て、自動統合に失敗したと表示されます。これは意図した競合練習の結果です。\n\nmainの先端はそのままで、Gitは解消作業を待っています。git statusでhello.pyが未解決であることを確認し、エディタで開きます。次の図では、ファイル内に並んだ2つの変更を読みます。"
+          ],
+          "command": "git switch main\ngit status\ngit merge feat/ja\n# 競合によって停止した後\ngit status",
+          "takeaway": "CONFLICTで止まったら、statusとファイルを確認する。",
+          "notes": [
+            {
+              "id": "conflict-merge-lecture",
+              "body": "失敗表示の後に、むやみにmergeを繰り返しません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "conflict-merge-study",
+              "body": "PDF76のターミナル出力とマーカーを2節に分けています。catに依存せず、ファイル確認はエディタで行います。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "conflict-merge"
+        },
+        {
+          "id": "markers",
+          "title": "競合マーカーで双方の内容を読む",
+          "body": [
+            "git statusで競合しているファイルを確認し、hello.pyをエディタで開きます。通常の競合表示では、<<<<<<< HEADと=======の間が現在のmain側、=======と>>>>>>> feat/jaの間が取り込む側です。この例ではHEADはmainを指しています。\n\nこれらのマーカーは、未解決の箇所を示すためにGitが挿入した文字です。Pythonのコードとしては実行できません。表示形式の設定によっては共通祖先の内容も表示されます。ファイルが複数ある場合や一つのファイルに複数の競合がある場合は、すべての箇所を確認します。"
+          ],
+          "command": "git status\n\n# hello.py をエディタで確認する\ndef greet():\n<<<<<<< HEAD\n    print(\"Hello, everyone!\")\n=======\n    print(\"こんにちは!\")\n>>>>>>> feat/ja",
+          "takeaway": "HEAD側と取り込み側を読み、未解決の範囲を確かめる。",
+          "notes": [
+            {
+              "id": "markers-head",
+              "body": "ここでのHEADは、GitHubのPRで使うhead branchという呼び方と混同しないようにします。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "markers",
+          "presentationCommandLines": [
+            0
+          ]
+        },
+        {
+          "id": "resolve",
+          "title": "マーカーを取り除き、意図したコードにする",
+          "body": [
+            "どちらか一方を採用しても、両方を組み合わせても、新しい表現に書き直してもかまいません。今回は「みなさんこんにちは!」と表示する形にします。競合マーカーをすべて取り除き、通常のPythonコードとして保存します。\n\n大切なのは、ボタンで機械的に片方を残すことではなく、Issueや相手の変更意図を確かめて完成形を決めることです。greet関数は、定義しただけでは挨拶を表示しません。下の確認例はPythonから関数を呼び出して、編集した結果を確かめます。"
+          ],
+          "command": "# hello.py の完成形\ndef greet():\n    print(\"みなさんこんにちは!\")\n\n# 保存した後、ターミナルで確認する\npython -c \"from hello import greet; greet()\"",
+          "takeaway": "人が完成形を編集し、実行して確かめる。",
+          "notes": [
+            {
+              "id": "resolve-meaning",
+              "body": "両方の行を残しただけで、仕様として正しいとは限りません。何を表示する関数なのかを確認します。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "resolve",
+          "presentationCommandLines": [
+            5
+          ]
+        },
+        {
+          "id": "record",
+          "title": "解消した内容を記録する",
+          "body": [
+            "すべての競合を編集して動作を確認したら、git add hello.pyで解消した内容をステージします。続いてgit commitを実行し、mergeの記録を残します。メッセージ用のエディタが開いた場合は、内容を確認して保存し、終了します。\n\nこの分岐した履歴の例では、main側とfeat/ja側の二つの親を持つmerge commitができます。コミット後にgit statusで未解決の状態がないことを確認し、関数やテストをもう一度実行します。ローカルのmainで行った練習は、そのままGitHubへpushする必要はありません。"
+          ],
+          "command": "git add hello.py\ngit status\ngit commit\ngit status\npython -c \"from hello import greet; greet()\"\ngit log --graph --oneline --decorate -8",
+          "takeaway": "編集→確認→add→commitで、競合解消を履歴に残す。",
+          "notes": [
+            {
+              "id": "record-add",
+              "body": "git addは、内容が正しいかを自動判定しません。マーカーが残ったファイルもステージできてしまうため、先に確認します。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "record"
+        },
+        {
+          "id": "alternatives",
+          "title": "中止する場合と、GitHub上で解消する場合",
+          "body": [
+            "方針を決められないときは、merge途中の状態でgit merge --abortを実行して開始前の状態へ戻す方法があります。merge後に行った解消用の編集を残したいなら、先に別途控えておきます。開始前から未コミットの変更があると元の状態を復元できない場合もあるため、作業ツリーを整理してから始めます。\n\nGitHubのPR画面にも、同じ行の変更など単純な競合を編集できる機能があります。対応できない競合やResolve conflictsが使えない場合はローカルで解消します。GitHub上での解消はbaseをhead側へ取り込む操作で、先ほどの「ローカルmainへmerge」と方向が違います。解消後もPRの確認とmainへの統合は必要です。"
+          ],
+          "command": "# mergeが進行中で、中止したい場合\ngit merge --abort\ngit status",
+          "takeaway": "進められなければ中止して相談する。解消方法で取り込み方向も変わる。",
+          "notes": [
+            {
+              "id": "alternatives-protected",
+              "body": "実際の共同開発では、保護されたmainを手元から直接更新せず、チーム指定のブランチとPRの手順を使います。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "alternatives"
+        }
+      ]
+    },
+    {
+      "id": "recover-and-extend",
+      "title": "復元・退避と発展事項",
+      "description": "戻したいのはファイル、ステージ、それとも履歴でしょうか。対象を見分けて復元し、共有済みの履歴を守りながら作業を整えます。後半は必要なときに参照する発展事項です。コマンドは教材用の例です。実行前に自分の状況と対象を確認し、一括で実行しないでください。",
+      "diagram": {
+        "type": "svg",
+        "src": "assets/recovery.svg"
+      },
+      "sources": [
+        {
+          "label": "Git公式: git-restore",
+          "url": "https://git-scm.com/docs/git-restore"
+        },
+        {
+          "label": "Git公式: git-stash",
+          "url": "https://git-scm.com/docs/git-stash"
+        },
+        {
+          "label": "Git公式: git-revert",
+          "url": "https://git-scm.com/docs/git-revert"
+        },
+        {
+          "label": "Git公式: git-commit",
+          "url": "https://git-scm.com/docs/git-commit"
+        },
+        {
+          "label": "Git公式: git-reset",
+          "url": "https://git-scm.com/docs/git-reset"
+        },
+        {
+          "label": "Git公式: git-clean",
+          "url": "https://git-scm.com/docs/git-clean"
+        },
+        {
+          "label": "Git公式: git-reflog",
+          "url": "https://git-scm.com/docs/git-reflog"
+        },
+        {
+          "label": "Git公式: git-cherry-pick",
+          "url": "https://git-scm.com/docs/git-cherry-pick"
+        },
+        {
+          "label": "Git公式: git-rebase",
+          "url": "https://git-scm.com/docs/git-rebase"
+        },
+        {
+          "label": "Git公式: git-push",
+          "url": "https://git-scm.com/docs/git-push"
+        },
+        {
+          "label": "Git公式: git-worktree",
+          "url": "https://git-scm.com/docs/git-worktree"
+        },
+        {
+          "label": "Git公式: git-submodule",
+          "url": "https://git-scm.com/docs/git-submodule"
+        },
+        {
+          "label": "Git公式: gitrevisions",
+          "url": "https://git-scm.com/docs/gitrevisions"
+        },
+        {
+          "label": "Git公式: git-tag",
+          "url": "https://git-scm.com/docs/git-tag"
+        },
+        {
+          "label": "Git公式: git-switch",
+          "url": "https://git-scm.com/docs/git-switch"
+        }
+      ],
+      "chapterId": "recover",
+      "sections": [
+        {
+          "id": "restore-worktree",
+          "title": "削除した追跡ファイルを復元する",
+          "body": [
+            "原資料の例は、Gitで管理していたファイルを誤って削除した場合です。hello.pyを作業フォルダーで削除しても、まだ削除をステージしていなければ、インデックスには記録した内容が残っています。git statusでdeleted: hello.pyと表示されることを確認します。\n\ngit restore -- hello.pyで、インデックスの内容を使って作業ツリーへファイルを戻せます。ここでは削除コマンドを実行する練習にはせず、誤って削除した状況からの復元手順を示します。HEADやブランチの位置は変わりません。\n\n削除をすでにステージした場合は、通常のrestoreだけでは同じ復元元がありません。次の節の--stagedでインデックスをHEADへ戻し、その後に作業ツリーを復元する、という対象の違いを確かめます。"
+          ],
+          "command": "git status\ngit diff -- hello.py\ngit restore -- hello.py\ngit status",
+          "takeaway": "statusで削除したパスを確かめ、追跡ファイルを復元する。",
+          "notes": [
+            {
+              "id": "restore-worktree-lecture",
+              "body": "復元元は通常インデックスです。未追跡ファイルは戻せません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "restore-worktree-study",
+              "body": "PDF86は削除したGit管理ファイルの復旧を説明しています。restoreは編集の取り消しにも使えますが、未コミットの編集を上書きします。過去版を明示する例は git restore --source=v1.0 -- hello.py。残したい変更は先に保存・退避します。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "restore-worktree"
+        },
+        {
+          "id": "restore-index",
+          "title": "削除をステージした場合は、対象を分けて戻す",
+          "body": [
+            "削除をgit addでステージ済みなら、インデックスからもファイルが取り除かれています。git restore --staged -- hello.pyは、インデックスをHEADの内容に戻します。この時点では作業ツリーのhello.pyはまだ存在しません。\n\n続いてgit restore -- hello.pyを実行すると、戻したインデックスから作業ツリーへファイルを復元できます。編集済みファイルを単にステージから外す場合も--stagedを使い、その場合は作業ツリーの編集が残ります。ここでは最初のcommitがあるリポジトリを前提にしています。"
+          ],
+          "command": "# 削除をすでにステージした場合\ngit restore --staged -- hello.py\ngit restore -- hello.py\ngit status",
+          "takeaway": "HEAD→indexとindex→作業ツリーは、別の復元。",
+          "notes": [
+            {
+              "id": "restore-index-lecture",
+              "body": "--stagedだけでは、作業ツリーのファイルは復元されません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "restore-index-study",
+              "body": "PDF86の説明を補う節です。path指定のgit reset HEAD -- hello.pyもindexだけを更新します。両方をHEADへ合わせる--staged --worktreeの指定もありますが、この例は対象の違いを見るため2段階で示します。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "restore-index"
+        },
+        {
+          "id": "stash",
+          "title": "途中の変更を一時退避する",
+          "body": [
+            "別の作業へ切り替えたいとき、git stash push で作業ツリーとインデックスの変更を退避します。-u は未追跡ファイルも含めますが、無視対象は含みません。\n\n変更がある状態でpushし、listの先頭に新しい「途中の解析」ができたことを確認してからapplyします。「No local changes to save」なら新しい退避は作られていないので、続くapplyは実行しません。applyは退避を残し、popは適用が成功したときに退避を削除します。以下の例でapplyした後、続けてpopする必要はありません。"
+          ],
+          "command": "git stash push -u -m \"途中の解析\"\ngit stash list\n# 先頭に新しい「途中の解析」があると確認してから\ngit stash apply 'stash@{0}'",
+          "takeaway": "stashは一時退避。applyは残し、popは成功時に消す。",
+          "notes": [
+            {
+              "id": "stash-lecture",
+              "body": "popで競合した場合は、退避は削除されません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "stash-study",
+              "body": "popの例は git stash pop 'stash@{0}'。競合したら内容を確認して手で解消し、退避の削除は復元を確認してから行います。ステージ状態も戻したい場合は--index。stashはリモートへ自動共有されません。旧saveよりpush -mを使います。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "stash"
+        },
+        {
+          "id": "revert",
+          "title": "共有済みの変更は、新しいコミットで打ち消す",
+          "body": [
+            "共有した履歴を取り消すときは、まずrevertを考えます。対象コミットの変更を逆向きに適用した新しいコミットを作り、既存の履歴を残します。\n\n作業ツリーをきれいにして対象の差分を確認します。例のabc1234は、実際の通常コミットのIDに置き換えてください。競合する場合は解消後に --continue、取りやめるなら --abort を使います。"
+          ],
+          "command": "git show abc1234\ngit revert abc1234",
+          "takeaway": "履歴を消さずに、変更を打ち消す記録を追加する。",
+          "notes": [
+            {
+              "id": "revert-lecture",
+              "body": "revertにも競合があります。対象の変更を読んで選びます。",
+              "showInPresentation": true
+            },
+            {
+              "id": "revert-study",
+              "body": "マージコミットのrevertは、どちらの親を基準にするかを-mで指定する別の判断が必要です。後の再マージにも影響するため、通常コミットの例と区別します。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "revert"
+        },
+        {
+          "id": "amend",
+          "title": "共有前の直近コミットを整える",
+          "body": [
+            "コミット直後に追加漏れを見つけたら、対象をステージして git commit --amend を使えます。直近コミットを元に、インデックスの内容を持つ新しいコミットへ置き換えます。\n\n--no-edit はメッセージを引き継ぎます。内容を変えなくてもコミットのIDは変わり得るため、すでに他の人が利用している履歴には原則使いません。"
+          ],
+          "command": "git add -- report.txt\ngit diff --cached\ngit commit --amend --no-edit",
+          "takeaway": "amendは追記ではなく、直近コミットの作り直し。",
+          "notes": [
+            {
+              "id": "amend-lecture",
+              "body": "ステージ済みの別の変更も入るので、差分を確認します。",
+              "showInPresentation": true
+            },
+            {
+              "id": "amend-study",
+              "body": "メッセージだけなら git commit --amend -m \"新しい説明\"。共有済みの修正は通常、新しいコミットを追加します。amendで置き換えた元コミットも直ちに物理削除されるとは限りません。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "amend"
+        },
+        {
+          "id": "reset",
+          "title": "resetの3つの対象を見分ける",
+          "body": [
+            "コミット指定のresetは、現在のブランチの先端を指定コミットへ動かします。--softはインデックスと作業ツリーを維持し、--mixed（既定）はインデックスも指定先へ戻して作業ツリーを維持します。\n\n--hardはインデックスと作業ツリーも指定先に合わせ、追跡ファイルの未コミット変更を破棄します。書き込みの邪魔になる未追跡ファイルやディレクトリも消す場合があります。共有済み履歴では通常revertを使い、ファイルだけならrestoreを先に検討します。\n\n以下は互いに代替となる比較例で、連続実行しません。作業を別途保護した練習用リポジトリでのみ扱います。reset --hardにdry-runはありません。status、diff、diff --cached、logで対象を確認しても、破棄の危険はなくなりません。"
+          ],
+          "command": "# いずれか1つを比較する例。連続実行しない\ngit reset --soft 'HEAD~1'\ngit reset --mixed 'HEAD~1'\ngit reset --hard 'HEAD~1'",
+          "takeaway": "softは先端、mixedは先端とindex、hardは作業ツリーまで変える。",
+          "notes": [
+            {
+              "id": "reset-lecture",
+              "body": "hardは未コミットの変更を破棄。reflogで全部戻せません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "reset-study",
+              "body": "図の「先端」は現在のブランチが指すコミットです。soft/mixedでも共有済みのブランチを動かすと共同作業に影響します。resetは過去コミットを直ちに物理削除する操作ではありません。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "reset"
+        },
+        {
+          "id": "clean",
+          "title": "未追跡ファイルは、削除候補を先に見る",
+          "body": [
+            "cleanはGitが追跡していないファイルを削除します。コミットにない解析データや実験メモも対象になり得るので、消してよいこととバックアップを確認する用途に限ります。\n\ngit clean -n はファイルの削除候補を表示し、-nd は未追跡ディレクトリも含む候補を表示します。実際に削除する -fd は、同じ作業場所・同じ条件の -nd の出力を確認してから判断します。確認後にファイルが増えれば対象も変わります。"
+          ],
+          "command": "git status --short\ngit clean -n\ngit clean -nd\n# 候補を確認し、必要なデータを退避した後に限る\ngit clean -fd",
+          "takeaway": "cleanは未追跡を削除。-nで候補を見てから判断する。",
+          "notes": [
+            {
+              "id": "clean-lecture",
+              "body": "未追跡データは、cleanのあとGitから復元できません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "clean-study",
+              "body": "既定では.gitignoreの対象を除外します。-xを付けると無視対象も削除範囲に入るため、この教材の実行例には含めません。-fdは通常、別のGitリポジトリをさらに強制して消す指定ではありません。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "clean"
+        },
+        {
+          "id": "reflog",
+          "title": "見失ったコミットは、参照の履歴から探す",
+          "body": [
+            "reflogは、このローカルリポジトリでHEADやブランチなどの参照が動いた記録です。resetやdetached HEADで見失ったコミットが残っていれば、IDを確認して救済用ブランチを付けられます。\n\ngit reflogで候補を見て、git showで内容を確認し、実際のIDに置き換えてgit branch rescueを作ります。先にreset --hardで上書きする必要はありません。"
+          ],
+          "command": "git reflog\ngit show abc1234\ngit branch rescue abc1234",
+          "takeaway": "見つかったコミットに、まずブランチの名前を付ける。",
+          "notes": [
+            {
+              "id": "reflog-lecture",
+              "body": "reflogは未コミットの編集やcleanしたデータの保険ではありません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "reflog-study",
+              "body": "記録には期限があり、既定のexpireは通常90日、現在の先端から到達できない記録は通常30日ですが、設定次第です。期限切れやGCでオブジェクトが消えれば救済できません。共有先のreflogが手元へ複製されるわけでもありません。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "reflog"
+        },
+        {
+          "id": "cherry-pick",
+          "title": "必要な変更だけを別の枝へ適用する",
+          "body": [
+            "別ブランチの特定コミットの変更だけが必要な場合、cherry-pickで現在のブランチへ適用できます。元のコミットを移動するのではなく、通常は別IDの新しいコミットを作ります。\n\n対象のIDと差分、適用先ブランチを確認して使います。依存する変更が別コミットにあれば、1つだけ取っても動くとは限りません。競合時は解消してadd後に --continue、取りやめるなら --abort です。"
+          ],
+          "command": "git switch release\ngit show abc1234\ngit cherry-pick abc1234",
+          "takeaway": "コミット全体の履歴ではなく、選んだ変更を別の枝へ。",
+          "notes": [
+            {
+              "id": "cherry-pick-lecture",
+              "body": "同じ修正を二重に取り込まないよう、適用済みか確認します。",
+              "showInPresentation": true
+            },
+            {
+              "id": "cherry-pick-study",
+              "body": "元ブランチそのものを統合するmergeとは目的が異なります。マージコミットのcherry-pickには親の選択が必要なので、この基本例では通常コミットを使います。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "cherry-pick"
+        },
+        {
+          "id": "rebase",
+          "title": "同じ分岐をrebaseとmergeで比べる",
+          "body": [
+            "原資料の図は、同じ共通commitからmainとfeat/popupが分かれ、その両方にcommitが増えた状態を出発点にしています。mainでgit rebase feat/popupを行うと、main側だけにあった変更をfeat/popupの先端の上へ順に適用し直します。mainの元のcommitは別IDのcommitへ作り直され、mainの目印がその先へ進みます。\n\n比較対象のgit merge feat/popupは、同じ分岐前の状態からmainで実行する別の選択肢です。両方の既存履歴を残し、2つの親を持つmerge commitをmainに追加します。図のrebase後とmerge後は、コマンドを連続で実行した結果ではありません。\n\nどの枝の履歴を作り直すかが重要です。この原図はmainを作り直す比較なので、未共有の練習用mainに限る例です。実際の共有済みmainでは実行せず、共有前の作業ブランチで扱います。競合時は解消・add後にgit rebase --continue、中止はgit rebase --abortです。"
+          ],
+          "command": "# 未共有の練習用mainで、どちらかを比較する\ngit switch main\ngit rebase feat/popup\n# 同じ出発点での代替案。上の直後に実行しない\ngit merge feat/popup",
+          "takeaway": "rebaseは適用し直し、mergeは元の履歴をつなぐ。",
+          "notes": [
+            {
+              "id": "rebase-lecture",
+              "body": "原図のmainを書き換える例は、未共有の練習用履歴に限ります。",
+              "showInPresentation": true
+            },
+            {
+              "id": "rebase-study",
+              "body": "PDF85の「最新へ乗せ直す」は、指定したブランチを新しい土台にする意味です。常に最新になるとは限りません。共有済み履歴を変更するなら共同作業者との合意が必要で、--force-with-leaseも万能ではありません。期待値省略はリモート追跡参照に依存し、バックグラウンドfetchで保護が弱まる場合があります。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "rebase"
+        },
+        {
+          "id": "worktree",
+          "title": "履歴を共有し、作業場所を分ける",
+          "body": [
+            "worktreeは、同じリポジトリのコミットや参照を共有しながら、作業ディレクトリを追加する仕組みです。解析中のmainを残し、別ディレクトリで修正を進められます。\n\n例は新しいfix/analysisブランチを作り、隣のanalysis-fixにチェックアウトします。各worktreeの作業ツリーとインデックスは独立しています。同じブランチを複数worktreeで同時にチェックアウトすることは原則拒否されます。"
+          ],
+          "command": "git worktree add -b fix/analysis ../analysis-fix main\ngit worktree list",
+          "takeaway": "履歴は共通、ブランチごとの作業場所は別々。",
+          "notes": [
+            {
+              "id": "worktree-lecture",
+              "body": "別のworktreeでブランチを動かす影響も、共有されています。",
+              "showInPresentation": true
+            },
+            {
+              "id": "worktree-study",
+              "body": "確認用なら git worktree add --detach ../analysis-check v1.0。片付けるときは作業が保存済みか確認し git worktree remove ../analysis-fix。同一ブランチの重複チェックアウトを--forceで回避する運用はここでは使いません。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "worktree"
+        },
+        {
+          "id": "submodule",
+          "title": "別リポジトリの特定版を組み込む",
+          "body": [
+            "submoduleは、独立した別リポジトリを親プロジェクトの中で利用する仕組みです。親はその中身全体ではなく、子の特定コミットを参照し、取得先を.gitmodulesに記録します。\n\n既存プロジェクトのsubmoduleをそろえる例です。--initで初期化し、--recursiveで入れ子も対象にします。通常は親が記録したコミットをチェックアウトし、子はdetached HEADになります。"
+          ],
+          "command": "git submodule update --init --recursive\ngit submodule status",
+          "takeaway": "親が記録するのは、別リポジトリの特定コミット。",
+          "notes": [
+            {
+              "id": "submodule-lecture",
+              "body": "親の更新だけで、子の変更や未pushのコミットは共有されません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "submodule-study",
+              "body": "子を変更する場合は子でブランチを作りcommit・pushし、親で子の参照先変更をadd・commit・pushします。worktreeは同一リポジトリの別作業場所、submoduleは別リポジトリの組み込みです。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "submodule"
+        },
+        {
+          "id": "revisions",
+          "title": "相対参照とタグで、見る版を指定する",
+          "body": [
+            "HEAD~2は第一親を2回たどったコミットです。HEAD^またはHEAD^1は第一親、HEAD^2は第二親を指定します。^2は「2つ前」ではなく、第二親があるマージコミットなどで使います。\n\nタグは特定の版に名前を付けます。例のv1.0を作ると、以後はgit show v1.0でその版を確認できます。タグはブランチのように新しいコミットへ自動で進みません。~や^を含む指定はシェルに解釈させないようクォートしています。"
+          ],
+          "command": "git show 'HEAD~2'\n# HEADがマージコミットの場合だけ\ngit show 'HEAD^2'\ngit tag -a v1.0 -m \"解析の基準版\"\ngit show v1.0",
+          "takeaway": "~は第一親をたどる回数、^はどの親を選ぶか。",
+          "notes": [
+            {
+              "id": "revisions-lecture",
+              "body": "コミットID、相対参照、タグは、版を指定する別の書き方です。",
+              "showInPresentation": true
+            },
+            {
+              "id": "revisions-study",
+              "body": "HEAD~2は時刻順に並べたログの上から3行目とは限りません。HEAD^2に第二親がなければエラーです。タグを共有するなら git push origin v1.0 のように対象を指定します。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "revisions"
+        },
+        {
+          "id": "detached",
+          "title": "過去版を見て、続けるならブランチを作る",
+          "body": [
+            "git switch --detach で過去コミットを確認すると、HEADはブランチ名を介さずコミットを直接指します。これがdetached HEADです。ブランチの先端を動かさず、その版のファイルを調べられます。\n\nそこで作業を続けるなら、その場でgit switch -cを実行して名前を付けます。detached HEADのまま作ったコミットも有効ですが、別の場所へ切り替えるとブランチから到達できなくなり、見失う可能性があります。"
+          ],
+          "command": "git switch --detach v1.0\n# この版から変更を続けたい場合\ngit switch -c investigate-v1",
+          "takeaway": "過去版を見るのはdetach。残す作業にはブランチを付ける。",
+          "notes": [
+            {
+              "id": "detached-lecture",
+              "body": "切り替える前に、残したいコミットへの目印を確認します。",
+              "showInPresentation": true
+            },
+            {
+              "id": "detached-study",
+              "body": "調査だけなら、未コミットの変更を保存・退避してgit switch mainで戻ります。見失ったら早めにreflogで探しbranchを作ります。detached HEAD自体がファイルを削除するわけではありません。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "detached"
+        }
+      ]
+    }
+  ]
+}

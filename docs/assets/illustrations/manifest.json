@@ -1,0 +1,237 @@
+{
+  "description": "Original artwork extracted without recoloring from the user-provided PowerPoint. Technical diagrams are authored separately in SVG.",
+  "checkedOn": "2026-10-15",
+  "gitLicense": "https://git-scm.com/community/logos",
+  "githubUsage": "https://brand.github.com/foundations/logo",
+  "artwork": [
+    {
+      "file": "git-logo.svg",
+      "source": "ppt-src.pptx:ppt/media/image10.svg",
+      "pptSlides": [
+        1,
+        6,
+        7,
+        13,
+        41,
+        104,
+        107,
+        108
+      ],
+      "sha256": "f85b18bbfd9166476ee4ea919e8a5afd3ec1968e8e3cebe5fae052c9294678ac",
+      "rights": "git-logo-cc-by-3.0"
+    },
+    {
+      "file": "cloud.svg",
+      "source": "ppt-src.pptx:ppt/media/image11.svg",
+      "pptSlides": [
+        6,
+        21,
+        22,
+        41,
+        42,
+        105
+      ],
+      "sha256": "622c6bb372571619519d1bc4a1c078bf45ee2f95f78c5298a3bb0b733dcdb0a1",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "computer.svg",
+      "source": "ppt-src.pptx:ppt/media/image12.svg",
+      "pptSlides": [
+        6,
+        8,
+        10,
+        15,
+        21,
+        22,
+        41,
+        42,
+        105
+      ],
+      "sha256": "736ed227a7d1138363e2638490f5e176528655a0aaafe4e14f608557a873a206",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "coding-person.svg",
+      "source": "ppt-src.pptx:ppt/media/image13.svg",
+      "pptSlides": [
+        7
+      ],
+      "sha256": "221603d8ea95017c6e1d92996430c5722508385ace0a714c2676ebce70be6f68",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "database.svg",
+      "source": "ppt-src.pptx:ppt/media/image15.svg",
+      "pptSlides": [
+        8,
+        11,
+        52,
+        105
+      ],
+      "sha256": "5cd8d51b2f9110157027d833d36023b14f5159b47dc6bf04c051f118a1a00eb2",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "people-group-a.svg",
+      "source": "ppt-src.pptx:ppt/media/image17.svg",
+      "pptSlides": [
+        8,
+        105
+      ],
+      "sha256": "08cb4c21134758cf3b699cb022acaf8923f46f34e9b2a3bcfae00af515e8fa81",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "people-group-b.svg",
+      "source": "ppt-src.pptx:ppt/media/image18.svg",
+      "pptSlides": [
+        8,
+        105
+      ],
+      "sha256": "2922d483c5914e9fc83d052fa7d55bd4569ef8fe68d846af32b44258306b163b",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "people-group-c.svg",
+      "source": "ppt-src.pptx:ppt/media/image19.svg",
+      "pptSlides": [
+        8,
+        105
+      ],
+      "sha256": "5d676bdf12c02a1189532ed0987efe504e4dee156d456e39cb1cc1aba091ad8c",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "version-management.svg",
+      "source": "ppt-src.pptx:ppt/media/image20.svg",
+      "pptSlides": [
+        9
+      ],
+      "sha256": "719fde12d67439fbf9b300a5f876ad665bb311db185027c6d8776417cd05fcbc",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "restore-backup.svg",
+      "source": "ppt-src.pptx:ppt/media/image21.svg",
+      "pptSlides": [
+        9
+      ],
+      "sha256": "470d98b4f2f1e385780c4597e3101df6860ab53e9a66df35d8ed661431633489",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "collaboration.svg",
+      "source": "ppt-src.pptx:ppt/media/image22.svg",
+      "pptSlides": [
+        9
+      ],
+      "sha256": "344179796fd8e5623fd0566e15f6f3f82b6d5b0c2aca62c322dbb599326c5780",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "file.svg",
+      "source": "ppt-src.pptx:ppt/media/image24.svg",
+      "pptSlides": [
+        10,
+        13,
+        21,
+        26
+      ],
+      "sha256": "5b4eab093e9beea2ff16f43b6e7cae68e1891799e6c16eecf63fb903bca97be5",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "folder.svg",
+      "source": "ppt-src.pptx:ppt/media/image25.svg",
+      "pptSlides": [
+        11,
+        105
+      ],
+      "sha256": "f5986790755d5e00d633894af90b544770dea4dc885b2e7f59f95d08f8af03e7",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "private-key.svg",
+      "source": "ppt-src.pptx:ppt/media/image34.svg",
+      "pptSlides": [
+        15
+      ],
+      "sha256": "780d4458edf6b154d9e492cb0a230646b12d518cd2df42c30b7166b81c06bee7",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "public-key.svg",
+      "source": "ppt-src.pptx:ppt/media/image35.svg",
+      "pptSlides": [
+        15
+      ],
+      "sha256": "3d3b775ebe1e3e5bc098c0c06c30c693831bfec88503e8682f7444d88f5194cf",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "server.svg",
+      "source": "ppt-src.pptx:ppt/media/image36.svg",
+      "pptSlides": [
+        15
+      ],
+      "sha256": "471b549188ffa90ff5126cc4f407d0e98508c707c64b4a8e551021ba0260b3ed",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "wifi.svg",
+      "source": "ppt-src.pptx:ppt/media/image38.svg",
+      "pptSlides": [
+        21,
+        22,
+        42
+      ],
+      "sha256": "66487039d6c59ba4c1c12262610d1def8644beefd0dfb04a578159d4ede65428",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "location-pin.svg",
+      "source": "ppt-src.pptx:ppt/media/image39.svg",
+      "pptSlides": [
+        21,
+        26
+      ],
+      "sha256": "f9b17a25abd3e51873a177a5fc023d346fac02a6f6e3f7117a621171f2144b77",
+      "rights": "user-provided-free-material-source-unidentified"
+    },
+    {
+      "file": "github-wordmark.svg",
+      "source": "ppt-src.pptx:ppt/media/image8.svg",
+      "pptSlides": [
+        1,
+        6,
+        8,
+        41,
+        107,
+        108
+      ],
+      "sha256": "652d6786790df9f9623f4a558194f93d3c35c9dc1bfd35cf912f445216235134",
+      "rights": "github-logo-link-use"
+    },
+    {
+      "file": "github-mark.svg",
+      "source": "ppt-src.pptx:ppt/media/image9.svg",
+      "pptSlides": [
+        1,
+        6,
+        8,
+        18,
+        21,
+        22,
+        41,
+        42,
+        72,
+        104,
+        107,
+        108
+      ],
+      "sha256": "5993678fd67b0eaecfabcb277b989c79c660a7c3859be5424a233d4428fe3b28",
+      "rights": "github-logo-link-use"
+    }
+  ]
+}
