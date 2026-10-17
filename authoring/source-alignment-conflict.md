@@ -1,5 +1,7 @@
 # 元PDFとの対応 — 競合・rebase・restore
 
+> 2026-10-17の競合図の再調整は [diagram-refinement.md](./diagram-refinement.md) を参照。collaboration-integration.svgの編集元はtools/build-diagrams.cjs。以下は初回移行時の記録。
+
 今回の段階は、原資料の比較構造・順序・例を優先してHTMLへ移すこと。元PDF/PPTは変更していない。描画したコード図と履歴図は教材用SVGであり、PDF画像の貼り付けではない。
 
 ## 確認した画像

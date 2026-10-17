@@ -9,7 +9,10 @@ const node = (x, y, id = '', cls = '') => `<circle class="commit ${cls}" cx="${x
 const frame = (x, y, h = 44, cls = 'marker') => `<rect class="${cls}" x="${x - 22}" y="${y - 22}" width="44" height="${h}" rx="5"/>`;
 const pointer = (x, y, label, width = 126, cls = '') => frame(x, y) + line(`M${x + 22} ${y} H${x + 42}`, 'ref') + rect(x + 42, y - 20, width, 40, `label-box ${cls}`) + text(x + 54, y + 8, label, `strong ${cls}`);
 const head = (x, y, targetY) => text(x, y, 'HEAD', 'red strong') + line(`M${x + 35} ${y + 8} V${targetY - 6} m-5 -7 l5 7 l5 -7`, 'head-arrow');
-const arrow = (x1, y, x2) => line(`M${x1} ${y} H${x2} m-9 -7 l9 7 l-9 7`, 'arrow');
+const arrow = (x1, y, x2) => {
+  const back = x2 > x1 ? -9 : 9;
+  return line(`M${x1} ${y} H${x2} m${back} -7 l${-back} 7 l${back} 7`, 'arrow');
+};
 const group = (state, title, body, footer) => `<g data-state="${state}">\n${text(36, 50, title, 'heading')}\n${body}\n${line('M36 557 H1084', 'divider')}${text(36, 600, footer, 'small')}\n</g>`;
 const panelTitle = (x, title, sub = '') => text(x, 110, title, 'strong') + (sub ? text(x, 145, sub, 'small muted') : '');
 const chain = (x, rows) => line(`M${x} ${rows.at(-1)[0]} V${rows[0][0]}`) + rows.map(([y, id]) => node(x, y, id)).join('');
@@ -137,4 +140,113 @@ branches['push-pr'] = group('push-pr', 'PRを提案し、共有先でmergeした
 fs.writeFileSync(path.join(__dirname, '../docs/assets/branch-model.svg'), svg('branch-model', 'Gitの管理構造とブランチの読み方',
   '上ほど新しいcommit。丸は記録、実線は親子関係、四角は一つのcommitを指すbranch。緑の矢印は操作や参照、赤い矢印はHEADの参照先。前後の図で同じcommitの位置を揃えています。現在の節の図だけを表示します。', branches));
 
-console.log(`Built branch-model.svg (${Object.keys(branches).length} states)`);
+const integration = {};
+const codeCard = (x, y, w, title, greeting, cls = 'card') => rect(x, y, w, 145, cls) +
+  text(x + 22, y + 35, title, 'strong') + text(x + 22, y + 77, 'def greet():', 'mono small') +
+  text(x + 22, y + 117, `    print("${greeting}")`, 'mono small');
+const processCard = (x, y, w, title, lines, cls = 'card') => rect(x, y, w, 170, cls) +
+  text(x + 24, y + 42, title, 'strong') + lines.map((s, i) => text(x + 24, y + 90 + i * 38, s, 'small')).join('');
+
+integration.publish = group('publish', 'pushで共有してから、PRで統合を提案する',
+  processCard(40, 165, 425, '手元：feature/pr-demo', ['commitした変更', 'mainへの統合は、まだ先']) +
+  arrow(490, 250, 610) + text(550, 210, 'push', 'mono', 'middle') +
+  processCard(645, 165, 435, '共有先：feature/pr-demo', ['同じcommitを送る', 'GitHubでPRを作る']) +
+  rect(40, 405, 1040, 105, 'note') + text(68, 450, 'PRに書くこと', 'strong') + text(340, 468, '目的・関連Issue・変更点・確認結果', 'small'),
+  'pushはbranchの共有。PRは、その変更をmainへ取り込むための提案。');
+
+integration.review = group('review', 'PRでは、取り込み先・変更元・差分を確認する',
+  processCard(40, 125, 430, 'base：取り込み先', ['main', 'ここへ変更を取り込む']) +
+  processCard(650, 125, 430, 'compare：変更元', ['feature/pr-demo', 'このbranchの変更を提案']) +
+  arrow(620, 210, 500) + text(560, 170, '統合', 'small', 'middle') +
+  rect(40, 365, 1040, 150) + text(70, 410, '目的・差分・動作をレビュー', 'strong') +
+  text(70, 459, '修正があれば同じbranchでcommit → push。確認してからmainへmerge。', 'small'),
+  'レビュー中の修正も同じPRに反映される。baseとcompareの向きを確かめる。');
+
+integration.sync = group('sync', '共有先での統合後、手元のmainを更新する',
+  processCard(40, 165, 425, '共有先：main', ['PRの変更が統合済み', '手元はまだ更新されていない']) +
+  arrow(490, 250, 610) + text(550, 205, 'pull', 'mono', 'middle') +
+  processCard(645, 165, 435, '手元：main', ['前へ進められる場合だけ更新', '履歴が分岐していたら停止']) +
+  rect(40, 405, 1040, 105) + text(68, 450, 'git switch main', 'mono small') + text(560, 450, 'git pull --ff-only', 'mono small'),
+  'pullはfetchも行う。origin/mainは、fetchで取得した共有先mainの位置を表す。');
+
+integration['conflict-setup'] = group('conflict-setup', '別フォルダで、同じ行を別々に変更してみる',
+  codeCard(285, 90, 550, '共通のcommit：hello.py', 'Hello, world!') +
+  line('M410 240 L280 285 M710 240 L840 285', 'arrow') +
+  codeCard(40, 300, 500, 'mainで変更 → commit', 'Hello, everyone!') +
+  codeCard(580, 300, 500, 'feat/jaで変更 → commit', 'こんにちは!', 'blue-card') +
+  text(560, 505, '実習の順序：feat/jaでcommit → mainへ戻ってcommit', 'small', 'middle'),
+  '既存の共有リポジトリと分けた、ローカル専用の練習用フォルダで再現する。');
+
+function conflictHistory(x, advanced) {
+  return chain(x, [[320, 'C1'], [400, 'c2'], [480, 'c1']]) + line(`M${x} 320 L${x + 215} 270`) + node(x + 215, 270, 'F1', 'incoming') +
+    frame(x + 215, 270) + text(x + 215, 223, 'feat/ja', 'strong blue', 'middle') +
+    (advanced ? line(`M${x} 320 V210`) + node(x, 210, 'M1') + frame(x, 210) + text(x, 165, 'main', 'strong', 'middle') : frame(x, 320) + text(x, 275, 'main', 'strong', 'middle'));
+}
+integration['conflict-history'] = group('conflict-history', '作業branchが分かれた後、mainも進んだ',
+  panelTitle(50, '前：分岐した時点') + panelTitle(615, '後：mainにもcommitを追加') +
+  line('M560 90 V520', 'divider') + conflictHistory(145, false) + conflictHistory(710, true) + arrow(475, 370, 610),
+  '左右のC1とF1は同じ記録。mainがC1からM1へ進み、両方に固有の変更がある。');
+
+integration.diverge = group('diverge', '共通のコードから、同じ行を別々に変更した',
+  codeCard(285, 80, 550, '共通：C1', 'Hello, world!') +
+  line('M410 230 L280 270 M710 230 L840 270', 'arrow') +
+  codeCard(40, 275, 500, 'main：M1', 'Hello, everyone!') +
+  codeCard(580, 275, 500, 'feat/ja：F1', 'こんにちは!', 'blue-card') +
+  line('M360 465 L560 525 L760 465') + node(560, 525, 'C1') + node(360, 465, 'M1') + node(760, 465, 'F1', 'incoming') + frame(360, 465) + frame(760, 465) +
+  text(270, 474, 'main', 'small strong', 'end') + text(810, 474, 'feat/ja', 'small blue strong'),
+  '両方が同じ行を変更。どんな挨拶を完成形にするかは、人が決める。');
+
+integration['conflict-choice'] = group('conflict-choice', 'mainへmergeしたい。でも、完成形を自動で決められない',
+  codeCard(40, 95, 500, 'main：M1', 'Hello, everyone!') +
+  codeCard(580, 95, 500, 'feat/ja：F1', 'こんにちは!', 'blue-card') +
+  line('M360 370 L560 485 L760 370') + node(560, 485, 'C1') + node(360, 370, 'M1') + node(760, 370, 'F1', 'incoming') + frame(360, 370) + frame(760, 370) +
+  line('M360 370 V285 L760 370', 'planned-link') + `<circle class="planned" cx="360" cy="285" r="15"/>` +
+  text(403, 292, '予定のmerge commit（まだ存在しない）', 'small') +
+  text(270, 379, 'main', 'small strong', 'end') + text(810, 379, 'feat/ja', 'small blue strong') +
+  text(80, 505, 'HEAD → main', 'small red') + text(610, 525, 'git merge feat/ja', 'mono small'),
+  '点線は予定。競合した段階では新しいcommitは作られず、mainの目印も進まない。');
+
+integration['conflict-merge'] = group('conflict-merge', 'mergeは競合で停止する。履歴の統合は、まだ完了しない',
+  rect(40, 110, 1040, 300, 'terminal') +
+  text(68, 160, '(main) > git merge feat/ja', 'terminal-text') + text(68, 215, 'Auto-merging hello.py', 'terminal-text') +
+  text(68, 270, 'CONFLICT (content): Merge conflict in hello.py', 'terminal-error') +
+  text(68, 325, 'Automatic merge failed; fix conflicts and then', 'terminal-text') + text(68, 365, 'commit the result.', 'terminal-text') +
+  text(70, 475, 'mainの先端はM1のまま', 'strong') + text(610, 475, '次はhello.pyを開いて確認', 'strong'),
+  'Gitが競合箇所にマーカーを入れる。編集・確認・add・commitをして統合を完了する。');
+
+integration.markers = group('markers', 'hello.py：マーカーの間に、双方の変更が並ぶ',
+  rect(40, 100, 720, 420) + text(65, 145, 'def greet():', 'mono') +
+  rect(55, 165, 690, 120, 'card') + text(75, 205, '<<<<<<< HEAD', 'mono small strong') + text(75, 255, '    print("Hello, everyone!")', 'mono small') +
+  text(75, 325, '=======', 'mono small muted') +
+  rect(55, 345, 690, 120, 'blue-card') + text(75, 390, '    print("こんにちは!")', 'mono small') + text(75, 440, '>>>>>>> feat/ja', 'mono small blue') +
+  text(800, 205, '現在のmain側', 'strong') + text(800, 250, 'HEAD → main', 'red small') +
+  text(800, 390, '取り込む側', 'blue strong') + text(800, 435, 'feat/ja', 'mono small'),
+  'マーカーは未解決箇所の印。完成形を残し、<<<<<<<・=======・>>>>>>>を削除する。');
+
+integration.resolve = group('resolve', '双方の意図を読んで、完成形を編集する',
+  processCard(40, 100, 500, 'mainの変更', ['Hello, everyone!', 'みんなへの挨拶にする']) +
+  processCard(580, 100, 500, 'feat/jaの変更', ['こんにちは!', '日本語で挨拶する'], 'blue-card') +
+  line('M290 285 V315 H560 V340 M830 285 V315 H560', 'arrow') +
+  codeCard(210, 365, 700, '完成形の例：hello.py', 'みなさんこんにちは!'),
+  'マーカーを消す → greet()を実行して確認 → git add hello.py → git commit。');
+
+integration.record = group('record', '解消した内容を、2つの親を持つcommitに記録する',
+  chain(150, [[210, 'M2'], [340, 'M1'], [480, 'C1']]) + line('M150 480 L400 370 L150 210') + node(400, 370, 'F1', 'incoming') +
+  pointer(150, 210, 'main') + head(245, 145, 190) + frame(400, 370) + text(400, 320, 'feat/ja', 'strong blue', 'middle') +
+  text(40, 300, '親1', 'small muted') + text(315, 260, '親2', 'small blue') +
+  codeCard(575, 120, 505, 'M2に保存する完成形', 'みなさんこんにちは!') +
+  text(575, 335, 'M2の第一親：M1（main側）', 'small') + text(575, 385, 'M2の第二親：F1（取り込む側）', 'small') +
+  text(575, 460, 'main → M2', 'strong') + text(575, 505, 'feat/ja → F1 のまま', 'blue small'),
+  'merge commitが作られ、HEADが指すmainがM2へ進む。既存のM1・F1は書き換わらない。');
+
+integration.alternatives = group('alternatives', '途中で中止する方法と、GitHubでの解消',
+  processCard(40, 130, 500, '手元で中止する', ['git merge --abort', 'merge開始前の状態へ戻す']) +
+  processCard(580, 130, 500, 'GitHubで解消する', ['単純な競合に対応', 'baseをhead側へ取り込む'], 'blue-card') +
+  rect(40, 385, 1040, 130, 'note') + text(68, 435, 'GitHubで競合を解消した場合も', 'strong') +
+  text(68, 480, 'PRの差分や動作を確認し、取り込み先への統合を完了する。', 'small'),
+  '競合の解消は、完成形を決める作業。PRのレビューと統合も続けて確認する。');
+
+fs.writeFileSync(path.join(__dirname, '../docs/assets/collaboration-integration.svg'), svg('collaboration-integration', '変更の統合と競合解消',
+  '共通のコードから二つの変更が分かれ、競合を編集してからmerge commitを作る過程を示します。丸はcommit、実線は親子関係、四角はbranch。青は取り込む側を識別します。点線のcommitは未作成の予定であり、競合停止中にmainは進みません。現在の節の図だけを表示します。', integration));
+
+console.log(`Built branch-model.svg (${Object.keys(branches).length} states), collaboration-integration.svg (${Object.keys(integration).length} states)`);

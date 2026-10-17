@@ -1,5 +1,7 @@
 # branch章：元PDFへの対応（70%段階）
 
+> 2026-10-17の図の再調整は [diagram-refinement.md](./diagram-refinement.md) を参照。以下は初回移行時の記録。現在の本文はcontent/、履歴はcontent/06-commit-branches/graph.json、branch-model.svgの編集元はtools/build-diagrams.cjs。
+
 ## 実見した資料
 
 `presentation/git-seminar.pdf` の下記19ページについて、`tmp/source-review/pages/page-N.png` の1600px画像を一枚ずつ開き、図の丸・線・四角・HEAD・左右比較・クイズの対象を確認した。本文の正本は `docs/lessons/branches.js`、履歴データの正本は同ファイルの `graph.nodes` と `graph.states`。自学習と本番で同じデータを使う。

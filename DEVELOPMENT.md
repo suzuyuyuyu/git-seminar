@@ -60,6 +60,8 @@ CSSはブラウザ標準のネスト記法を使います。Sassのコンパイ�
 
 図はSVGを編集元と公開形式にします。SVGにPNGやJPEGのスクリーンショットを埋め込んで置き換えません。原資料を確認するためのページ画像は公開せず、元PPTから抽出できたベクター素材を docs/assets/illustrations/ にまとめて参照します。素材の対応と出典状況は同フォルダーの manifest.json に記録します。自学習・本番・拡大表示は同じSVGと教材データを使います。
 
+`branch-model.svg` と `collaboration-integration.svg` は `tools/build-diagrams.cjs` が編集元です。この2図の文言や配置を変える場合はスクリプトを編集し、`node tools/build-diagrams.cjs` で再生成して、SVGも一緒にcommitします。参考画像との対応と図の読み方は [authoring/diagram-refinement.md](./authoring/diagram-refinement.md) を参照してください。
+
 ## 教材の整合性を確認する
 
 ```sh

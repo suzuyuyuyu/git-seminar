@@ -4,7 +4,7 @@
 
 ## 編集と再生成
 
-`node tools/build-diagrams.cjs` で `docs/assets/branch-model.svg` を生成する。図中の文言・位置・形状の編集元はこのスクリプト。本文と章の順序は従来どおりcontent/で管理する。自学習・講義・拡大表示に同じSVGを使う。
+`node tools/build-diagrams.cjs` で `docs/assets/branch-model.svg` と `docs/assets/collaboration-integration.svg` を生成する。図中の文言・位置・形状の編集元はこのスクリプト。本文と章の順序は従来どおりcontent/で管理する。自学習・講義・拡大表示に同じSVGを使う。
 
 ## branch章
 
@@ -15,6 +15,15 @@
 - 59の誤解比較は左右で履歴の丸と線を揃え、囲む範囲だけを変える。分岐時・merge後を上下に示す。
 - PR図のorigin/*は、共有先の状態をfetchした後の手元の参照として説明する。共有先のmergeだけでローカルmainが進んだようには描かない。
 - 相対参照・mergeモデル・クイズは従来のgraph.jsonと共通rendererを使う。ノードや答えを単純化しない。
+
+## 競合解消の章
+
+- 全12状態を16:9で再配置。長いコードを縮めて収めず、等幅の文字と十分な幅を持つカードを使う。
+- 74の共通コード→左右の変更を維持し、M1・F1・C1を各コードと履歴の対応に使う。取り込むfeat/ja側はコード・commitとも青で揃える。
+- 75の予定の合流点を点線にし、「まだ存在しない」と明記。競合停止時にはmainをM1に残す。
+- 76のmerge失敗出力・マーカー表示を分ける。マーカー表示はmain側とfeat/ja側をコードの行に沿って色分けし、右側に説明する。
+- 解消後のM2はM1とF1を親に持つ。mainはM2へ移動するがfeat/jaはF1に残る。同じコードの完成形を横に置く。
+- PRのbase/compareは変更元から取り込み先へ向かう矢印で表す。共有先のmainと手元のorigin/mainの意味を分け、pullの図でfetchによる取得も説明する。
 
 ## 確認
 
