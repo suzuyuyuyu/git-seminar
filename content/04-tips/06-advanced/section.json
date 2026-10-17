@@ -1,12 +1,56 @@
 {
-  "id": "tags",
-  "title": "tag・相対参照",
-  "description": "名前や親からの相対位置で、確認する版を指定します。",
+  "id": "advanced",
+  "title": "Gitコマンド（応用）",
+  "description": "比較・調査・復元の道具を、目的に応じて選べるようにします。",
   "diagram": {
     "type": "svg",
     "src": "assets/curriculum-guide.svg"
   },
   "sources": [
+    {
+      "label": "git clone",
+      "url": "https://git-scm.com/docs/git-clone"
+    },
+    {
+      "label": "git status",
+      "url": "https://git-scm.com/docs/git-status"
+    },
+    {
+      "label": "git diff",
+      "url": "https://git-scm.com/docs/git-diff"
+    },
+    {
+      "label": "git log",
+      "url": "https://git-scm.com/docs/git-log"
+    },
+    {
+      "label": "git fetch",
+      "url": "https://git-scm.com/docs/git-fetch"
+    },
+    {
+      "label": "git pullと--ff-only",
+      "url": "https://git-scm.com/docs/git-pull"
+    },
+    {
+      "label": "Git: show",
+      "url": "https://git-scm.com/docs/git-show"
+    },
+    {
+      "label": "Git: blame",
+      "url": "https://git-scm.com/docs/git-blame"
+    },
+    {
+      "label": "Git: remote",
+      "url": "https://git-scm.com/docs/git-remote"
+    },
+    {
+      "label": "Git: branch",
+      "url": "https://git-scm.com/docs/git-branch"
+    },
+    {
+      "label": "Git: push",
+      "url": "https://git-scm.com/docs/git-push"
+    },
     {
       "label": "Git公式: git-restore",
       "url": "https://git-scm.com/docs/git-restore"
@@ -44,10 +88,6 @@
       "url": "https://git-scm.com/docs/git-rebase"
     },
     {
-      "label": "Git: push",
-      "url": "https://git-scm.com/docs/git-push"
-    },
-    {
       "label": "Git公式: git-worktree",
       "url": "https://git-scm.com/docs/git-worktree"
     },
@@ -66,10 +106,24 @@
     {
       "label": "Git公式: git-switch",
       "url": "https://git-scm.com/docs/git-switch"
+    },
+    {
+      "label": "Git: bisect",
+      "url": "https://git-scm.com/docs/git-bisect"
     }
   ],
   "steps": [
+    "diff.md",
+    "log.md",
+    "show-and-blame.md",
+    "fetch.md",
+    "remote-and-tracking.md",
+    "revert.md",
+    "reflog.md",
+    "rescue-branch.md",
     "revisions.md",
-    "release-tag.md"
+    "release-tag.md",
+    "bisect-start.md",
+    "bisect-finish.md"
   ]
 }

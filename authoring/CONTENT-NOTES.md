@@ -2,7 +2,7 @@
 
 ## 現在の構成（2026-10-18）
 
-元PPT `ppt-src.pptx` の108スライドを再び読み、全スライドのテキストを抽出できた。教材は依頼された順序の7 Chapterへ再構成し、Chapter → Section → Slide（Step）の3階層、Sectionごとに1ページとした。現在は30 Section・111 Step。正規URLは `#study/chapter/section[/step]`、旧URLの転送は `content/course.json` の `redirects` に記載する。
+元PPT `ppt-src.pptx` の108スライドを再び読み、全スライドのテキストを抽出できた。教材は依頼された順序の5 Chapterへ再構成し、Chapter → Section → Slide（Step）の3階層、Sectionごとに1ページとした。現在は23 Section・111 Step。標準・ブランチ周辺のコマンドは共同開発内、応用コマンドはTips内のgh直前に配置する。正規URLは `#study/chapter/section[/step]`、旧URLの転送は `content/course.json` の `redirects` に記載する。
 
 Chapterの順序は番号付きフォルダー、Sectionは `chapter.json` の `sections`、Stepは各Sectionの `section.json` の `steps` で定義する。1つのMarkdownが1Stepであり、共通のgraphはcontentルート基準の `graphs/branches.json` を参照する。本文・要点・付箋・コマンド・図の状態を自学習と講義で共用する。
 

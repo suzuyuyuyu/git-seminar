@@ -29,7 +29,7 @@
     "practice-solo/init": "solo/basic/init",
     "practice-solo": "solo/practice/create-repository",
     "recover-and-extend/reset": "solo/basic/reset",
-    "recover-and-extend": "branch-commands/restore/restore-worktree",
+    "recover-and-extend": "collaboration/branch-commands/restore-worktree",
     "recover-and-extend/clean": "solo/basic/clean",
     "recover-and-extend/stash": "solo/basic/stash",
     "commit-branches/merge-model": "solo/basic/merge-model",
@@ -75,21 +75,49 @@
     "review-and-resolve/resolve": "collaboration/hands-on/resolve",
     "review-and-resolve/record": "collaboration/hands-on/record",
     "review-and-resolve/alternatives": "collaboration/hands-on/alternatives",
-    "recover-and-extend/rebase": "branch-commands/rebase/rebase",
-    "recover-and-extend/restore-worktree": "branch-commands/restore/restore-worktree",
-    "recover-and-extend/restore-index": "branch-commands/restore/restore-index",
-    "inspect-and-sync/diff": "advanced/inspect/diff",
-    "inspect-and-sync/log": "advanced/inspect/log",
-    "inspect-and-sync/fetch": "advanced/remote/fetch",
-    "recover-and-extend/revert": "advanced/recover/revert",
-    "recover-and-extend/reflog": "advanced/recover/reflog",
-    "recover-and-extend/revisions": "advanced/tags/revisions",
+    "recover-and-extend/rebase": "collaboration/branch-commands/rebase",
+    "recover-and-extend/restore-worktree": "collaboration/branch-commands/restore-worktree",
+    "recover-and-extend/restore-index": "collaboration/branch-commands/restore-index",
+    "inspect-and-sync/diff": "tips/advanced/diff",
+    "inspect-and-sync/log": "tips/advanced/log",
+    "inspect-and-sync/fetch": "tips/advanced/fetch",
+    "recover-and-extend/revert": "tips/advanced/revert",
+    "recover-and-extend/reflog": "tips/advanced/reflog",
+    "recover-and-extend/revisions": "tips/advanced/revisions",
     "recover-and-extend/worktree": "tips/worktree/worktree",
     "recover-and-extend/submodule": "tips/submodule/submodule",
     "recover-and-extend/amend": "tips/data-loss/amend",
     "practice-solo/remote": "solo/practice/create-repository",
     "practice-solo/record": "solo/practice/record",
-    "practice-solo/publish": "solo/practice/publish"
+    "practice-solo/publish": "solo/practice/publish",
+    "branch-commands/branch/branch": "collaboration/branch-commands/branch",
+    "branch-commands/branch": "collaboration/branch-commands/branch",
+    "branch-commands/switch/checkout-switch": "collaboration/branch-commands/checkout-switch",
+    "branch-commands/switch": "collaboration/branch-commands/checkout-switch",
+    "branch-commands/rebase/rebase": "collaboration/branch-commands/rebase",
+    "branch-commands/rebase": "collaboration/branch-commands/rebase",
+    "branch-commands/restore/restore-worktree": "collaboration/branch-commands/restore-worktree",
+    "branch-commands/restore/restore-index": "collaboration/branch-commands/restore-index",
+    "branch-commands/restore": "collaboration/branch-commands/restore-worktree",
+    "branch-commands": "collaboration/branch-commands/branch",
+    "advanced/inspect/diff": "tips/advanced/diff",
+    "advanced/inspect/log": "tips/advanced/log",
+    "advanced/inspect/show-and-blame": "tips/advanced/show-and-blame",
+    "advanced/inspect": "tips/advanced/diff",
+    "advanced/remote/fetch": "tips/advanced/fetch",
+    "advanced/remote/remote-and-tracking": "tips/advanced/remote-and-tracking",
+    "advanced/remote": "tips/advanced/fetch",
+    "advanced/recover/revert": "tips/advanced/revert",
+    "advanced/recover/reflog": "tips/advanced/reflog",
+    "advanced/recover/rescue-branch": "tips/advanced/rescue-branch",
+    "advanced/recover": "tips/advanced/revert",
+    "advanced/tags/revisions": "tips/advanced/revisions",
+    "advanced/tags/release-tag": "tips/advanced/release-tag",
+    "advanced/tags": "tips/advanced/revisions",
+    "advanced/bisect/bisect-start": "tips/advanced/bisect-start",
+    "advanced/bisect/bisect-finish": "tips/advanced/bisect-finish",
+    "advanced/bisect": "tips/advanced/bisect-start",
+    "advanced": "tips/advanced/diff"
   },
   "schemaVersion": 2,
   "chapters": [
@@ -137,37 +165,13 @@
       "sectionIds": [
         "markdown",
         "issues",
-        "hands-on"
-      ]
-    },
-    {
-      "id": "branch-commands",
-      "number": "04",
-      "title": "Gitコマンド（標準・ブランチ周辺）",
-      "description": "branchの操作、切り替え、履歴の適用し直し、ファイルの復元を整理します。",
-      "sectionIds": [
-        "branch",
-        "switch",
-        "rebase",
-        "restore"
-      ]
-    },
-    {
-      "id": "advanced",
-      "number": "05",
-      "title": "Gitコマンド（応用）",
-      "description": "比較・調査・復元の道具を、目的に応じて選べるようにします。",
-      "sectionIds": [
-        "inspect",
-        "remote",
-        "recover",
-        "tags",
-        "bisect"
+        "hands-on",
+        "branch-commands"
       ]
     },
     {
       "id": "tips",
-      "number": "06",
+      "number": "04",
       "title": "その他Tipsから少しむずかしいところまで",
       "description": "作業場所・依存リポジトリ・競合・消失のしくみと、日常の操作を補います。",
       "sectionIds": [
@@ -176,6 +180,7 @@
         "conflicts",
         "data-loss",
         "aliases",
+        "advanced",
         "gh"
       ]
     }
@@ -6126,67 +6131,9 @@
       ]
     },
     {
-      "id": "branch",
-      "title": "branch",
-      "description": "branchの一覧・作成・削除を確認します。",
-      "diagram": {
-        "type": "svg",
-        "src": "assets/curriculum-guide.svg"
-      },
-      "sources": [],
-      "chapterId": "branch-commands",
-      "route": "branch-commands/branch",
-      "steps": [
-        {
-          "id": "branch",
-          "title": "branch：一覧・作成・削除を使い分ける",
-          "body": [
-            "git branchはローカルbranchの一覧を表示し、現在のbranchに*を付けます。-rはリモート追跡branch、-aはその両方を表示します。branch名を渡すと現在のcommitに新しい目印を作りますが、切り替えません。切り替えはswitchです。\n\n削除は別のbranchへ移ってからgit branch -d branch-nameを使います。これは通常、upstream（なければHEAD）へ統合済みか確認します。削除対象の未共有commitを必要に応じて保護し、確認を飛ばす-Dを安易に使わないでください。ローカルbranchの削除は、GitHubのbranch削除とは別です。"
-          ],
-          "command": "git branch\ngit branch -a\ngit branch feature/name\n# 切り替えは別の操作\ngit switch feature/name",
-          "takeaway": "branchは目印の管理。作成と切り替え、手元と共有先の削除を区別する。",
-          "notes": [],
-          "diagramState": "branch-commands-branch-branch",
-          "diagram": {
-            "type": "svg",
-            "src": "assets/curriculum-guide.svg"
-          }
-        }
-      ]
-    },
-    {
-      "id": "switch",
-      "title": "checkout/switch",
-      "description": "現在地の切り替えと、checkoutの別の用途を区別します。",
-      "diagram": {
-        "type": "svg",
-        "src": "assets/curriculum-guide.svg"
-      },
-      "sources": [],
-      "chapterId": "branch-commands",
-      "route": "branch-commands/switch",
-      "steps": [
-        {
-          "id": "checkout-switch",
-          "title": "checkoutとswitch：切り替える対象を確認する",
-          "body": [
-            "branchの切り替えにはgit switch branch-name、新しいbranchを作って切り替えるにはgit switch -c branch-nameを使います。過去のcommitを直接見る操作はgit switch --detach commit-idです。\n\n古い資料では同じ目的にcheckoutを使います。checkout branch-nameはbranchへの切り替え、checkout commit-idはdetached HEADへの移動です。さらにcheckout -- fileはファイルの未ステージ変更を破棄する別の用途なので、文字の似たコマンドを取り違えないようにします。ファイルの復元は次のrestore Sectionで扱います。\n\n切り替え前にstatusを確認します。未commitの変更は切り替えに伴って持ち越される場合もあり、上書きの恐れがある場合は拒否されます。切り替えれば必ず作業が保存されるわけではありません。"
-          ],
-          "command": "git status\ngit switch main\n# 古い書き方では git checkout main\n# 作成と切り替えを同時に行う場合\ngit switch -c feature/new-work",
-          "takeaway": "branchへの切り替えはswitch。checkoutにはファイル復元の用途もある。",
-          "notes": [],
-          "diagramState": "branch-commands-switch-checkout-switch",
-          "diagram": {
-            "type": "svg",
-            "src": "assets/curriculum-guide.svg"
-          }
-        }
-      ]
-    },
-    {
-      "id": "rebase",
-      "title": "rebase",
-      "description": "同じ出発点をmergeと比較し、作り直されるcommitを読みます。",
+      "id": "branch-commands",
+      "title": "Gitコマンド（標準・ブランチ周辺）",
+      "description": "branchの操作、切り替え、履歴の適用し直し、ファイルの復元を整理します。",
       "diagram": {
         "type": "svg",
         "src": "assets/curriculum-guide.svg"
@@ -6253,9 +6200,39 @@
           "url": "https://git-scm.com/docs/git-switch"
         }
       ],
-      "chapterId": "branch-commands",
-      "route": "branch-commands/rebase",
+      "chapterId": "collaboration",
+      "route": "collaboration/branch-commands",
       "steps": [
+        {
+          "id": "branch",
+          "title": "branch：一覧・作成・削除を使い分ける",
+          "body": [
+            "git branchはローカルbranchの一覧を表示し、現在のbranchに*を付けます。-rはリモート追跡branch、-aはその両方を表示します。branch名を渡すと現在のcommitに新しい目印を作りますが、切り替えません。切り替えはswitchです。\n\n削除は別のbranchへ移ってからgit branch -d branch-nameを使います。これは通常、upstream（なければHEAD）へ統合済みか確認します。削除対象の未共有commitを必要に応じて保護し、確認を飛ばす-Dを安易に使わないでください。ローカルbranchの削除は、GitHubのbranch削除とは別です。"
+          ],
+          "command": "git branch\ngit branch -a\ngit branch feature/name\n# 切り替えは別の操作\ngit switch feature/name",
+          "takeaway": "branchは目印の管理。作成と切り替え、手元と共有先の削除を区別する。",
+          "notes": [],
+          "diagramState": "branch-commands-branch-branch",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/curriculum-guide.svg"
+          }
+        },
+        {
+          "id": "checkout-switch",
+          "title": "checkoutとswitch：切り替える対象を確認する",
+          "body": [
+            "branchの切り替えにはgit switch branch-name、新しいbranchを作って切り替えるにはgit switch -c branch-nameを使います。過去のcommitを直接見る操作はgit switch --detach commit-idです。\n\n古い資料では同じ目的にcheckoutを使います。checkout branch-nameはbranchへの切り替え、checkout commit-idはdetached HEADへの移動です。さらにcheckout -- fileはファイルの未ステージ変更を破棄する別の用途なので、文字の似たコマンドを取り違えないようにします。ファイルの復元は次のrestore Sectionで扱います。\n\n切り替え前にstatusを確認します。未commitの変更は切り替えに伴って持ち越される場合もあり、上書きの恐れがある場合は拒否されます。切り替えれば必ず作業が保存されるわけではありません。"
+          ],
+          "command": "git status\ngit switch main\n# 古い書き方では git checkout main\n# 作成と切り替えを同時に行う場合\ngit switch -c feature/new-work",
+          "takeaway": "branchへの切り替えはswitch。checkoutにはファイル復元の用途もある。",
+          "notes": [],
+          "diagramState": "branch-commands-switch-checkout-switch",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/curriculum-guide.svg"
+          }
+        },
         {
           "id": "rebase",
           "title": "同じ分岐をrebaseとmergeで比べる",
@@ -6281,82 +6258,7 @@
             "type": "svg",
             "src": "assets/recovery.svg"
           }
-        }
-      ]
-    },
-    {
-      "id": "restore",
-      "title": "restore",
-      "description": "作業ファイルとindexのどちらを戻すか、分けて操作します。",
-      "diagram": {
-        "type": "svg",
-        "src": "assets/curriculum-guide.svg"
-      },
-      "sources": [
-        {
-          "label": "Git公式: git-restore",
-          "url": "https://git-scm.com/docs/git-restore"
         },
-        {
-          "label": "Git公式: git-stash",
-          "url": "https://git-scm.com/docs/git-stash"
-        },
-        {
-          "label": "Git公式: git-revert",
-          "url": "https://git-scm.com/docs/git-revert"
-        },
-        {
-          "label": "Git公式: git-commit",
-          "url": "https://git-scm.com/docs/git-commit"
-        },
-        {
-          "label": "Git公式: git-reset",
-          "url": "https://git-scm.com/docs/git-reset"
-        },
-        {
-          "label": "Git公式: git-clean",
-          "url": "https://git-scm.com/docs/git-clean"
-        },
-        {
-          "label": "Git公式: git-reflog",
-          "url": "https://git-scm.com/docs/git-reflog"
-        },
-        {
-          "label": "Git公式: git-cherry-pick",
-          "url": "https://git-scm.com/docs/git-cherry-pick"
-        },
-        {
-          "label": "Git公式: git-rebase",
-          "url": "https://git-scm.com/docs/git-rebase"
-        },
-        {
-          "label": "Git公式: git-push",
-          "url": "https://git-scm.com/docs/git-push"
-        },
-        {
-          "label": "Git公式: git-worktree",
-          "url": "https://git-scm.com/docs/git-worktree"
-        },
-        {
-          "label": "Git公式: git-submodule",
-          "url": "https://git-scm.com/docs/git-submodule"
-        },
-        {
-          "label": "Git公式: gitrevisions",
-          "url": "https://git-scm.com/docs/gitrevisions"
-        },
-        {
-          "label": "Git公式: git-tag",
-          "url": "https://git-scm.com/docs/git-tag"
-        },
-        {
-          "label": "Git公式: git-switch",
-          "url": "https://git-scm.com/docs/git-switch"
-        }
-      ],
-      "chapterId": "branch-commands",
-      "route": "branch-commands/restore",
-      "steps": [
         {
           "id": "restore-worktree",
           "title": "削除した追跡ファイルを復元する",
@@ -6407,508 +6309,6 @@
           "diagram": {
             "type": "svg",
             "src": "assets/recovery.svg"
-          }
-        }
-      ]
-    },
-    {
-      "id": "inspect",
-      "title": "log・diff・show・blame",
-      "description": "履歴や差分を読み、変更された理由と場所を調べます。",
-      "diagram": {
-        "type": "svg",
-        "src": "assets/curriculum-guide.svg"
-      },
-      "sources": [
-        {
-          "label": "git clone",
-          "url": "https://git-scm.com/docs/git-clone"
-        },
-        {
-          "label": "git status",
-          "url": "https://git-scm.com/docs/git-status"
-        },
-        {
-          "label": "git diff",
-          "url": "https://git-scm.com/docs/git-diff"
-        },
-        {
-          "label": "git log",
-          "url": "https://git-scm.com/docs/git-log"
-        },
-        {
-          "label": "git fetch",
-          "url": "https://git-scm.com/docs/git-fetch"
-        },
-        {
-          "label": "git pullと--ff-only",
-          "url": "https://git-scm.com/docs/git-pull"
-        },
-        {
-          "label": "Git: show",
-          "url": "https://git-scm.com/docs/git-show"
-        },
-        {
-          "label": "Git: blame",
-          "url": "https://git-scm.com/docs/git-blame"
-        }
-      ],
-      "chapterId": "advanced",
-      "route": "advanced/inspect",
-      "steps": [
-        {
-          "id": "diff",
-          "title": "何が変わったかをdiffで読む",
-          "body": [
-            "git diffはworking treeとindexを比べ、まだaddしていない編集を表示します。git diff --stagedはindexと現在のcommitを比べ、次のcommitに入る変更を表示します。\n\n同じファイルでもaddの前後で表示先が変わります。未追跡ファイルの中身は通常のdiffには出ません。ファイルをエディターで確認してからaddします。"
-          ],
-          "command": "git diff\ngit diff --staged",
-          "takeaway": "diffとdiff --stagedは、比較する場所が違う。",
-          "notes": [
-            {
-              "id": "inspect-diff-pager",
-              "body": "長い表示がページャーで開いたらqで戻れます。−は削除側、+は追加側の行です。",
-              "showInPresentation": true
-            }
-          ],
-          "diagramState": "diff",
-          "diagram": {
-            "type": "svg",
-            "src": "assets/foundations-inspect.svg"
-          }
-        },
-        {
-          "id": "log",
-          "title": "commitのつながりを読む",
-          "body": [
-            "logは記録済みのcommitを表示します。--onelineで1件を短く、--graphで親子関係を線で、--decorateでbranchなどの目印を表示します。\n\n--allを付けると、複数のbranchなどの参照からたどれる履歴をまとめて見られます。未commitの編集はこの図には出ません。HEADやbranchの関係は「Gitの難関 “branch” を理解する」のまとめでも確認できます。"
-          ],
-          "command": "git log --oneline --graph --decorate --all",
-          "takeaway": "logに並ぶのは、記録済みのcommit。",
-          "notes": [
-            {
-              "id": "inspect-log-order",
-              "body": "通常は新しいcommitが上に表示されます。図の線は親子関係で、単なる時刻の順番ではありません。",
-              "showInPresentation": true
-            }
-          ],
-          "diagramState": "log",
-          "diagram": {
-            "type": "svg",
-            "src": "assets/foundations-inspect.svg"
-          }
-        },
-        {
-          "id": "show-and-blame",
-          "title": "変更の由来を show と blame でたどる",
-          "body": [
-            "`git show HEAD` は最新commitの説明と差分を読みます。`git blame README.md` は各行を最後に変更したcommitを示します。気になる行のハッシュを `git show` に渡すと、変更理由を調べられます。\n\nblameの名前だけで原因を決めず、commit全体と周辺の履歴を読みましょう。整形だけの変更が直近の履歴になる場合もあります。どちらも履歴を読む操作で、ファイルは変わりません。"
-          ],
-          "command": "git show HEAD\ngit blame README.md",
-          "takeaway": "行からcommitへ進み、差分と説明を合わせて読む。",
-          "notes": [],
-          "diagramState": "advanced-inspect-show-and-blame",
-          "diagram": {
-            "type": "svg",
-            "src": "assets/curriculum-guide.svg"
-          }
-        }
-      ]
-    },
-    {
-      "id": "remote",
-      "title": "remote・fetch",
-      "description": "共有先とリモート追跡branchを、作業中のbranchから分けて管理します。",
-      "diagram": {
-        "type": "svg",
-        "src": "assets/curriculum-guide.svg"
-      },
-      "sources": [
-        {
-          "label": "git clone",
-          "url": "https://git-scm.com/docs/git-clone"
-        },
-        {
-          "label": "git status",
-          "url": "https://git-scm.com/docs/git-status"
-        },
-        {
-          "label": "git diff",
-          "url": "https://git-scm.com/docs/git-diff"
-        },
-        {
-          "label": "git log",
-          "url": "https://git-scm.com/docs/git-log"
-        },
-        {
-          "label": "git fetch",
-          "url": "https://git-scm.com/docs/git-fetch"
-        },
-        {
-          "label": "git pullと--ff-only",
-          "url": "https://git-scm.com/docs/git-pull"
-        },
-        {
-          "label": "Git: remote",
-          "url": "https://git-scm.com/docs/git-remote"
-        },
-        {
-          "label": "Git: branch",
-          "url": "https://git-scm.com/docs/git-branch"
-        },
-        {
-          "label": "Git: push",
-          "url": "https://git-scm.com/docs/git-push"
-        }
-      ],
-      "chapterId": "advanced",
-      "route": "advanced/remote",
-      "steps": [
-        {
-          "id": "fetch",
-          "title": "共有先の履歴だけを取得する",
-          "body": [
-            "git fetch originは、originからcommitなどを取得し、origin/mainなどのリモート追跡branchを更新します。origin/mainは、最後に取得した共有先のmainの状態を手元で表す目印です。\n\nfetchだけでは作業中のmainやworking treeのファイルを切り替えません。取得後にstatusやlogを見て、手元と共有先の違いを確認できます。"
-          ],
-          "command": "git fetch origin\ngit status\ngit log --oneline --graph --decorate --all",
-          "takeaway": "fetchは追跡情報を更新し、作業ファイルは変えない。",
-          "notes": [
-            {
-              "id": "inspect-origin-local",
-              "body": "mainとorigin/mainは別の目印です。origin/mainも自分のPCにある追跡情報です。",
-              "showInPresentation": true
-            }
-          ],
-          "diagramState": "fetch",
-          "diagram": {
-            "type": "svg",
-            "src": "assets/operation-map.svg"
-          }
-        },
-        {
-          "id": "remote-and-tracking",
-          "title": "接続先と追跡先を確認する",
-          "body": [
-            "`origin` は接続先に付けた名前です。`git remote -v` で取得先・送信先のURLを、`git branch -vv` で各ローカルbranchのupstreamを確認できます。`origin/main` はfetchした時点のリモート追跡branchです。\n\n新しいbranchを共有するときは、送信先を確認してから `git push -u origin feature/readme` のようにupstreamを設定します。以後の引数なしのpullやpushの動作にも設定が関係するため、意図した相手か確認しましょう。"
-          ],
-          "command": "git remote -v\ngit branch -vv",
-          "takeaway": "originのURLとbranchの追跡先は別々に確認する。",
-          "notes": [],
-          "diagramState": "advanced-remote-remote-and-tracking",
-          "diagram": {
-            "type": "svg",
-            "src": "assets/curriculum-guide.svg"
-          }
-        }
-      ]
-    },
-    {
-      "id": "recover",
-      "title": "revert・reflog",
-      "description": "打ち消す記録と、見失ったcommitを探す操作を使い分けます。",
-      "diagram": {
-        "type": "svg",
-        "src": "assets/curriculum-guide.svg"
-      },
-      "sources": [
-        {
-          "label": "Git公式: git-restore",
-          "url": "https://git-scm.com/docs/git-restore"
-        },
-        {
-          "label": "Git公式: git-stash",
-          "url": "https://git-scm.com/docs/git-stash"
-        },
-        {
-          "label": "Git公式: git-revert",
-          "url": "https://git-scm.com/docs/git-revert"
-        },
-        {
-          "label": "Git公式: git-commit",
-          "url": "https://git-scm.com/docs/git-commit"
-        },
-        {
-          "label": "Git公式: git-reset",
-          "url": "https://git-scm.com/docs/git-reset"
-        },
-        {
-          "label": "Git公式: git-clean",
-          "url": "https://git-scm.com/docs/git-clean"
-        },
-        {
-          "label": "Git: reflog",
-          "url": "https://git-scm.com/docs/git-reflog"
-        },
-        {
-          "label": "Git公式: git-cherry-pick",
-          "url": "https://git-scm.com/docs/git-cherry-pick"
-        },
-        {
-          "label": "Git公式: git-rebase",
-          "url": "https://git-scm.com/docs/git-rebase"
-        },
-        {
-          "label": "Git公式: git-push",
-          "url": "https://git-scm.com/docs/git-push"
-        },
-        {
-          "label": "Git公式: git-worktree",
-          "url": "https://git-scm.com/docs/git-worktree"
-        },
-        {
-          "label": "Git公式: git-submodule",
-          "url": "https://git-scm.com/docs/git-submodule"
-        },
-        {
-          "label": "Git公式: gitrevisions",
-          "url": "https://git-scm.com/docs/gitrevisions"
-        },
-        {
-          "label": "Git公式: git-tag",
-          "url": "https://git-scm.com/docs/git-tag"
-        },
-        {
-          "label": "Git公式: git-switch",
-          "url": "https://git-scm.com/docs/git-switch"
-        },
-        {
-          "label": "Git: branch",
-          "url": "https://git-scm.com/docs/git-branch"
-        }
-      ],
-      "chapterId": "advanced",
-      "route": "advanced/recover",
-      "steps": [
-        {
-          "id": "revert",
-          "title": "共有済みの変更は、新しいコミットで打ち消す",
-          "body": [
-            "共有した履歴を取り消すときは、まずrevertを考えます。対象コミットの変更を逆向きに適用した新しいコミットを作り、既存の履歴を残します。\n\n作業ツリーをきれいにして対象の差分を確認します。例のabc1234は、実際の通常コミットのIDに置き換えてください。競合する場合は解消後に --continue、取りやめるなら --abort を使います。"
-          ],
-          "command": "git show abc1234\ngit revert abc1234",
-          "takeaway": "履歴を消さずに、変更を打ち消す記録を追加する。",
-          "notes": [
-            {
-              "id": "revert-lecture",
-              "body": "revertにも競合があります。対象の変更を読んで選びます。",
-              "showInPresentation": true
-            },
-            {
-              "id": "revert-study",
-              "body": "マージコミットのrevertは、どちらの親を基準にするかを-mで指定する別の判断が必要です。後の再マージにも影響するため、通常コミットの例と区別します。",
-              "showInPresentation": false
-            }
-          ],
-          "diagramState": "revert",
-          "diagram": {
-            "type": "svg",
-            "src": "assets/recovery.svg"
-          }
-        },
-        {
-          "id": "reflog",
-          "title": "見失ったコミットは、参照の履歴から探す",
-          "body": [
-            "reflogは、このローカルリポジトリでHEADやブランチなどの参照が動いた記録です。resetやdetached HEADで見失ったコミットが残っていれば、IDを確認して救済用ブランチを付けられます。\n\ngit reflogで候補を見て、git showで内容を確認し、実際のIDに置き換えてgit branch rescueを作ります。先にreset --hardで上書きする必要はありません。"
-          ],
-          "command": "git reflog\ngit show abc1234\ngit branch rescue abc1234",
-          "takeaway": "見つかったコミットに、まずブランチの名前を付ける。",
-          "notes": [
-            {
-              "id": "reflog-lecture",
-              "body": "reflogは未コミットの編集やcleanしたデータの保険ではありません。",
-              "showInPresentation": true
-            },
-            {
-              "id": "reflog-study",
-              "body": "記録には期限があり、既定のexpireは通常90日、現在の先端から到達できない記録は通常30日ですが、設定次第です。期限切れやGCでオブジェクトが消えれば救済できません。共有先のreflogが手元へ複製されるわけでもありません。",
-              "showInPresentation": false
-            }
-          ],
-          "diagramState": "reflog",
-          "diagram": {
-            "type": "svg",
-            "src": "assets/recovery.svg"
-          }
-        },
-        {
-          "id": "rescue-branch",
-          "title": "見つけたcommitに救出用branchを付ける",
-          "body": [
-            "resetやamendの後で元のcommitを探す場合は、`git reflog` で過去のHEADの移動を確認します。候補のハッシュを `git show` で読み、必要な内容か確かめます。\n\n候補が見つかったら `git branch rescue/work ハッシュ` で名前を付けます。現在の作業ファイルを切り替えずにcommitを参照できるため、そこから比較やcherry-pickを検討できます。reflogは各端末の記録で、未記録のファイル内容や永久保存を保証するものではありません。"
-          ],
-          "command": "git reflog\n# 候補を確認し、実際のハッシュに置き換える\ngit show COMMIT_HASH\ngit branch rescue/work COMMIT_HASH",
-          "takeaway": "戻す前に内容を確かめ、救出用の名前を付ける。",
-          "notes": [],
-          "diagramState": "advanced-recover-rescue-branch",
-          "diagram": {
-            "type": "svg",
-            "src": "assets/curriculum-guide.svg"
-          }
-        }
-      ]
-    },
-    {
-      "id": "tags",
-      "title": "tag・相対参照",
-      "description": "名前や親からの相対位置で、確認する版を指定します。",
-      "diagram": {
-        "type": "svg",
-        "src": "assets/curriculum-guide.svg"
-      },
-      "sources": [
-        {
-          "label": "Git公式: git-restore",
-          "url": "https://git-scm.com/docs/git-restore"
-        },
-        {
-          "label": "Git公式: git-stash",
-          "url": "https://git-scm.com/docs/git-stash"
-        },
-        {
-          "label": "Git公式: git-revert",
-          "url": "https://git-scm.com/docs/git-revert"
-        },
-        {
-          "label": "Git公式: git-commit",
-          "url": "https://git-scm.com/docs/git-commit"
-        },
-        {
-          "label": "Git公式: git-reset",
-          "url": "https://git-scm.com/docs/git-reset"
-        },
-        {
-          "label": "Git公式: git-clean",
-          "url": "https://git-scm.com/docs/git-clean"
-        },
-        {
-          "label": "Git公式: git-reflog",
-          "url": "https://git-scm.com/docs/git-reflog"
-        },
-        {
-          "label": "Git公式: git-cherry-pick",
-          "url": "https://git-scm.com/docs/git-cherry-pick"
-        },
-        {
-          "label": "Git公式: git-rebase",
-          "url": "https://git-scm.com/docs/git-rebase"
-        },
-        {
-          "label": "Git: push",
-          "url": "https://git-scm.com/docs/git-push"
-        },
-        {
-          "label": "Git公式: git-worktree",
-          "url": "https://git-scm.com/docs/git-worktree"
-        },
-        {
-          "label": "Git公式: git-submodule",
-          "url": "https://git-scm.com/docs/git-submodule"
-        },
-        {
-          "label": "Git公式: gitrevisions",
-          "url": "https://git-scm.com/docs/gitrevisions"
-        },
-        {
-          "label": "Git: tag",
-          "url": "https://git-scm.com/docs/git-tag"
-        },
-        {
-          "label": "Git公式: git-switch",
-          "url": "https://git-scm.com/docs/git-switch"
-        }
-      ],
-      "chapterId": "advanced",
-      "route": "advanced/tags",
-      "steps": [
-        {
-          "id": "revisions",
-          "title": "相対参照とタグで、見る版を指定する",
-          "body": [
-            "HEAD~2は第一親を2回たどったコミットです。HEAD^またはHEAD^1は第一親、HEAD^2は第二親を指定します。^2は「2つ前」ではなく、第二親があるマージコミットなどで使います。\n\nタグは特定の版に名前を付けます。例のv1.0を作ると、以後はgit show v1.0でその版を確認できます。タグはブランチのように新しいコミットへ自動で進みません。~や^を含む指定はシェルに解釈させないようクォートしています。"
-          ],
-          "command": "git show 'HEAD~2'\n# HEADがマージコミットの場合だけ\ngit show 'HEAD^2'\ngit tag -a v1.0 -m \"解析の基準版\"\ngit show v1.0",
-          "takeaway": "~は第一親をたどる回数、^はどの親を選ぶか。",
-          "notes": [
-            {
-              "id": "revisions-lecture",
-              "body": "コミットID、相対参照、タグは、版を指定する別の書き方です。",
-              "showInPresentation": true
-            },
-            {
-              "id": "revisions-study",
-              "body": "HEAD~2は時刻順に並べたログの上から3行目とは限りません。HEAD^2に第二親がなければエラーです。タグを共有するなら git push origin v1.0 のように対象を指定します。",
-              "showInPresentation": false
-            }
-          ],
-          "diagramState": "revisions",
-          "diagram": {
-            "type": "svg",
-            "src": "assets/recovery.svg"
-          }
-        },
-        {
-          "id": "release-tag",
-          "title": "tagで公開した版に名前を付ける",
-          "body": [
-            "branchはcommitに伴って先へ進みます。tagは、公開版などの特定のcommitを指す名前として使います。注釈付きtagには説明や作成者、日時も記録できます。\n\n作業内容とテスト結果を確認したcommitで `git tag -a v1.0.0 -m \"First release\"` を作り、`git show v1.0.0` で対象を確かめます。tagはローカルで作成されるので、共有するときは `git push origin v1.0.0` と対象を明示します。"
-          ],
-          "command": "git tag -a v1.0.0 -m \"First release\"\ngit show v1.0.0\n# 共有するときだけ実行する例\n# git push origin v1.0.0",
-          "takeaway": "branchは作業の先端、tagは版の目印。",
-          "notes": [],
-          "diagramState": "advanced-tags-release-tag",
-          "diagram": {
-            "type": "svg",
-            "src": "assets/curriculum-guide.svg"
-          }
-        }
-      ]
-    },
-    {
-      "id": "bisect",
-      "title": "bisect",
-      "description": "正常・不具合のある版の間から、原因になったcommitを絞ります。",
-      "diagram": {
-        "type": "svg",
-        "src": "assets/curriculum-guide.svg"
-      },
-      "sources": [
-        {
-          "label": "Git: bisect",
-          "url": "https://git-scm.com/docs/git-bisect"
-        }
-      ],
-      "chapterId": "advanced",
-      "route": "advanced/bisect",
-      "steps": [
-        {
-          "id": "bisect-start",
-          "title": "bisectで不具合が入ったcommitを絞る",
-          "body": [
-            "「この版では正常」「この版では不具合が出る」という2点と、同じ条件で再現できる確認手順を用意します。作業中の変更は先に保存し、調査中に何度も作業ファイルが切り替わることを理解して始めます。\n\n下の `BAD_COMMIT` と `GOOD_COMMIT` は実際に確認したハッシュへ置き換えます。bisectが選ぶ途中のcommitで同じ確認を繰り返し、正常ならgood、不具合が出ればbadと伝えます。"
-          ],
-          "command": "git status\n# 以下の2語を実際のハッシュに置き換える\ngit bisect start\ngit bisect bad BAD_COMMIT\ngit bisect good GOOD_COMMIT",
-          "takeaway": "正常な版と不具合のある版の間を、半分ずつ調べる。",
-          "notes": [],
-          "diagramState": "advanced-bisect-bisect-start",
-          "diagram": {
-            "type": "svg",
-            "src": "assets/curriculum-guide.svg"
-          }
-        },
-        {
-          "id": "bisect-finish",
-          "title": "判定を繰り返し、調査を終了する",
-          "body": [
-            "選ばれたcommitをビルド・実行して、結果に応じて `git bisect good` または `git bisect bad` を一方だけ実行します。依存関係などの理由で判定できない版には `git bisect skip` が使えますが、候補が一つに絞れない場合もあります。\n\n原因候補が表示されたらハッシュを控え、`git bisect reset` で調査前の位置に戻ります。その後に差分を読み、原因の仮説を検証します。ここでのresetはbisectを終えるサブコマンドです。"
-          ],
-          "command": "# 確認結果に応じて一方を実行する例\n# git bisect good\n# git bisect bad\n# 結果のハッシュを控えて終了\ngit bisect reset",
-          "takeaway": "判定条件を揃え、終わったら bisect reset。",
-          "notes": [],
-          "diagramState": "advanced-bisect-bisect-finish",
-          "diagram": {
-            "type": "svg",
-            "src": "assets/curriculum-guide.svg"
           }
         }
       ]
@@ -7440,6 +6840,356 @@
             }
           ],
           "diagramState": "tips-aliases-powershell-function",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/curriculum-guide.svg"
+          }
+        }
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Gitコマンド（応用）",
+      "description": "比較・調査・復元の道具を、目的に応じて選べるようにします。",
+      "diagram": {
+        "type": "svg",
+        "src": "assets/curriculum-guide.svg"
+      },
+      "sources": [
+        {
+          "label": "git clone",
+          "url": "https://git-scm.com/docs/git-clone"
+        },
+        {
+          "label": "git status",
+          "url": "https://git-scm.com/docs/git-status"
+        },
+        {
+          "label": "git diff",
+          "url": "https://git-scm.com/docs/git-diff"
+        },
+        {
+          "label": "git log",
+          "url": "https://git-scm.com/docs/git-log"
+        },
+        {
+          "label": "git fetch",
+          "url": "https://git-scm.com/docs/git-fetch"
+        },
+        {
+          "label": "git pullと--ff-only",
+          "url": "https://git-scm.com/docs/git-pull"
+        },
+        {
+          "label": "Git: show",
+          "url": "https://git-scm.com/docs/git-show"
+        },
+        {
+          "label": "Git: blame",
+          "url": "https://git-scm.com/docs/git-blame"
+        },
+        {
+          "label": "Git: remote",
+          "url": "https://git-scm.com/docs/git-remote"
+        },
+        {
+          "label": "Git: branch",
+          "url": "https://git-scm.com/docs/git-branch"
+        },
+        {
+          "label": "Git: push",
+          "url": "https://git-scm.com/docs/git-push"
+        },
+        {
+          "label": "Git公式: git-restore",
+          "url": "https://git-scm.com/docs/git-restore"
+        },
+        {
+          "label": "Git公式: git-stash",
+          "url": "https://git-scm.com/docs/git-stash"
+        },
+        {
+          "label": "Git公式: git-revert",
+          "url": "https://git-scm.com/docs/git-revert"
+        },
+        {
+          "label": "Git公式: git-commit",
+          "url": "https://git-scm.com/docs/git-commit"
+        },
+        {
+          "label": "Git公式: git-reset",
+          "url": "https://git-scm.com/docs/git-reset"
+        },
+        {
+          "label": "Git公式: git-clean",
+          "url": "https://git-scm.com/docs/git-clean"
+        },
+        {
+          "label": "Git公式: git-reflog",
+          "url": "https://git-scm.com/docs/git-reflog"
+        },
+        {
+          "label": "Git公式: git-cherry-pick",
+          "url": "https://git-scm.com/docs/git-cherry-pick"
+        },
+        {
+          "label": "Git公式: git-rebase",
+          "url": "https://git-scm.com/docs/git-rebase"
+        },
+        {
+          "label": "Git公式: git-worktree",
+          "url": "https://git-scm.com/docs/git-worktree"
+        },
+        {
+          "label": "Git公式: git-submodule",
+          "url": "https://git-scm.com/docs/git-submodule"
+        },
+        {
+          "label": "Git公式: gitrevisions",
+          "url": "https://git-scm.com/docs/gitrevisions"
+        },
+        {
+          "label": "Git: tag",
+          "url": "https://git-scm.com/docs/git-tag"
+        },
+        {
+          "label": "Git公式: git-switch",
+          "url": "https://git-scm.com/docs/git-switch"
+        },
+        {
+          "label": "Git: bisect",
+          "url": "https://git-scm.com/docs/git-bisect"
+        }
+      ],
+      "chapterId": "tips",
+      "route": "tips/advanced",
+      "steps": [
+        {
+          "id": "diff",
+          "title": "何が変わったかをdiffで読む",
+          "body": [
+            "git diffはworking treeとindexを比べ、まだaddしていない編集を表示します。git diff --stagedはindexと現在のcommitを比べ、次のcommitに入る変更を表示します。\n\n同じファイルでもaddの前後で表示先が変わります。未追跡ファイルの中身は通常のdiffには出ません。ファイルをエディターで確認してからaddします。"
+          ],
+          "command": "git diff\ngit diff --staged",
+          "takeaway": "diffとdiff --stagedは、比較する場所が違う。",
+          "notes": [
+            {
+              "id": "inspect-diff-pager",
+              "body": "長い表示がページャーで開いたらqで戻れます。−は削除側、+は追加側の行です。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "diff",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-inspect.svg"
+          }
+        },
+        {
+          "id": "log",
+          "title": "commitのつながりを読む",
+          "body": [
+            "logは記録済みのcommitを表示します。--onelineで1件を短く、--graphで親子関係を線で、--decorateでbranchなどの目印を表示します。\n\n--allを付けると、複数のbranchなどの参照からたどれる履歴をまとめて見られます。未commitの編集はこの図には出ません。HEADやbranchの関係は「Gitの難関 “branch” を理解する」のまとめでも確認できます。"
+          ],
+          "command": "git log --oneline --graph --decorate --all",
+          "takeaway": "logに並ぶのは、記録済みのcommit。",
+          "notes": [
+            {
+              "id": "inspect-log-order",
+              "body": "通常は新しいcommitが上に表示されます。図の線は親子関係で、単なる時刻の順番ではありません。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "log",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-inspect.svg"
+          }
+        },
+        {
+          "id": "show-and-blame",
+          "title": "変更の由来を show と blame でたどる",
+          "body": [
+            "`git show HEAD` は最新commitの説明と差分を読みます。`git blame README.md` は各行を最後に変更したcommitを示します。気になる行のハッシュを `git show` に渡すと、変更理由を調べられます。\n\nblameの名前だけで原因を決めず、commit全体と周辺の履歴を読みましょう。整形だけの変更が直近の履歴になる場合もあります。どちらも履歴を読む操作で、ファイルは変わりません。"
+          ],
+          "command": "git show HEAD\ngit blame README.md",
+          "takeaway": "行からcommitへ進み、差分と説明を合わせて読む。",
+          "notes": [],
+          "diagramState": "advanced-inspect-show-and-blame",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/curriculum-guide.svg"
+          }
+        },
+        {
+          "id": "fetch",
+          "title": "共有先の履歴だけを取得する",
+          "body": [
+            "git fetch originは、originからcommitなどを取得し、origin/mainなどのリモート追跡branchを更新します。origin/mainは、最後に取得した共有先のmainの状態を手元で表す目印です。\n\nfetchだけでは作業中のmainやworking treeのファイルを切り替えません。取得後にstatusやlogを見て、手元と共有先の違いを確認できます。"
+          ],
+          "command": "git fetch origin\ngit status\ngit log --oneline --graph --decorate --all",
+          "takeaway": "fetchは追跡情報を更新し、作業ファイルは変えない。",
+          "notes": [
+            {
+              "id": "inspect-origin-local",
+              "body": "mainとorigin/mainは別の目印です。origin/mainも自分のPCにある追跡情報です。",
+              "showInPresentation": true
+            }
+          ],
+          "diagramState": "fetch",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/operation-map.svg"
+          }
+        },
+        {
+          "id": "remote-and-tracking",
+          "title": "接続先と追跡先を確認する",
+          "body": [
+            "`origin` は接続先に付けた名前です。`git remote -v` で取得先・送信先のURLを、`git branch -vv` で各ローカルbranchのupstreamを確認できます。`origin/main` はfetchした時点のリモート追跡branchです。\n\n新しいbranchを共有するときは、送信先を確認してから `git push -u origin feature/readme` のようにupstreamを設定します。以後の引数なしのpullやpushの動作にも設定が関係するため、意図した相手か確認しましょう。"
+          ],
+          "command": "git remote -v\ngit branch -vv",
+          "takeaway": "originのURLとbranchの追跡先は別々に確認する。",
+          "notes": [],
+          "diagramState": "advanced-remote-remote-and-tracking",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/curriculum-guide.svg"
+          }
+        },
+        {
+          "id": "revert",
+          "title": "共有済みの変更は、新しいコミットで打ち消す",
+          "body": [
+            "共有した履歴を取り消すときは、まずrevertを考えます。対象コミットの変更を逆向きに適用した新しいコミットを作り、既存の履歴を残します。\n\n作業ツリーをきれいにして対象の差分を確認します。例のabc1234は、実際の通常コミットのIDに置き換えてください。競合する場合は解消後に --continue、取りやめるなら --abort を使います。"
+          ],
+          "command": "git show abc1234\ngit revert abc1234",
+          "takeaway": "履歴を消さずに、変更を打ち消す記録を追加する。",
+          "notes": [
+            {
+              "id": "revert-lecture",
+              "body": "revertにも競合があります。対象の変更を読んで選びます。",
+              "showInPresentation": true
+            },
+            {
+              "id": "revert-study",
+              "body": "マージコミットのrevertは、どちらの親を基準にするかを-mで指定する別の判断が必要です。後の再マージにも影響するため、通常コミットの例と区別します。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "revert",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
+        },
+        {
+          "id": "reflog",
+          "title": "見失ったコミットは、参照の履歴から探す",
+          "body": [
+            "reflogは、このローカルリポジトリでHEADやブランチなどの参照が動いた記録です。resetやdetached HEADで見失ったコミットが残っていれば、IDを確認して救済用ブランチを付けられます。\n\ngit reflogで候補を見て、git showで内容を確認し、実際のIDに置き換えてgit branch rescueを作ります。先にreset --hardで上書きする必要はありません。"
+          ],
+          "command": "git reflog\ngit show abc1234\ngit branch rescue abc1234",
+          "takeaway": "見つかったコミットに、まずブランチの名前を付ける。",
+          "notes": [
+            {
+              "id": "reflog-lecture",
+              "body": "reflogは未コミットの編集やcleanしたデータの保険ではありません。",
+              "showInPresentation": true
+            },
+            {
+              "id": "reflog-study",
+              "body": "記録には期限があり、既定のexpireは通常90日、現在の先端から到達できない記録は通常30日ですが、設定次第です。期限切れやGCでオブジェクトが消えれば救済できません。共有先のreflogが手元へ複製されるわけでもありません。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "reflog",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
+        },
+        {
+          "id": "rescue-branch",
+          "title": "見つけたcommitに救出用branchを付ける",
+          "body": [
+            "resetやamendの後で元のcommitを探す場合は、`git reflog` で過去のHEADの移動を確認します。候補のハッシュを `git show` で読み、必要な内容か確かめます。\n\n候補が見つかったら `git branch rescue/work ハッシュ` で名前を付けます。現在の作業ファイルを切り替えずにcommitを参照できるため、そこから比較やcherry-pickを検討できます。reflogは各端末の記録で、未記録のファイル内容や永久保存を保証するものではありません。"
+          ],
+          "command": "git reflog\n# 候補を確認し、実際のハッシュに置き換える\ngit show COMMIT_HASH\ngit branch rescue/work COMMIT_HASH",
+          "takeaway": "戻す前に内容を確かめ、救出用の名前を付ける。",
+          "notes": [],
+          "diagramState": "advanced-recover-rescue-branch",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/curriculum-guide.svg"
+          }
+        },
+        {
+          "id": "revisions",
+          "title": "相対参照とタグで、見る版を指定する",
+          "body": [
+            "HEAD~2は第一親を2回たどったコミットです。HEAD^またはHEAD^1は第一親、HEAD^2は第二親を指定します。^2は「2つ前」ではなく、第二親があるマージコミットなどで使います。\n\nタグは特定の版に名前を付けます。例のv1.0を作ると、以後はgit show v1.0でその版を確認できます。タグはブランチのように新しいコミットへ自動で進みません。~や^を含む指定はシェルに解釈させないようクォートしています。"
+          ],
+          "command": "git show 'HEAD~2'\n# HEADがマージコミットの場合だけ\ngit show 'HEAD^2'\ngit tag -a v1.0 -m \"解析の基準版\"\ngit show v1.0",
+          "takeaway": "~は第一親をたどる回数、^はどの親を選ぶか。",
+          "notes": [
+            {
+              "id": "revisions-lecture",
+              "body": "コミットID、相対参照、タグは、版を指定する別の書き方です。",
+              "showInPresentation": true
+            },
+            {
+              "id": "revisions-study",
+              "body": "HEAD~2は時刻順に並べたログの上から3行目とは限りません。HEAD^2に第二親がなければエラーです。タグを共有するなら git push origin v1.0 のように対象を指定します。",
+              "showInPresentation": false
+            }
+          ],
+          "diagramState": "revisions",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
+        },
+        {
+          "id": "release-tag",
+          "title": "tagで公開した版に名前を付ける",
+          "body": [
+            "branchはcommitに伴って先へ進みます。tagは、公開版などの特定のcommitを指す名前として使います。注釈付きtagには説明や作成者、日時も記録できます。\n\n作業内容とテスト結果を確認したcommitで `git tag -a v1.0.0 -m \"First release\"` を作り、`git show v1.0.0` で対象を確かめます。tagはローカルで作成されるので、共有するときは `git push origin v1.0.0` と対象を明示します。"
+          ],
+          "command": "git tag -a v1.0.0 -m \"First release\"\ngit show v1.0.0\n# 共有するときだけ実行する例\n# git push origin v1.0.0",
+          "takeaway": "branchは作業の先端、tagは版の目印。",
+          "notes": [],
+          "diagramState": "advanced-tags-release-tag",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/curriculum-guide.svg"
+          }
+        },
+        {
+          "id": "bisect-start",
+          "title": "bisectで不具合が入ったcommitを絞る",
+          "body": [
+            "「この版では正常」「この版では不具合が出る」という2点と、同じ条件で再現できる確認手順を用意します。作業中の変更は先に保存し、調査中に何度も作業ファイルが切り替わることを理解して始めます。\n\n下の `BAD_COMMIT` と `GOOD_COMMIT` は実際に確認したハッシュへ置き換えます。bisectが選ぶ途中のcommitで同じ確認を繰り返し、正常ならgood、不具合が出ればbadと伝えます。"
+          ],
+          "command": "git status\n# 以下の2語を実際のハッシュに置き換える\ngit bisect start\ngit bisect bad BAD_COMMIT\ngit bisect good GOOD_COMMIT",
+          "takeaway": "正常な版と不具合のある版の間を、半分ずつ調べる。",
+          "notes": [],
+          "diagramState": "advanced-bisect-bisect-start",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/curriculum-guide.svg"
+          }
+        },
+        {
+          "id": "bisect-finish",
+          "title": "判定を繰り返し、調査を終了する",
+          "body": [
+            "選ばれたcommitをビルド・実行して、結果に応じて `git bisect good` または `git bisect bad` を一方だけ実行します。依存関係などの理由で判定できない版には `git bisect skip` が使えますが、候補が一つに絞れない場合もあります。\n\n原因候補が表示されたらハッシュを控え、`git bisect reset` で調査前の位置に戻ります。その後に差分を読み、原因の仮説を検証します。ここでのresetはbisectを終えるサブコマンドです。"
+          ],
+          "command": "# 確認結果に応じて一方を実行する例\n# git bisect good\n# git bisect bad\n# 結果のハッシュを控えて終了\ngit bisect reset",
+          "takeaway": "判定条件を揃え、終わったら bisect reset。",
+          "notes": [],
+          "diagramState": "advanced-bisect-bisect-finish",
           "diagram": {
             "type": "svg",
             "src": "assets/curriculum-guide.svg"

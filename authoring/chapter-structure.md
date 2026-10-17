@@ -2,7 +2,7 @@
 
 2026-10-18に、ワークスペース直下の `ppt-src.pptx` を読み、108枚すべてのスライドXMLからテキストを抽出できた。確認用テキストはワークスペースの `tmp/ppt-outline-20261018.json` にある。元PPTは変更していない。同梱の `presentation/git-seminar.pdf` は88ページであり、PPT末尾のTips案・補助図を含む全体と同一ではない。
 
-教材は **Chapter → Section → Slide（Step）** の3階層へ再構成した。Sectionごとにページを分け、Stepは内容の重さと図の切り替えに合わせて分割する。2026-10-18時点では7 Chapter・30 Section・111 Step。ファイル数や節数を完成度の指標にはしない。
+教材は **Chapter → Section → Slide（Step）** の3階層へ再構成した。Sectionごとにページを分け、Stepは内容の重さと図の切り替えに合わせて分割する。2026-10-18の配置修正後は5 Chapter・23 Section・111 Step。ファイル数や節数を完成度の指標にはしない。
 
 ## 指定された章とSection順
 
@@ -11,12 +11,10 @@
 | はじめに | 学習の準備 → まずは結論 |
 | 個人開発を管理しよう | Git導入のモチベーション → Git管理の流れ → Gitコマンド（超基本）絶対に覚える → Gitコマンド（基本）調べながら使えるようにしておく → Gitを試してみよう → 前半のまとめ |
 | Gitの難関 “branch” を理解する | Gitの仕組みを知ろう → commit/branch/HEADとはなにか？ → detached HEADについて知ろう → まとめ |
-| 共同開発を管理しよう | Markdownを書こう → Issueを立てよう → ハンズオン（Pull request、merge、Conflict） |
-| Gitコマンド（標準・ブランチ周辺） | branch → checkout/switch → rebase → restore |
-| Gitコマンド（応用） | log・diff・show・blame → remote・fetch → revert・reflog → tag・相対参照 → bisect |
-| その他Tipsから少しむずかしいところまで | worktree → submodule → conflict周辺のいろいろ → Git管理していてもコードが消えてしまうケース → Git configエイリアスの設定とシェルスクリプトのエイリアス → ghコマンド |
+| 共同開発を管理しよう | Markdownを書こう → Issueを立てよう → ハンズオン（Pull request、merge、Conflict） → Gitコマンド（標準・ブランチ周辺） |
+| その他Tipsから少しむずかしいところまで | worktree → submodule → conflict周辺のいろいろ → Git管理していてもコードが消えてしまうケース → Git configエイリアスの設定とシェルスクリプトのエイリアス → Gitコマンド（応用） → ghコマンド |
 
-先頭から5章目までとTipsのSectionは依頼された主題・順序に対応する。応用のSectionは比較・調査・復元を目的に補った。見出しの正本は各 `chapter.json` と `section.json` に置く。
+Sectionは依頼された主題・順序に対応する。標準コマンドのSection内ではbranch・checkout/switch・rebase・restoreの順にStepを並べる。応用コマンドのSection内ではlog・diff・show・blame、remote・fetch、revert・reflog、tag・相対参照、bisectを扱う。今回移動したページの旧URLも `redirects` で新しいStepへ転送する。見出しの正本は各 `chapter.json` と `section.json` に置く。
 
 ## PPTとの対応
 
@@ -52,4 +50,4 @@ SSH認証はPPT 15の暗号化・復号図をそのまま写さず、公開鍵�
 
 ## 検証記録
 
-再構成時のschema v2テストは7件成功し、整合性検証は7章・30 Section・111 Stepについて通過した。ID・順序・ファイル・転送先・SVG状態・graph参照を検証している。目視確認は別途必要であり、この記録だけで全Stepの視覚的な完成を示すものではない。
+schema v2テストと整合性検証では、5章・23 Section・111 StepのID・順序・ファイル・転送先・SVG状態・graph参照を確認する。目視確認は別途必要であり、この記録だけで全Stepの視覚的な完成を示すものではない。

@@ -1,7 +1,7 @@
 {
-  "id": "rebase",
-  "title": "rebase",
-  "description": "同じ出発点をmergeと比較し、作り直されるcommitを読みます。",
+  "id": "branch-commands",
+  "title": "Gitコマンド（標準・ブランチ周辺）",
+  "description": "branchの操作、切り替え、履歴の適用し直し、ファイルの復元を整理します。",
   "diagram": {
     "type": "svg",
     "src": "assets/curriculum-guide.svg"
@@ -69,6 +69,10 @@
     }
   ],
   "steps": [
-    "rebase.md"
+    "branch.md",
+    "checkout-switch.md",
+    "rebase.md",
+    "restore-worktree.md",
+    "restore-index.md"
   ]
 }

@@ -1,6 +1,6 @@
 # GitゼミのHTML教材
 
-教材は **Chapter → Section → Slide（Step）** の3階層です。Sectionを1ページとし、その中のStepを自学習では順に読み、講義では1枚ずつ表示します。現在の7章構成と原資料の対応は [authoring/chapter-structure.md](./authoring/chapter-structure.md) に記載しています。
+教材は **Chapter → Section → Slide（Step）** の3階層です。Sectionを1ページとし、その中のStepを自学習では順に読み、講義では1枚ずつ表示します。現在の5章構成と原資料の対応は [authoring/chapter-structure.md](./authoring/chapter-structure.md) に記載しています。
 
 ## ローカルで確認する
 

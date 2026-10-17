@@ -6,6 +6,7 @@
   "sections": [
     "01-markdown",
     "02-issues",
-    "03-hands-on"
+    "03-hands-on",
+    "04-branch-commands"
   ]
 }

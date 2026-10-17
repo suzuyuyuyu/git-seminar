@@ -131,16 +131,14 @@ test('graphはcontent配下に限定し、redirectは既存Stepの完全なル�
   }
 }));
 
-test('実教材は指定された7 ChapterとSection順を保つ', () => {
+test('実教材は指定された5 ChapterとSection順を保つ', () => {
   const data = buildCourse({ output: null });
   const expected = {
     intro: ['preparation', 'conclusion'],
     solo: ['motivation', 'flow', 'essential', 'basic', 'practice', 'summary'],
     branches: ['internals', 'concepts', 'detached', 'summary'],
-    collaboration: ['markdown', 'issues', 'hands-on'],
-    'branch-commands': ['branch', 'switch', 'rebase', 'restore'],
-    advanced: ['inspect', 'remote', 'recover', 'tags', 'bisect'],
-    tips: ['worktree', 'submodule', 'conflicts', 'data-loss', 'aliases', 'gh'],
+    collaboration: ['markdown', 'issues', 'hands-on', 'branch-commands'],
+    tips: ['worktree', 'submodule', 'conflicts', 'data-loss', 'aliases', 'advanced', 'gh'],
   };
   assert.deepEqual(data.chapters.map(chapter => chapter.id), Object.keys(expected));
   for (const chapter of data.chapters) {
@@ -152,6 +150,13 @@ test('実教材は指定された7 ChapterとSection順を保つ', () => {
   const basic = data.sections.find(section => section.route === 'solo/basic');
   const basicCommands = ['init', 'reset', 'clean', 'stash', 'merge-model', 'cherry-pick'];
   assert.deepEqual(basic.steps.map(step => step.id).filter(id => basicCommands.includes(id)), basicCommands);
+  const standard = data.sections.find(section => section.route === 'collaboration/branch-commands');
+  assert.deepEqual(standard.steps.map(step => step.id), ['branch', 'checkout-switch', 'rebase', 'restore-worktree', 'restore-index']);
+  const advanced = data.sections.find(section => section.route === 'tips/advanced');
+  assert.equal(advanced.steps.length, 12);
+  assert.equal(data.sections.reduce((sum, section) => sum + section.steps.length, 0), 111);
+  assert.equal(data.redirects['branch-commands/rebase/rebase'], 'collaboration/branch-commands/rebase');
+  assert.equal(data.redirects['advanced/bisect/bisect-start'], 'tips/advanced/bisect-start');
   const routes = new Set(data.sections.flatMap(section => section.steps.map(step => `${section.route}/${step.id}`)));
   for (const destination of Object.values(data.redirects)) assert.ok(routes.has(destination), destination);
 });
