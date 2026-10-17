@@ -1,0 +1,76 @@
+{
+  "id": "hands-on",
+  "title": "ハンズオン（Pull request、merge、Conflict）",
+  "description": "cloneからbranch・PRを試し、別の練習用履歴で競合を作って解消します。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/curriculum-guide.svg"
+  },
+  "sources": [
+    {
+      "label": "Git：オブジェクトの構造",
+      "url": "https://git-scm.com/book/en/v2/Git-Internals-Git-Objects"
+    },
+    {
+      "label": "Git：branch",
+      "url": "https://git-scm.com/docs/git-branch"
+    },
+    {
+      "label": "Git：switchとdetached HEAD",
+      "url": "https://git-scm.com/docs/git-switch"
+    },
+    {
+      "label": "Git：相対位置の~と^",
+      "url": "https://git-scm.com/docs/gitrevisions"
+    },
+    {
+      "label": "Git：mergeと競合解消",
+      "url": "https://git-scm.com/docs/git-merge"
+    },
+    {
+      "label": "Git：clone",
+      "url": "https://git-scm.com/docs/git-clone"
+    },
+    {
+      "label": "Git：push",
+      "url": "https://git-scm.com/docs/git-push"
+    },
+    {
+      "label": "GitHub Docs：Pull Request",
+      "url": "https://docs.github.com/en/pull-requests/reference/pull-requests"
+    },
+    {
+      "label": "GitLab Docs：Merge Request",
+      "url": "https://docs.gitlab.com/user/project/merge_requests/"
+    },
+    {
+      "label": "Git：pull",
+      "url": "https://git-scm.com/docs/git-pull"
+    },
+    {
+      "label": "GitHub Docs：ブラウザで競合を解消する",
+      "url": "https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/resolving-a-merge-conflict-on-github"
+    }
+  ],
+  "steps": [
+    "clone.md",
+    "create.md",
+    "switch.md",
+    "edit.md",
+    "feature-commit.md",
+    "push-pr.md",
+    "publish.md",
+    "review.md",
+    "sync.md",
+    "conflict-setup.md",
+    "conflict-history.md",
+    "diverge.md",
+    "conflict-choice.md",
+    "conflict-merge.md",
+    "markers.md",
+    "resolve.md",
+    "record.md",
+    "alternatives.md"
+  ],
+  "graph": "graphs/branches.json"
+}

@@ -1,0 +1,52 @@
+{
+  "id": "gh",
+  "title": "ghコマンド",
+  "description": "GitHub CLIからIssueやPRを確認し、目的に応じて操作します。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/curriculum-guide.svg"
+  },
+  "sources": [
+    {
+      "label": "GitHub CLI: auth status",
+      "url": "https://cli.github.com/manual/gh_auth_status"
+    },
+    {
+      "label": "GitHub CLI: auth login",
+      "url": "https://cli.github.com/manual/gh_auth_login"
+    },
+    {
+      "label": "GitHub CLI: repo view",
+      "url": "https://cli.github.com/manual/gh_repo_view"
+    },
+    {
+      "label": "GitHub CLI: issue list",
+      "url": "https://cli.github.com/manual/gh_issue_list"
+    },
+    {
+      "label": "GitHub CLI: issue view",
+      "url": "https://cli.github.com/manual/gh_issue_view"
+    },
+    {
+      "label": "GitHub CLI: issue create",
+      "url": "https://cli.github.com/manual/gh_issue_create"
+    },
+    {
+      "label": "GitHub CLI: pr create",
+      "url": "https://cli.github.com/manual/gh_pr_create"
+    },
+    {
+      "label": "GitHub CLI: pr view",
+      "url": "https://cli.github.com/manual/gh_pr_view"
+    },
+    {
+      "label": "GitHub CLI: pr checks",
+      "url": "https://cli.github.com/manual/gh_pr_checks"
+    }
+  ],
+  "steps": [
+    "gh-intro.md",
+    "gh-issue-workflow.md",
+    "gh-pr-workflow.md"
+  ]
+}

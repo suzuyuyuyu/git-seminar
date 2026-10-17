@@ -1,0 +1,37 @@
+{
+  "id": "markdown",
+  "title": "Markdownを書こう",
+  "description": "READMEを読みやすくし、共同作業に必要な説明を用意します。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/curriculum-guide.svg"
+  },
+  "sources": [
+    {
+      "label": "GitHub Docs：README",
+      "url": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes"
+    },
+    {
+      "label": "Git：gitignore",
+      "url": "https://git-scm.com/docs/gitignore"
+    },
+    {
+      "label": "GitHub Docs：リポジトリのライセンス",
+      "url": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository"
+    },
+    {
+      "label": "GitHub Docs：Markdownの基本",
+      "url": "https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax"
+    },
+    {
+      "label": "GitHub Docs：Issue",
+      "url": "https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/about-issues"
+    }
+  ],
+  "steps": [
+    "markdown.md",
+    "readme.md",
+    "ignore.md",
+    "license.md"
+  ]
+}

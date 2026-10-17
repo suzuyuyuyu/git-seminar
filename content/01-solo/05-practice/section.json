@@ -1,0 +1,39 @@
+{
+  "id": "practice",
+  "title": "Gitを試してみよう",
+  "description": "GitHubで作成してSSHでcloneし、hello.pyの作成からpushまで試します。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/curriculum-guide.svg"
+  },
+  "sources": [
+    {
+      "label": "git init",
+      "url": "https://git-scm.com/docs/git-init"
+    },
+    {
+      "label": "変更を記録する",
+      "url": "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository"
+    },
+    {
+      "label": "GitHubに新しいリポジトリを作る",
+      "url": "https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository"
+    },
+    {
+      "label": "git remote",
+      "url": "https://git-scm.com/docs/git-remote"
+    },
+    {
+      "label": "git push",
+      "url": "https://git-scm.com/docs/git-push"
+    }
+  ],
+  "steps": [
+    "create-repository.md",
+    "ssh-clone.md",
+    "edit.md",
+    "record.md",
+    "publish.md",
+    "exercise.md"
+  ]
+}

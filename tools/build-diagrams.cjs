@@ -148,15 +148,15 @@ const processCard = (x, y, w, title, lines, cls = 'card') => rect(x, y, w, 170, 
   text(x + 24, y + 42, title, 'strong') + lines.map((s, i) => text(x + 24, y + 90 + i * 38, s, 'small')).join('');
 
 integration.publish = group('publish', 'pushで共有してから、PRで統合を提案する',
-  processCard(40, 165, 425, '手元：feature/pr-demo', ['commitした変更', 'mainへの統合は、まだ先']) +
+  processCard(40, 165, 425, '手元：feature/name', ['commitした変更', 'mainへの統合は、まだ先']) +
   arrow(490, 250, 610) + text(550, 210, 'push', 'mono', 'middle') +
-  processCard(645, 165, 435, '共有先：feature/pr-demo', ['同じcommitを送る', 'GitHubでPRを作る']) +
+  processCard(645, 165, 435, '共有先：feature/name', ['同じcommitを送る', 'GitHubでPRを作る']) +
   rect(40, 405, 1040, 105, 'note') + text(68, 450, 'PRに書くこと', 'strong') + text(340, 468, '目的・関連Issue・変更点・確認結果', 'small'),
   'pushはbranchの共有。PRは、その変更をmainへ取り込むための提案。');
 
 integration.review = group('review', 'PRでは、取り込み先・変更元・差分を確認する',
   processCard(40, 125, 430, 'base：取り込み先', ['main', 'ここへ変更を取り込む']) +
-  processCard(650, 125, 430, 'compare：変更元', ['feature/pr-demo', 'このbranchの変更を提案']) +
+  processCard(650, 125, 430, 'compare：変更元', ['feature/name', 'このbranchの変更を提案']) +
   arrow(620, 210, 500) + text(560, 170, '統合', 'small', 'middle') +
   rect(40, 365, 1040, 150) + text(70, 410, '目的・差分・動作をレビュー', 'strong') +
   text(70, 459, '修正があれば同じbranchでcommit → push。確認してからmainへmerge。', 'small'),

@@ -26,22 +26,23 @@
           <p class="intro-description">Gitのしくみを図で確かめながら、個人の作業から共同開発までを学びます。講義で使う図を、あとから自分のペースで読み返せます。</p>
         </div>
         <div class="course-guide">
-          <div><span class="guide-label">学び方</span><p>Chapterの順に読み、図とコマンドを確かめながら手を動かしましょう。</p></div>
+          <div><span class="guide-label">学び方</span><p>Chapter → Section → Stepの順に学びます。Sectionごとにページを開き、図とコマンドを確かめながら手を動かしましょう。</p></div>
           <div><span class="guide-label">2つの表示</span><p><strong>自学習</strong>は説明と補足をじっくり読むために。<strong>講義</strong>は図と要点を大きく見るために。</p></div>
         </div>
-        <div class="toc-section-heading"><h2>Chapter</h2><span>上から順に学ぶ</span></div>
+        <div class="toc-section-heading"><h2>Chapters &amp; Sections</h2><span>上から順に学ぶ</span></div>
         <div id="chapter-list" class="chapter-list"></div>
         <p id="course-status" class="toc-footnote"></p>
       </section>
 
       <section id="study-view" class="study-view" hidden aria-labelledby="lesson-title">
+        <nav id="study-breadcrumbs" class="breadcrumbs" aria-label="現在の位置"></nav>
         <div class="lesson-heading">
           <p class="eyebrow">SELF STUDY</p>
           <h1 id="lesson-title"></h1>
           <p id="lesson-description" class="lesson-description"></p>
           <details class="lesson-outline">
-            <summary>この章で学ぶこと</summary>
-            <nav id="lesson-outline" aria-label="この章の目次"></nav>
+            <summary>このSectionのSteps</summary>
+            <nav id="lesson-outline" aria-label="このSectionのSteps"></nav>
           </details>
         </div>
         <div class="study-layout">
@@ -53,22 +54,31 @@
           </aside>
           <div id="lesson-steps" class="lesson-steps"></div>
         </div>
-        <aside id="lesson-sources" class="lesson-sources" aria-label="この章の参考資料"></aside>
-        <div class="lesson-end"><span>図と要点を大きく表示する</span><a id="lesson-present-link" href="#present/record-changes">この節を講義表示で開く <span aria-hidden="true">→</span></a></div>
-        <nav id="chapter-navigation" aria-label="読める教材の前後"></nav>
+        <aside id="lesson-sources" class="lesson-sources" aria-label="このSectionの参考資料"></aside>
+        <div class="lesson-end"><span>図と要点を大きく表示する</span><a id="lesson-present-link" href="#toc">このStepを講義表示で開く <span aria-hidden="true">→</span></a></div>
+        <nav id="chapter-navigation" class="section-navigation" aria-label="前後のSection"></nav>
       </section>
 
       <section id="present-view" class="present-view" hidden aria-labelledby="present-title">
+        <nav id="present-breadcrumbs" class="breadcrumbs" aria-label="現在の位置"></nav>
         <div class="present-heading"><p class="eyebrow">LECTURE</p><h1 id="present-title"></h1><button id="enlarge-present-diagram" class="diagram-enlarge" type="button">図を大きく見る</button></div>
         <div class="present-content">
           <div id="present-diagram" class="present-diagram"></div>
           <div class="present-copy"><p id="present-takeaway" class="present-takeaway" aria-live="polite"></p><div id="present-command" class="present-command"></div><div id="present-notes" class="present-notes"></div></div>
         </div>
         <footer class="present-controls">
-          <a id="back-to-study" href="#study/record-changes">説明を読む</a>
+          <a id="back-to-study" href="#toc">説明を読む</a>
           <div class="step-navigation"><button id="previous-step" type="button" aria-label="前の説明へ">← <span>前へ</span></button><span id="present-progress" aria-live="polite"></span><button id="next-step" type="button" aria-label="次の説明へ"><span>次へ</span> →</button></div>
-          <span class="keyboard-hint">← → キーで切り替え</span>
+          <span class="keyboard-hint">← → キーでStep・Sectionを移動</span>
         </footer>
+        <nav id="present-section-navigation" class="section-navigation" aria-label="前後のSection"></nav>
+      </section>
+      <section id="error-view" class="toc-view" hidden aria-labelledby="error-title">
+        <p class="eyebrow">PAGE NOT FOUND</p>
+        <h1 id="error-title">ページが見つかりません</h1>
+        <p>指定されたChapter・Section・Stepを確認できませんでした。</p>
+        <p><code id="unknown-route"></code></p>
+        <a href="#toc">目次からSectionを選ぶ →</a>
       </section>
     </main>
     <dialog id="diagram-dialog" aria-label="図の拡大表示">

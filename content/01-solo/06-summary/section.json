@@ -1,0 +1,13 @@
+{
+  "id": "summary",
+  "title": "前半のまとめ",
+  "description": "基本操作を振り返り、自分のコードでも記録と共有を繰り返します。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/curriculum-guide.svg"
+  },
+  "sources": [],
+  "steps": [
+    "summary.md"
+  ]
+}

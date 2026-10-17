@@ -1,0 +1,43 @@
+{
+  "id": "essential",
+  "title": "Gitコマンド（超基本）絶対に覚える",
+  "description": "clone・add・commit・push・pull・statusを流れと結び付けます。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/curriculum-guide.svg"
+  },
+  "sources": [
+    {
+      "label": "git clone",
+      "url": "https://git-scm.com/docs/git-clone"
+    },
+    {
+      "label": "git status",
+      "url": "https://git-scm.com/docs/git-status"
+    },
+    {
+      "label": "git diff",
+      "url": "https://git-scm.com/docs/git-diff"
+    },
+    {
+      "label": "git log",
+      "url": "https://git-scm.com/docs/git-log"
+    },
+    {
+      "label": "git fetch",
+      "url": "https://git-scm.com/docs/git-fetch"
+    },
+    {
+      "label": "git pullと--ff-only",
+      "url": "https://git-scm.com/docs/git-pull"
+    }
+  ],
+  "steps": [
+    "clone.md",
+    "stage.md",
+    "commit.md",
+    "push.md",
+    "pull.md",
+    "status.md"
+  ]
+}

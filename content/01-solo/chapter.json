@@ -1,0 +1,14 @@
+{
+  "id": "solo",
+  "number": "01",
+  "title": "個人開発を管理しよう",
+  "description": "変更の記録・共有を学び、自分のリポジトリで一巡します。",
+  "sections": [
+    "01-motivation",
+    "02-flow",
+    "03-essential",
+    "04-basic",
+    "05-practice",
+    "06-summary"
+  ]
+}

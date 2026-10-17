@@ -5,7 +5,7 @@ const root = path.resolve(__dirname, '..');
 const readJSON = file => JSON.parse(fs.readFileSync(file, 'utf8'));
 const fail = (file, message) => { throw new Error(`${path.relative(root, file)}: ${message}`); };
 
-function parseSection(source, file = 'section.md') {
+function parseStep(source, file = 'step.md') {
   const text = source.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
   const front = text.match(/^---\n([\s\S]*?)\n---(?:\n|$)/);
   if (!front) fail(file, '先頭に --- で囲んだ設定が必要です。');
@@ -79,61 +79,86 @@ function parseSection(source, file = 'section.md') {
 
 function buildCourse({ contentRoot = path.join(root, 'content'), output = path.join(root, 'docs/course.json'), onWarning = console.warn } = {}) {
   const course = readJSON(path.join(contentRoot, 'course.json'));
-  const chapters = [], lessons = [], chapterIds = new Set(), lessonIds = new Set();
+  const chapters = [], sections = [], chapterIds = new Set(), routes = new Set();
+  const slug = value => typeof value === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
+  const child = (directory, name, extension = '') => {
+    if (typeof name !== 'string' || !/^[^\\/:*?"<>|\s]+$/.test(name) || name.startsWith('.') || (extension && !name.endsWith(extension))) {
+      fail(directory, `直下の${extension || 'フォルダー'}名を指定してください: ${JSON.stringify(name)}`);
+    }
+    const resolved = path.join(directory, name);
+    if (!fs.existsSync(resolved)) fail(directory, `ファイルまたはフォルダーが見つかりません: ${name}`);
+    return resolved;
+  };
+  const ordered = (value, file, key) => {
+    if (!Array.isArray(value) || !value.length) fail(file, `${key}に名前の配列を1件以上指定してください。`);
+    const names = new Set();
+    for (const name of value) {
+      if (typeof name !== 'string') fail(file, `${key}の名前を文字列で指定してください。`);
+      if (names.has(name.toLowerCase())) fail(file, `${key}の名前が重複: ${name}`);
+      names.add(name.toLowerCase());
+    }
+    return value;
+  };
   const folders = fs.readdirSync(contentRoot, { withFileTypes: true }).filter(entry => entry.isDirectory() && /^\d+-/.test(entry.name)).sort((a, b) => a.name.localeCompare(b.name, 'en', { numeric: true }));
   for (const folder of folders) {
     const directory = path.join(contentRoot, folder.name);
-    const metadataPath = path.join(directory, 'lesson.json');
-    const { chapter, graph, sections: files, ...lesson } = readJSON(metadataPath);
-    if (!chapter?.id || !lesson.id || !lesson.diagram) fail(metadataPath, 'chapter、lessonのid、diagramが必要です。');
-    if (chapterIds.has(chapter.id) || lessonIds.has(lesson.id)) fail(metadataPath, '章またはレッスンのidが重複しています。');
-    chapterIds.add(chapter.id); lessonIds.add(lesson.id);
-    chapters.push({ ...chapter, status: 'ready', lessonId: lesson.id });
-    lesson.chapterId = chapter.id;
-    if (graph) {
-      const graphPath = path.resolve(directory, graph);
-      if (!graphPath.startsWith(directory + path.sep)) fail(metadataPath, 'graphは章フォルダー内のJSONを指定してください。');
-      lesson.graph = readJSON(graphPath);
-    }
-    if (!Array.isArray(files) || !files.length) fail(metadataPath, 'sectionsにMarkdownファイル名の配列を1件以上指定してください。');
-    const filenames = new Set();
-    for (const name of files) {
-      if (typeof name !== 'string' || !/^[^\\/:*?"<>|\s]+\.md$/.test(name) || name.startsWith('.')) {
-        fail(metadataPath, `sectionsには章フォルダー直下のMarkdownファイル名を指定してください: ${JSON.stringify(name)}`);
+    const metadataPath = path.join(directory, 'chapter.json');
+    const { sections: sectionFolders, ...chapter } = readJSON(metadataPath);
+    if (!slug(chapter.id) || !chapter.title) fail(metadataPath, 'chapterのidとtitleが必要です。');
+    if (chapterIds.has(chapter.id)) fail(metadataPath, `chapterのidが重複: ${chapter.id}`);
+    chapterIds.add(chapter.id);
+    chapter.sectionIds = [];
+    const sectionIds = new Set();
+    for (const name of ordered(sectionFolders, metadataPath, 'sections')) {
+      const sectionDirectory = child(directory, name);
+      const sectionPath = path.join(sectionDirectory, 'section.json');
+      const { steps: files, graph, ...section } = readJSON(sectionPath);
+      if (!slug(section.id) || !section.title || !section.diagram) fail(sectionPath, 'sectionのid、title、diagramが必要です。');
+      if (sectionIds.has(section.id)) fail(sectionPath, `sectionのidが重複: ${section.id}`);
+      sectionIds.add(section.id);
+      section.chapterId = chapter.id;
+      section.route = `${chapter.id}/${section.id}`;
+      chapter.sectionIds.push(section.id);
+      if (graph) {
+        const graphPath = path.resolve(contentRoot, graph);
+        if (!graphPath.startsWith(path.resolve(contentRoot) + path.sep)) fail(sectionPath, 'graphはcontent内のJSONを指定してください。');
+        section.graph = readJSON(graphPath);
       }
-      const key = name.toLowerCase();
-      if (filenames.has(key)) fail(metadataPath, `sectionsのファイル名が重複: ${name}`);
-      filenames.add(key);
-      const file = path.join(directory, name);
-      if (!fs.existsSync(file) || !fs.statSync(file).isFile()) fail(metadataPath, `sectionsのMarkdownが見つかりません: ${name}`);
-    }
-    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
-      if (entry.isFile() && /\.md$/i.test(entry.name) && !/^readme\.md$/i.test(entry.name) && !files.includes(entry.name)) {
-        onWarning(`${path.relative(root, path.join(directory, entry.name))}: sections未登録のため下書きとして除外します。公開する場合はlesson.jsonのsectionsへ追加してください。`);
+      const stepFiles = ordered(files, sectionPath, 'steps');
+      section.steps = stepFiles.map(filename => {
+        const file = child(sectionDirectory, filename, '.md');
+        if (!fs.statSync(file).isFile()) fail(file, 'Markdownファイルを指定してください。');
+        return parseStep(fs.readFileSync(file, 'utf8'), file);
+      });
+      const ids = new Set();
+      for (const step of section.steps) {
+        if (ids.has(step.id)) fail(sectionPath, `stepのidが重複: ${step.id}`);
+        ids.add(step.id);
+        routes.add(`${section.route}/${step.id}`);
       }
+      for (const entry of fs.readdirSync(sectionDirectory, { withFileTypes: true })) {
+        if (entry.isFile() && /\.md$/i.test(entry.name) && !/^readme\.md$/i.test(entry.name) && !stepFiles.includes(entry.name)) {
+          onWarning(`${path.relative(root, path.join(sectionDirectory, entry.name))}: steps未登録のため下書きとして除外します。公開する場合はsection.jsonのstepsへ追加してください。`);
+        }
+      }
+      sections.push(section);
     }
-    lesson.sections = files.map(name => {
-      const file = path.join(directory, name);
-      return parseSection(fs.readFileSync(file, 'utf8'), file);
-    });
-    const ids = new Set();
-    for (const section of lesson.sections) {
-      if (ids.has(section.id)) fail(metadataPath, `節のidが重複: ${section.id}`);
-      ids.add(section.id);
-    }
-    lessons.push(lesson);
+    chapters.push(chapter);
   }
-  if (!lessons.length) throw new Error('章が見つかりません。');
-  const data = { ...course, chapters, lessons };
+  if (!sections.length) throw new Error('Sectionが見つかりません。');
+  for (const [from, to] of Object.entries(course.redirects || {})) {
+    if (!routes.has(to)) fail(path.join(contentRoot, 'course.json'), `旧URLの転送先が存在しません: ${from} → ${to}`);
+  }
+  const data = { ...course, schemaVersion: 2, chapters, sections };
   const serialized = JSON.stringify(data, null, 2) + '\n';
   if (output && (!fs.existsSync(output) || fs.readFileSync(output, 'utf8') !== serialized)) fs.writeFileSync(output, serialized);
   return data;
 }
 
-module.exports = { buildCourse, parseSection };
+module.exports = { buildCourse, parseStep };
 if (require.main === module) {
   try {
     const data = buildCourse();
-    console.log(`Generated: ${data.chapters.length} chapters, ${data.lessons.reduce((sum, lesson) => sum + lesson.sections.length, 0)} sections.`);
+    console.log(`Generated: ${data.chapters.length} chapters, ${data.sections.length} sections, ${data.sections.reduce((sum, section) => sum + section.steps.length, 0)} steps.`);
   } catch (error) { console.error(error.message); process.exitCode = 1; }
 }

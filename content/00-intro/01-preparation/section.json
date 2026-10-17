@@ -1,0 +1,53 @@
+{
+  "id": "preparation",
+  "title": "学習の準備",
+  "description": "端末の読み方、Gitの設定、SSHのしくみと接続を確認します。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/curriculum-guide.svg"
+  },
+  "sources": [
+    {
+      "label": "Gitのインストール",
+      "url": "https://git-scm.com/install/"
+    },
+    {
+      "label": "Gitの初期設定",
+      "url": "https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup"
+    },
+    {
+      "label": "SSH鍵の生成とOS別の手順",
+      "url": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent"
+    },
+    {
+      "label": "公開鍵をGitHubに登録",
+      "url": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account"
+    },
+    {
+      "label": "SSH接続の確認",
+      "url": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection"
+    },
+    {
+      "label": "GitHubのSSHホスト鍵の指紋",
+      "url": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints"
+    },
+    {
+      "label": "RFC 4252 §7：SSH公開鍵認証の署名と検証",
+      "url": "https://www.rfc-editor.org/rfc/rfc4252#section-7"
+    },
+    {
+      "label": "RFC 8709：SSHでのEd25519署名",
+      "url": "https://www.rfc-editor.org/rfc/rfc8709.html"
+    }
+  ],
+  "steps": [
+    "notice.md",
+    "tools.md",
+    "identity.md",
+    "authentication.md",
+    "keys.md",
+    "register.md",
+    "config.md",
+    "connect.md"
+  ]
+}

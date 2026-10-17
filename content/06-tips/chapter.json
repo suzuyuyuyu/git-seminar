@@ -1,0 +1,14 @@
+{
+  "id": "tips",
+  "number": "06",
+  "title": "その他Tipsから少しむずかしいところまで",
+  "description": "作業場所・依存リポジトリ・競合・消失のしくみと、日常の操作を補います。",
+  "sections": [
+    "01-worktree",
+    "02-submodule",
+    "03-conflicts",
+    "04-data-loss",
+    "05-aliases",
+    "06-gh"
+  ]
+}

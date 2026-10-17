@@ -3,8 +3,10 @@
   'use strict';
   let data;
   const byId = id => document.getElementById(id);
-  let activeLesson = null;
+  let activeSection = null;
   let activeStep = 0;
+  let activeChapter = null;
+  let orderedSections = [];
   let mode = 'toc';
   const svgSources = new Map();
   let scrollPending = false;
@@ -17,7 +19,7 @@
   }
 
   function currentDiagram() {
-    return activeLesson.sections[activeStep].diagram || activeLesson.diagram || { type: 'svg', src: 'assets/record-flow.svg' };
+    return activeSection.steps[activeStep].diagram || activeSection.diagram || { type: 'svg', src: 'assets/record-flow.svg' };
   }
 
   function graphViewBox(graph, state) {
@@ -30,7 +32,7 @@
     target.dataset.source = diagram.type === 'commit-graph' ? 'commit-graph' : diagram.src;
     target.dataset.instance = suffix;
     if (diagram.type === 'commit-graph') {
-      target.replaceChildren(window.GitCommitGraph.render(activeLesson.graph, activeLesson.sections[activeStep].diagramState));
+      target.replaceChildren(window.GitCommitGraph.render(activeSection.graph, activeSection.steps[activeStep].diagramState));
       return;
     }
     target.innerHTML = svgSources.get(diagram.src);
@@ -68,7 +70,7 @@
       const href = node.getAttribute('href') || node.getAttributeNS('http://www.w3.org/1999/xlink', 'href');
       if (href && !href.startsWith('#')) node.setAttribute('href', new URL(href, new URL(diagram.src, location.href)).href);
     });
-    svg.setAttribute('data-current-state', activeLesson.sections[0].diagramState);
+    svg.setAttribute('data-current-state', activeSection.steps[activeStep].diagramState);
   }
 
   function showDiagramState(target, state) {
@@ -79,20 +81,60 @@
     if (!svg) return;
     const isGraph = diagram.type === 'commit-graph';
     if (isGraph && svg.getAttribute('data-current-state') !== state) {
-      svg = window.GitCommitGraph.render(activeLesson.graph, state);
+      svg = window.GitCommitGraph.render(activeSection.graph, state);
       target.replaceChildren(svg);
     }
     svg.setAttribute('data-current-state', state);
     // Fit the complete vector drawing inside a stable slide frame, including on narrow screens.
-    svg.setAttribute('viewBox', isGraph ? graphViewBox(activeLesson.graph, state) : svg.dataset.fullViewbox);
+    svg.setAttribute('viewBox', isGraph ? graphViewBox(activeSection.graph, state) : svg.dataset.fullViewbox);
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
   }
 
   function enlargeDiagram() {
     mountDiagram(byId('large-diagram'), 'large');
-    showDiagramState(byId('large-diagram'), activeLesson.sections[activeStep].diagramState);
-    byId('large-diagram-caption').textContent = activeLesson.sections[activeStep].takeaway;
+    showDiagramState(byId('large-diagram'), activeSection.steps[activeStep].diagramState);
+    byId('large-diagram-caption').textContent = activeSection.steps[activeStep].takeaway;
     byId('diagram-dialog').showModal();
+  }
+
+  function sectionPath(section, step) {
+    return `${section.route}${step ? `/${step.id}` : ''}`;
+  }
+
+  function adjacentSection(offset) {
+    return orderedSections[orderedSections.indexOf(activeSection) + offset];
+  }
+
+  function renderSectionNavigation(target, displayMode) {
+    target.replaceChildren();
+    for (const [offset, label] of [[-1, '前のSection'], [1, '次のSection']]) {
+      const section = adjacentSection(offset);
+      if (!section) continue;
+      const link = element('a', '', `${offset < 0 ? '← ' : ''}${label}：${section.title}${offset > 0 ? ' →' : ''}`);
+      link.href = `#${displayMode}/${sectionPath(section)}`;
+      target.append(link);
+    }
+    if (!adjacentSection(1)) {
+      const home = element('a', '', '全Sectionの最後です。目次へ →');
+      home.href = '#toc';
+      target.append(home);
+    }
+  }
+
+  function renderBreadcrumbs(displayMode) {
+    const target = byId(`${displayMode}-breadcrumbs`);
+    target.replaceChildren();
+    const home = element('a', '', '目次');
+    home.href = '#toc';
+    const chapter = element('a', '', `Chapter ${String(activeChapter.number).padStart(2, '0')} ${activeChapter.title}`);
+    chapter.href = '#toc';
+    const chapterId = activeChapter.id;
+    chapter.addEventListener('click', () => requestAnimationFrame(() => byId(`chapter-${chapterId}`)?.scrollIntoView()));
+    const section = element('a', '', activeSection.title);
+    section.href = `#${displayMode}/${sectionPath(activeSection)}`;
+    target.append(home, element('span', 'breadcrumb-separator', '›'), chapter, element('span', 'breadcrumb-separator', '›'), section);
+    if (displayMode === 'present') target.append(element('span', 'breadcrumb-separator', '›'), element('span', '', `Step ${activeStep + 1}`));
+    else section.setAttribute('aria-current', 'page');
   }
 
   function renderTOC() {
@@ -100,27 +142,36 @@
     list.replaceChildren();
     for (const chapter of data.chapters) {
       const row = element('article', 'chapter');
+      row.id = `chapter-${chapter.id}`;
       row.append(element('span', 'chapter-number', String(chapter.number).padStart(2, '0')));
       const copy = element('div', 'chapter-copy');
-      copy.append(element('h2', '', chapter.title), element('p', '', chapter.description));
-      copy.append(element('p', 'chapter-goal', `到達目標：${chapter.goal}`));
-      if (chapter.status === 'ready' && chapter.lessonId) {
+      copy.append(element('h3', '', chapter.title), element('p', '', chapter.description));
+      if (chapter.goal) copy.append(element('p', 'chapter-goal', `到達目標：${chapter.goal}`));
+      const sections = element('ol', 'toc-sections');
+      for (const id of chapter.sectionIds) {
+        const section = data.sections.find(item => item.id === id && item.chapterId === chapter.id);
+        if (!section) continue;
+        const item = element('li', 'toc-section');
+        const heading = element('div', 'toc-section-heading');
+        const title = element('a', 'toc-section-title', section.title);
+        title.href = `#study/${sectionPath(section)}`;
+        heading.append(title, element('span', 'section-step-count', `${section.steps.length} Step${section.steps.length === 1 ? "" : "s"}`));
         const links = element('div', 'chapter-links');
-        const study = element('a', '', '自学習ページを読む');
-        study.href = `#study/${chapter.lessonId}`;
-        const present = element('a', '', '本番用を開く');
-        present.href = `#present/${chapter.lessonId}`;
-        links.append(study, present);
-        copy.append(links);
-      } else {
-        copy.append(element('span', 'chapter-status', '構成案・本文は準備中'));
+        for (const [displayMode, label] of [['study', '自学習'], ['present', '講義']]) {
+          const link = element('a', '', label);
+          link.href = `#${displayMode}/${sectionPath(section)}`;
+          link.setAttribute('aria-label', `${section.title}を${label}で開く`);
+          links.append(link);
+        }
+        item.append(heading, links);
+        sections.append(item);
       }
+      copy.append(sections);
       row.append(copy);
       list.append(row);
     }
-    const ready = data.chapters.filter(chapter => chapter.status === 'ready').length;
-    const steps = data.lessons.reduce((total, lesson) => total + lesson.sections.length, 0);
-    byId('course-status').textContent = `${ready}章・${steps}節を収録。事前準備から共同開発へ順に進み、Chapter 08は必要に応じて参照できます。`;
+    const steps = data.sections.reduce((total, section) => total + section.steps.length, 0);
+    byId('course-status').textContent = `${data.chapters.length} Chapters・${data.sections.length} Sections・${steps} Steps。Sectionごとにページを開き、図と説明を順に確かめます。`;
   }
 
   function renderStudy(lesson) {
@@ -128,10 +179,10 @@
     byId('lesson-description').textContent = lesson.description;
     const outline = byId('lesson-outline');
     outline.replaceChildren();
-    for (const section of lesson.sections) {
+    for (const section of lesson.steps) {
       const link = element('a', '', section.title);
-      link.href = `#study/${lesson.id}/${section.id}`;
-      link.dataset.sectionId = section.id;
+      link.href = `#study/${sectionPath(lesson, section)}`;
+      link.dataset.stepId = section.id;
         link.dataset.diagramState = section.diagramState;
       outline.append(link);
     }
@@ -154,15 +205,15 @@
     }
     const container = byId('lesson-steps');
     container.replaceChildren();
-    for (const [index, section] of lesson.sections.entries()) {
+    for (const [index, section] of lesson.steps.entries()) {
       const row = element('section', 'lesson-step');
       row.id = `step-${section.id}`;
       row.dataset.step = index;
       const copy = element('div', 'step-copy');
       const heading = element('h2', '', section.title);
-      const anchor = element('a', 'step-anchor', 'この節へのリンク');
-      anchor.href = `#study/${lesson.id}/${section.id}`;
-      copy.append(element('span', 'step-number', `STEP ${String(index + 1).padStart(2, '0')}`), heading);
+      const anchor = element('a', 'step-anchor', 'このStepへのリンク');
+      anchor.href = `#study/${sectionPath(lesson, section)}`;
+      copy.append(element('span', 'step-number', `Step ${String(index + 1).padStart(2, '0')}`), heading);
       for (const text of section.body) copy.append(window.GitSeminarMarkdown.render(text));
       if (section.command) {
         const pre = element('pre', 'command-block');
@@ -172,7 +223,7 @@
       copy.append(element('p', 'takeaway', section.takeaway), anchor);
       const notes = element('aside', 'step-notes');
       notes.setAttribute('aria-label', `${section.title}の補足`);
-      for (const note of section.notes) {
+      for (const note of section.notes || []) {
         const card = element('div', 'note');
         card.append(element('span', 'note-label', '補足'), window.GitSeminarMarkdown.render(note.body));
         notes.append(card);
@@ -181,30 +232,21 @@
       container.append(row);
     }
     mountDiagram(byId('study-diagram'), 'study');
-    byId('lesson-present-link').href = `#present/${lesson.id}`;
-    const navigation = byId('chapter-navigation');
-    navigation.replaceChildren();
-    const available = data.chapters.filter(chapter => chapter.status === 'ready');
-    const position = available.findIndex(chapter => chapter.lessonId === lesson.id);
-    for (const [offset, label] of [[-1, '前の教材'], [1, '次の教材']]) {
-      const chapter = available[position + offset];
-      if (!chapter) continue;
-      const link = element('a', '', `${label}：${chapter.title}`);
-      link.href = `#study/${chapter.lessonId}`;
-      navigation.append(link);
-    }
+    byId('lesson-present-link').href = `#present/${sectionPath(lesson)}`;
+    renderBreadcrumbs('study');
+    renderSectionNavigation(byId('chapter-navigation'), 'study');
   }
 
   function setStudyStep(index) {
     activeStep = index;
-    const section = activeLesson.sections[index];
+    const section = activeSection.steps[index];
     showDiagramState(byId('study-diagram'), section.diagramState);
     byId('study-diagram-caption').textContent = section.takeaway;
     const modeLink = byId('mode-links').querySelector('a');
-    if (modeLink) modeLink.href = `#present/${activeLesson.id}/${section.id}`;
-    byId('lesson-present-link').href = `#present/${activeLesson.id}/${section.id}`;
+    if (modeLink) modeLink.href = `#present/${sectionPath(activeSection, section)}`;
+    byId('lesson-present-link').href = `#present/${sectionPath(activeSection, section)}`;
     byId('lesson-outline').querySelectorAll('a').forEach(link => {
-      if (link.dataset.sectionId === section.id) link.setAttribute('aria-current', 'location');
+      if (link.dataset.stepId === section.id) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
     });
     document.querySelectorAll('.lesson-step').forEach((node, i) => node.classList.toggle('is-active', i === index));
@@ -219,8 +261,9 @@
   }
 
   function trackReading() {
-    if (mode !== 'study' || !activeLesson) return;
+    if (mode !== 'study' || !activeSection) return;
     const rows = [...document.querySelectorAll('.lesson-step')];
+    if (!rows.length) return;
     const small = window.matchMedia('(max-width:760px), (orientation:portrait) and (max-width:1000px)').matches;
     const line = small ? Math.min(window.innerHeight - 40, document.querySelector('.diagram-panel').getBoundingClientRect().bottom + 40) : window.innerHeight * 0.5;
     let index = 0;
@@ -230,7 +273,7 @@
   }
 
   function renderPresentation() {
-    const section = activeLesson.sections[activeStep];
+    const section = activeSection.steps[activeStep];
     byId('present-title').textContent = section.title;
     byId('present-takeaway').textContent = section.takeaway;
     const command = section.command || '';
@@ -238,26 +281,42 @@
       ? section.presentationCommandLines.map(index => command.split('\n')[index]).join('\n')
       : command;
     byId('present-command').hidden = !section.command;
-    byId('present-progress').textContent = `${activeStep + 1} / ${activeLesson.sections.length}`;
+    byId('present-progress').textContent = `Step ${activeStep + 1} / ${activeSection.steps.length}`;
     const notes = byId('present-notes');
     notes.replaceChildren();
-    section.notes.filter(note => note.showInPresentation).forEach(note => {
+    (section.notes || []).filter(note => note.showInPresentation).forEach(note => {
       const card = element('div', 'note');
       card.append(window.GitSeminarMarkdown.render(note.body));
       notes.append(card);
     });
     showDiagramState(byId('present-diagram'), section.diagramState);
-    byId('previous-step').disabled = activeStep === 0;
-    byId('next-step').disabled = activeStep === activeLesson.sections.length - 1;
-    byId('back-to-study').href = `#study/${activeLesson.id}/${section.id}`;
+    const previousSection = adjacentSection(-1);
+    const nextSection = adjacentSection(1);
+    const atStart = activeStep === 0;
+    const atEnd = activeStep === activeSection.steps.length - 1;
+    const previous = byId('previous-step');
+    const next = byId('next-step');
+    previous.disabled = atStart && !previousSection;
+    next.disabled = atEnd && !nextSection;
+    previous.querySelector('span').textContent = atStart && previousSection ? '前のSection' : '前のStep';
+    next.querySelector('span').textContent = atEnd && nextSection ? '次のSection' : '次のStep';
+    previous.setAttribute('aria-label', atStart && previousSection ? `前のSection：${previousSection.title}` : '前のStepへ');
+    next.setAttribute('aria-label', atEnd && nextSection ? `次のSection：${nextSection.title}` : '次のStepへ');
+    previous.title = previous.getAttribute('aria-label');
+    next.title = next.getAttribute('aria-label');
+    byId('back-to-study').href = `#study/${sectionPath(activeSection, section)}`;
+    renderBreadcrumbs('present');
+    renderSectionNavigation(byId('present-section-navigation'), 'present');
   }
 
   function changePresentationStep(delta) {
     if (mode !== 'present') return;
-    const next = Math.max(0, Math.min(activeLesson.sections.length - 1, activeStep + delta));
-    if (next !== activeStep) {
-      activeStep = next;
-      location.hash = `present/${activeLesson.id}/${activeLesson.sections[next].id}`;
+    const next = activeStep + delta;
+    if (next >= 0 && next < activeSection.steps.length) {
+      location.hash = `present/${sectionPath(activeSection, activeSection.steps[next])}`;
+    } else {
+      const section = adjacentSection(delta);
+      if (section) location.hash = `present/${sectionPath(section, delta < 0 ? section.steps.at(-1) : section.steps[0])}`;
     }
   }
 
@@ -267,46 +326,63 @@
       byId('main').focus();
       return;
     }
-    const [requestedMode, lessonId, sectionId] = location.hash.slice(1).split('/');
-    const lesson = data.lessons.find(item => item.id === lessonId);
-    const nextMode = lesson && ['study', 'present'].includes(requestedMode) ? requestedMode : 'toc';
+    const raw = location.hash.slice(1);
+    let parts;
+    try { parts = decodeURIComponent(raw).split('/'); }
+    catch { parts = []; }
+    const requestedMode = parts[0];
+    const legacy = parts.slice(1).join('/');
+    if (['study', 'present'].includes(requestedMode) && data.redirects?.[legacy]) {
+      history.replaceState(null, '', `#${requestedMode}/${data.redirects[legacy]}`);
+      route();
+      return;
+    }
+    const [, chapterId, sectionId, stepId] = parts;
+    const chapter = data.chapters.find(item => item.id === chapterId);
+    const section = data.sections.find(item => item.chapterId === chapterId && item.id === sectionId);
+    const index = section && stepId ? section.steps.findIndex(step => step.id === stepId) : 0;
+    const isTOC = raw === '' || raw === 'toc';
+    const valid = ['study', 'present'].includes(requestedMode) && chapter && section && index >= 0 && parts.length <= 4;
+    const nextMode = isTOC ? 'toc' : valid ? requestedMode : 'error';
     const previousMode = mode;
-    const previousLesson = activeLesson;
+    const previousSection = activeSection;
     mode = nextMode;
-    ['toc', 'study', 'present'].forEach(view => { byId(`${view}-view`).hidden = view !== mode; });
+    ['toc', 'study', 'present', 'error'].forEach(view => { byId(`${view}-view`).hidden = view !== mode; });
     document.body.dataset.mode = mode;
     const links = byId('mode-links');
     links.replaceChildren();
-    if (mode === 'toc') {
-      document.title = `${data.title} — 目次`;
+    if (mode === 'toc' || mode === 'error') {
+      activeSection = null;
+      document.title = `${data.title} — ${mode === 'toc' ? '目次' : 'ページが見つかりません'}`;
+      if (mode === 'error') byId('unknown-route').textContent = location.hash;
       window.scrollTo(0, 0);
       return;
     }
-    activeLesson = lesson;
-    const index = lesson.sections.findIndex(section => section.id === sectionId);
-    activeStep = Math.max(0, index);
+    activeSection = section;
+    activeChapter = chapter;
+    activeStep = index;
     const counterpart = mode === 'study' ? 'present' : 'study';
-    const link = element('a', '', mode === 'study' ? '本番用を開く' : '自学習用を開く');
-    link.href = `#${counterpart}/${lesson.id}/${lesson.sections[activeStep].id}`;
+    const link = element('a', '', mode === 'study' ? '講義表示を開く' : '自学習を開く');
+    link.href = `#${counterpart}/${sectionPath(section, section.steps[activeStep])}`;
     links.append(link);
-    document.title = `${lesson.title} — ${mode === 'study' ? '自学習' : 'ゼミ本番'}`;
+    document.title = `${section.title} — ${chapter.title} — ${mode === 'study' ? '自学習' : '講義'}`;
     if (mode === 'study') {
-      renderStudy(lesson);
+      renderStudy(section);
       setStudyStep(activeStep);
       requestAnimationFrame(() => {
         centerStudyDiagram();
-        if (index >= 0) {
+        if (stepId) {
           const small = window.matchMedia('(max-width:760px), (orientation:portrait) and (max-width:1000px)').matches;
           const panel = document.querySelector('.diagram-panel');
           const offset = small ? parseFloat(getComputedStyle(panel).top) + panel.getBoundingClientRect().height + 20 : 110;
-          const target = byId(`step-${sectionId}`);
+          const target = byId(`step-${stepId}`);
           window.scrollTo(0, window.scrollY + target.getBoundingClientRect().top - offset);
         }
         else window.scrollTo(0, 0);
         trackReading();
       });
     } else {
-      if (previousMode !== 'present' || previousLesson !== lesson) mountDiagram(byId('present-diagram'), 'present');
+      if (previousMode !== 'present' || previousSection !== section) mountDiagram(byId('present-diagram'), 'present');
       renderPresentation();
       window.scrollTo(0, 0);
     }
@@ -317,9 +393,10 @@
       const courseResponse = await fetch('course.json', { cache: 'no-store' });
       if (!courseResponse.ok) throw new Error(`course.json (${courseResponse.status}): ${await courseResponse.text()}`);
       data = await courseResponse.json();
+      orderedSections = data.chapters.flatMap(chapter => chapter.sectionIds.map(id => data.sections.find(section => section.id === id && section.chapterId === chapter.id)).filter(Boolean));
       const sources = new Set();
-      for (const lesson of data.lessons) {
-        for (const section of lesson.sections) {
+      for (const lesson of data.sections) {
+        for (const section of lesson.steps) {
           const diagram = section.diagram || lesson.diagram || { type: 'svg', src: 'assets/record-flow.svg' };
           if (diagram.type !== 'commit-graph') sources.add(diagram.src);
         }
@@ -354,11 +431,13 @@
         if (byId('diagram-dialog').open || mode !== 'present' || event.altKey || event.ctrlKey || event.metaKey || /INPUT|TEXTAREA|SELECT/.test(event.target.tagName)) return;
         if (['ArrowRight', 'ArrowDown', 'PageDown'].includes(event.key)) { event.preventDefault(); changePresentationStep(1); }
         if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(event.key)) { event.preventDefault(); changePresentationStep(-1); }
-        if (event.key === 'Home') { event.preventDefault(); location.hash = `present/${activeLesson.id}/${activeLesson.sections[0].id}`; }
-        if (event.key === 'End') { event.preventDefault(); location.hash = `present/${activeLesson.id}/${activeLesson.sections.at(-1).id}`; }
+        if (event.key === 'Home') { event.preventDefault(); location.hash = `present/${sectionPath(activeSection, activeSection.steps[0])}`; }
+        if (event.key === 'End') { event.preventDefault(); location.hash = `present/${sectionPath(activeSection, activeSection.steps.at(-1))}`; }
       });
       route();
     } catch (error) {
+      ['study', 'present', 'error'].forEach(view => { byId(`${view}-view`).hidden = true; });
+      byId('toc-view').hidden = false;
       byId('chapter-list').textContent = `教材を読み込めませんでした。${error.message}`;
       console.error(error);
     }

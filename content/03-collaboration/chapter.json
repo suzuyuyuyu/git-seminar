@@ -1,0 +1,11 @@
+{
+  "id": "collaboration",
+  "number": "03",
+  "title": "共同開発を管理しよう",
+  "description": "説明を整え、IssueからbranchとPRへ進み、競合を解消します。",
+  "sections": [
+    "01-markdown",
+    "02-issues",
+    "03-hands-on"
+  ]
+}

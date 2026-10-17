@@ -1,0 +1,12 @@
+{
+  "id": "branches",
+  "number": "02",
+  "title": "Gitの難関 “branch” を理解する",
+  "description": "保存された記録と名前付きの参照から、branchとHEADを読み解きます。",
+  "sections": [
+    "01-internals",
+    "02-concepts",
+    "03-detached",
+    "04-summary"
+  ]
+}

@@ -1143,3 +1143,73 @@ pre {
     transition: none !important;
   }
 }
+
+/* Chapter > Section > Step navigation. Each Section is an independent page. */
+.chapter-copy { min-width: 0; }
+.chapter { grid-template-columns: 60px minmax(0, 1fr); }
+.chapter .toc-sections {
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 0;
+  counter-reset: section;
+}
+.toc-section {
+  counter-increment: section;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid var(--line);
+  padding: 15px 0;
+}
+.toc-section-heading { min-width: 0; }
+.toc-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.8;
+  text-decoration: none;
+  &::before { content: counter(section, decimal-leading-zero) "  "; color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+}
+.section-step-count { display: block; color: var(--muted); font-size: 11px; margin-top: 3px; }
+.chapter-copy .toc-section .chapter-links { margin: 0; padding: 0; flex-wrap: nowrap; }
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+  margin-bottom: 24px;
+  & a { text-decoration: none; }
+  & [aria-current] { color: var(--ink); }
+}
+.breadcrumb-separator { color: #a1ada4; }
+.section-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px 28px;
+  margin-top: 24px;
+  font-size: 12px;
+  & a { flex: 1 1 240px; line-height: 1.8; }
+  & a:last-child { text-align: right; }
+}
+#present-section-navigation { border-top: 1px solid var(--line); padding-top: 14px; margin-top: 16px; font-size: 11px; }
+#present-progress { min-width: 80px; white-space: nowrap; }
+@media (max-width: 760px), (orientation: portrait) and (max-width: 1000px) {
+  .chapter { grid-template-columns: 35px minmax(0, 1fr); }
+  .toc-section { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .chapter-copy .toc-section .chapter-links { grid-column: 1; }
+  .toc-section-title { font-size: 13px; }
+  .breadcrumbs { font-size: 10px; margin-bottom: 18px; gap: 4px 7px; }
+  .toc-section-heading { flex-wrap: wrap; }
+  .present-controls { flex-wrap: wrap; }
+  .step-navigation { margin-left: auto; gap: 8px; }
+  .step-navigation button { padding: 9px; font-size: 11px; }
+  .section-navigation { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .section-navigation a { flex: initial; }
+  .section-navigation a:last-child { text-align: left; }
+}
+@media print { .breadcrumbs, .section-navigation { display: none; } }

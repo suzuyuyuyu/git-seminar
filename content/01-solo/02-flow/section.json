@@ -1,0 +1,15 @@
+{
+  "id": "flow",
+  "title": "Git管理の流れ",
+  "description": "4つの領域と、記録・取得・退避の矢印を読みます。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/curriculum-guide.svg"
+  },
+  "sources": [],
+  "steps": [
+    "simple-flow.md",
+    "working-tree.md",
+    "operation-map.md"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "internals",
+  "title": "Gitの仕組みを知ろう",
+  "description": ".git、スナップショット、親commit、名前付きの参照を確認します。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/curriculum-guide.svg"
+  },
+  "sources": [
+    {
+      "label": "Git：オブジェクトの構造",
+      "url": "https://git-scm.com/book/en/v2/Git-Internals-Git-Objects"
+    },
+    {
+      "label": "Git：branch",
+      "url": "https://git-scm.com/docs/git-branch"
+    },
+    {
+      "label": "Git：switchとdetached HEAD",
+      "url": "https://git-scm.com/docs/git-switch"
+    },
+    {
+      "label": "Git：相対位置の~と^",
+      "url": "https://git-scm.com/docs/gitrevisions"
+    },
+    {
+      "label": "Git：merge",
+      "url": "https://git-scm.com/docs/git-merge"
+    },
+    {
+      "label": "Git：clone",
+      "url": "https://git-scm.com/docs/git-clone"
+    },
+    {
+      "label": "Git：push",
+      "url": "https://git-scm.com/docs/git-push"
+    }
+  ],
+  "steps": [
+    "dotgit.md",
+    "objects.md",
+    "primitive.md"
+  ],
+  "graph": "graphs/branches.json"
+}

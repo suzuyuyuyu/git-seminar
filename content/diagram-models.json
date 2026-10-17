@@ -1,0 +1,947 @@
+{
+  "intro-preparation-notice": {
+    "title": "ことわり・はじめに",
+    "takeaway": "入力するコマンドと出力を見分け、少しずつ手を動かして学ぶ。",
+    "cards": [
+      {
+        "title": "読む",
+        "lines": [
+          "コマンドと出力",
+          "記号は入力しない"
+        ]
+      },
+      {
+        "title": "試す",
+        "lines": [
+          "自分の練習場所",
+          "statusで確認"
+        ]
+      },
+      {
+        "title": "読み返す",
+        "lines": [
+          "全部を暗記しない",
+          "必要なSectionへ"
+        ]
+      }
+    ]
+  },
+  "intro-conclusion-conclusion": {
+    "title": "まずは結論：記録して、共有する",
+    "takeaway": "保存の次にadd・commitで履歴を残し、pushで共有先へ送る。",
+    "cards": [
+      {
+        "title": "作業ファイル",
+        "lines": [
+          "編集して保存",
+          "statusで確認"
+        ]
+      },
+      {
+        "title": "手元の履歴",
+        "lines": [
+          "addで選ぶ",
+          "commitで記録"
+        ]
+      },
+      {
+        "title": "共有先の履歴",
+        "lines": [
+          "pushで送る",
+          "pullで取り込む"
+        ]
+      }
+    ]
+  },
+  "solo-flow-simple-flow": {
+    "title": "簡単な流れ：4つの領域と3つの操作",
+    "takeaway": "working tree → index → local repository → remote repositoryの順に反映する。",
+    "cards": [
+      {
+        "title": "working tree",
+        "lines": [
+          "編集・保存する",
+          "add → index"
+        ]
+      },
+      {
+        "title": "index / local repo.",
+        "lines": [
+          "次の内容を選ぶ",
+          "commit → 履歴"
+        ]
+      },
+      {
+        "title": "remote repo.",
+        "lines": [
+          "GitHubなどの共有先",
+          "pushで履歴を送る"
+        ]
+      }
+    ]
+  },
+  "solo-basic-stash-options": {
+    "title": "stashの既定・apply・pop・-u・saveを区別する",
+    "takeaway": "pushで退避し、listで選び、applyかpopで戻す。-uは未追跡も含む。",
+    "cards": [
+      {
+        "title": "退避",
+        "lines": [
+          "stash / stash push",
+          "-u は未追跡も"
+        ]
+      },
+      {
+        "title": "適用して残す",
+        "lines": [
+          "stash apply",
+          "listから選ぶ"
+        ]
+      },
+      {
+        "title": "適用後に削除",
+        "lines": [
+          "stash pop",
+          "競合時は残る"
+        ]
+      }
+    ]
+  },
+  "solo-practice-create-repository": {
+    "title": "GitHubで練習用リポジトリを作る",
+    "takeaway": "GitHubにREADME付きの練習用リポジトリを作り、SSH URLをコピーする。",
+    "cards": [
+      {
+        "title": "GitHubで作成",
+        "lines": [
+          "自分のアカウント",
+          "READMEを追加"
+        ]
+      },
+      {
+        "title": "SSH URLを確認",
+        "lines": [
+          "CodeからSSHを選ぶ",
+          "git@github.com:..."
+        ]
+      },
+      {
+        "title": "次はclone",
+        "lines": [
+          "新しい作業場所へ",
+          "既存作業と分ける"
+        ]
+      }
+    ]
+  },
+  "solo-practice-ssh-clone": {
+    "title": "SSHでcloneし、作業場所へ移動する",
+    "takeaway": "SSH URLからcloneし、正しいフォルダーと共有先で作業しているか確認する。",
+    "cards": [
+      {
+        "title": "共有先",
+        "lines": [
+          "自分のSSH URL",
+          "README付きのmain"
+        ]
+      },
+      {
+        "title": "clone",
+        "lines": [
+          "新しいフォルダー",
+          "cdで中へ移動"
+        ]
+      },
+      {
+        "title": "作業前の確認",
+        "lines": [
+          "remote -v",
+          "status"
+        ]
+      }
+    ]
+  },
+  "solo-practice-record": {
+    "title": "hello.pyをaddして、commitする",
+    "takeaway": "indexを確認してhello.pyを記録する。この時点では、まだ手元の履歴だけ。",
+    "cards": [
+      {
+        "title": "hello.py",
+        "lines": [
+          "ファイルを保存",
+          "まだ未追跡"
+        ]
+      },
+      {
+        "title": "add → commit",
+        "lines": [
+          "記録する内容を確認",
+          "手元にcommitを作る"
+        ]
+      },
+      {
+        "title": "確認",
+        "lines": [
+          "logに変更の記録",
+          "statusがclean"
+        ]
+      }
+    ]
+  },
+  "solo-practice-publish": {
+    "title": "pushし、GitHubで記録を確かめる",
+    "takeaway": "push後にGitHubでファイルとcommitを確認して、記録と共有を結び付ける。",
+    "cards": [
+      {
+        "title": "手元のmain",
+        "lines": [
+          "hello.pyを記録済み",
+          "origin/mainを追跡"
+        ]
+      },
+      {
+        "title": "push",
+        "lines": [
+          "記録したcommitを送る",
+          "拒否の理由は確認"
+        ]
+      },
+      {
+        "title": "GitHubで確認",
+        "lines": [
+          "hello.pyが見える",
+          "commitも見える"
+        ]
+      }
+    ]
+  },
+  "solo-summary-summary": {
+    "title": "前半のまとめ：状態を読んで、変更を記録する",
+    "takeaway": "clone・add・commit・push・pull・statusを、流れの中で使い分ける。",
+    "cards": [
+      {
+        "title": "状態を読む",
+        "lines": [
+          "status / diff",
+          "何を変えたか確認"
+        ]
+      },
+      {
+        "title": "記録する",
+        "lines": [
+          "add / commit",
+          "目的をメッセージに"
+        ]
+      },
+      {
+        "title": "共有する",
+        "lines": [
+          "push / pull",
+          "GitHubで確認"
+        ]
+      }
+    ]
+  },
+  "branches-internals-primitive": {
+    "title": "Gitは意外と原始的：記録と目印を組み合わせる",
+    "takeaway": "保存したcommitを名前で指す。commitが増えると、現在のbranchの目印が動く。",
+    "cards": [
+      {
+        "title": "保存された内容",
+        "lines": [
+          "blob / tree",
+          "同じ内容を再利用"
+        ]
+      },
+      {
+        "title": "commit",
+        "lines": [
+          "treeと親を覚える",
+          "作者・説明も保存"
+        ]
+      },
+      {
+        "title": "名前付きの参照",
+        "lines": [
+          "branch → commit",
+          "HEAD → branch"
+        ]
+      }
+    ]
+  },
+  "branches-concepts-branch-commit": {
+    "title": "作業branchでcommitすると、その目印だけが進む",
+    "takeaway": "commitで動くのはHEADが指すbranch。ほかのbranchはその場に残る。",
+    "cards": [
+      {
+        "title": "切り替え",
+        "lines": [
+          "HEAD → feature/name",
+          "mainと同じcommit"
+        ]
+      },
+      {
+        "title": "commitを追加",
+        "lines": [
+          "親は直前のcommit",
+          "新しい記録ができる"
+        ]
+      },
+      {
+        "title": "参照先の違い",
+        "lines": [
+          "feature/nameだけ進む",
+          "mainは元の位置"
+        ]
+      }
+    ]
+  },
+  "branches-summary-reachable": {
+    "title": "commit graphに出るのは、指定した参照からたどれる履歴",
+    "takeaway": "HEADやbranchなどの出発点から親をたどる。--allで表示対象の参照が広がる。",
+    "cards": [
+      {
+        "title": "通常のlog",
+        "lines": [
+          "HEADから親をたどる",
+          "到達する履歴を表示"
+        ]
+      },
+      {
+        "title": "--all",
+        "lines": [
+          "ほかのbranchやtag",
+          "出発点を広げる"
+        ]
+      },
+      {
+        "title": "表示されないcommit",
+        "lines": [
+          "reflogで探せる場合も",
+          "表示と保存は別"
+        ]
+      }
+    ]
+  },
+  "collaboration-issues-motivation": {
+    "title": "Issueで、作業する理由と範囲を共有する",
+    "takeaway": "Issueは、作業の理由と「何ができたら完了か」を共有する場所。",
+    "cards": [
+      {
+        "title": "困っていること",
+        "lines": [
+          "問題・背景",
+          "再現する条件"
+        ]
+      },
+      {
+        "title": "実現したいこと",
+        "lines": [
+          "期待する動作",
+          "完了の判断基準"
+        ]
+      },
+      {
+        "title": "作業へつなぐ",
+        "lines": [
+          "担当・branch・PR",
+          "Issue番号で関連付け"
+        ]
+      }
+    ]
+  },
+  "branch-commands-branch-branch": {
+    "title": "branch：一覧・作成・削除を使い分ける",
+    "takeaway": "branchは目印の管理。作成と切り替え、手元と共有先の削除を区別する。",
+    "cards": [
+      {
+        "title": "一覧",
+        "lines": [
+          "branch / -r / -a",
+          "* が現在のbranch"
+        ]
+      },
+      {
+        "title": "作成",
+        "lines": [
+          "branch feature/name",
+          "作成だけでは移動しない"
+        ]
+      },
+      {
+        "title": "削除",
+        "lines": [
+          "branch -d branch-name",
+          "統合済みか確認"
+        ]
+      }
+    ]
+  },
+  "branch-commands-switch-checkout-switch": {
+    "title": "checkoutとswitch：切り替える対象を確認する",
+    "takeaway": "branchへの切り替えはswitch。checkoutにはファイル復元の用途もある。",
+    "cards": [
+      {
+        "title": "branchへ移動",
+        "lines": [
+          "switch main",
+          "checkout main と対応"
+        ]
+      },
+      {
+        "title": "作成して移動",
+        "lines": [
+          "switch -c feature/name",
+          "目印を作って切り替え"
+        ]
+      },
+      {
+        "title": "commitを直接見る",
+        "lines": [
+          "switch --detach ID",
+          "detached HEADになる"
+        ]
+      }
+    ]
+  },
+  "advanced-inspect-show-and-blame": {
+    "title": "変更の由来を show と blame でたどる",
+    "takeaway": "行からcommitへ進み、差分と説明を合わせて読む。",
+    "cards": [
+      {
+        "title": "行を選ぶ",
+        "lines": [
+          "README.md",
+          "気になる変更"
+        ]
+      },
+      {
+        "title": "履歴をたどる",
+        "lines": [
+          "git blame",
+          "commitを特定"
+        ]
+      },
+      {
+        "title": "理由を読む",
+        "lines": [
+          "git show",
+          "差分と説明"
+        ]
+      }
+    ]
+  },
+  "advanced-remote-remote-and-tracking": {
+    "title": "接続先と追跡先を確認する",
+    "takeaway": "originのURLとbranchの追跡先は別々に確認する。",
+    "cards": [
+      {
+        "title": "接続先",
+        "lines": [
+          "origin",
+          "URLを確認"
+        ]
+      },
+      {
+        "title": "手元のbranch",
+        "lines": [
+          "feature/readme",
+          "自分の作業位置"
+        ]
+      },
+      {
+        "title": "追跡先",
+        "lines": [
+          "origin/feature/readme",
+          "fetch時点の情報"
+        ]
+      }
+    ]
+  },
+  "advanced-recover-rescue-branch": {
+    "title": "見つけたcommitに救出用branchを付ける",
+    "takeaway": "戻す前に内容を確かめ、救出用の名前を付ける。",
+    "cards": [
+      {
+        "title": "探す",
+        "lines": [
+          "git reflog",
+          "HEADの移動履歴"
+        ]
+      },
+      {
+        "title": "確かめる",
+        "lines": [
+          "git show",
+          "必要な内容か"
+        ]
+      },
+      {
+        "title": "名前を付ける",
+        "lines": [
+          "rescue/work",
+          "作業中の位置は維持"
+        ]
+      }
+    ]
+  },
+  "advanced-tags-release-tag": {
+    "title": "tagで公開した版に名前を付ける",
+    "takeaway": "branchは作業の先端、tagは版の目印。",
+    "cards": [
+      {
+        "title": "branch",
+        "lines": [
+          "次のcommitへ進む",
+          "main"
+        ]
+      },
+      {
+        "title": "tag",
+        "lines": [
+          "特定の版を指す",
+          "v1.0.0"
+        ]
+      },
+      {
+        "title": "共有",
+        "lines": [
+          "対象tagを指定",
+          "push先も確認"
+        ]
+      }
+    ]
+  },
+  "advanced-bisect-bisect-start": {
+    "title": "bisectで不具合が入ったcommitを絞る",
+    "takeaway": "正常な版と不具合のある版の間を、半分ずつ調べる。",
+    "cards": [
+      {
+        "title": "正常な版",
+        "lines": [
+          "GOOD_COMMIT",
+          "再現しない"
+        ]
+      },
+      {
+        "title": "調査範囲",
+        "lines": [
+          "中間のcommit",
+          "同じ条件で確認"
+        ]
+      },
+      {
+        "title": "不具合の版",
+        "lines": [
+          "BAD_COMMIT",
+          "再現する"
+        ]
+      }
+    ]
+  },
+  "advanced-bisect-bisect-finish": {
+    "title": "判定を繰り返し、調査を終了する",
+    "takeaway": "判定条件を揃え、終わったら bisect reset。",
+    "cards": [
+      {
+        "title": "判定する",
+        "lines": [
+          "good または bad",
+          "同じテストを使う"
+        ]
+      },
+      {
+        "title": "候補を読む",
+        "lines": [
+          "最初のbad",
+          "差分から原因を検証"
+        ]
+      },
+      {
+        "title": "調査を終える",
+        "lines": [
+          "git bisect reset",
+          "開始前の位置へ"
+        ]
+      }
+    ]
+  },
+  "tips-worktree-worktree-lifecycle": {
+    "title": "worktreeを追加して、使い終わったら片付ける",
+    "takeaway": "別ディレクトリでも同じリポジトリ。各作業の保存を確かめる。",
+    "cards": [
+      {
+        "title": "元の作業場所",
+        "lines": [
+          "main",
+          "編集中の作業を維持"
+        ]
+      },
+      {
+        "title": "追加した場所",
+        "lines": [
+          "../seminar-check",
+          "checkで別作業"
+        ]
+      },
+      {
+        "title": "共有するもの",
+        "lines": [
+          "commitの履歴",
+          "branchやtag"
+        ]
+      }
+    ]
+  },
+  "tips-submodule-submodule-update": {
+    "title": "submoduleは「参照するcommit」を更新する",
+    "takeaway": "子のcommitを共有してから、親の参照先を更新する。",
+    "cards": [
+      {
+        "title": "子リポジトリ",
+        "lines": [
+          "変更をcommit",
+          "先に共有する"
+        ]
+      },
+      {
+        "title": "親リポジトリ",
+        "lines": [
+          "子のハッシュを記録",
+          "参照の変更をcommit"
+        ]
+      },
+      {
+        "title": "受け取る側",
+        "lines": [
+          "submodule update",
+          "記録された版を展開"
+        ]
+      }
+    ]
+  },
+  "tips-conflicts-conflict-map": {
+    "title": "Conflictは「どの操作の途中か」から読む",
+    "takeaway": "確認 → 完成形へ編集 → add → 操作ごとの終了。",
+    "cards": [
+      {
+        "title": "状況を読む",
+        "lines": [
+          "git status",
+          "何の操作の途中か"
+        ]
+      },
+      {
+        "title": "内容を決める",
+        "lines": [
+          "両側の意図を読む",
+          "編集して動作確認"
+        ]
+      },
+      {
+        "title": "操作を終える",
+        "lines": [
+          "merge: commit",
+          "rebase: continue"
+        ]
+      }
+    ]
+  },
+  "tips-conflicts-stash-conflict": {
+    "title": "stashを戻したときのConflictを解消する",
+    "takeaway": "退避は残る。解消後は通常のcommitで保存する。",
+    "cards": [
+      {
+        "title": "退避を適用",
+        "lines": [
+          "apply / pop",
+          "変更先との競合"
+        ]
+      },
+      {
+        "title": "解消する",
+        "lines": [
+          "完成形へ編集",
+          "addして確認"
+        ]
+      },
+      {
+        "title": "保存を確かめる",
+        "lines": [
+          "通常のcommit",
+          "不要な退避を整理"
+        ]
+      }
+    ]
+  },
+  "tips-conflicts-rebase-conflict": {
+    "title": "rebaseのConflictは一つずつ解消する",
+    "takeaway": "一つ直してcontinue。skipはcommitを省く判断。",
+    "cards": [
+      {
+        "title": "停止したcommit",
+        "lines": [
+          "statusで確認",
+          "競合箇所を編集"
+        ]
+      },
+      {
+        "title": "次へ進む",
+        "lines": [
+          "git add",
+          "rebase --continue"
+        ]
+      },
+      {
+        "title": "やめる場合",
+        "lines": [
+          "rebase --abort",
+          "開始時の状態へ"
+        ]
+      }
+    ]
+  },
+  "tips-data-loss-loss-reset-checkout": {
+    "title": "reset・checkoutは未commit変更を上書きし得る",
+    "takeaway": "Gitで管理中でも、未記録の編集は守られていない。",
+    "cards": [
+      {
+        "title": "HEADと履歴",
+        "lines": [
+          "commit済みの内容",
+          "参照を探せる場合"
+        ]
+      },
+      {
+        "title": "index",
+        "lines": [
+          "次のcommitの候補",
+          "操作で置き換わる"
+        ]
+      },
+      {
+        "title": "作業ファイル",
+        "lines": [
+          "未commitの編集",
+          "上書き前に保存"
+        ]
+      }
+    ]
+  },
+  "tips-data-loss-loss-clean": {
+    "title": "cleanは未追跡ファイルを削除する",
+    "takeaway": "cleanの前にdry-run。未追跡ファイルはGitから戻せない。",
+    "cards": [
+      {
+        "title": "削除の対象",
+        "lines": [
+          "未追跡ファイル",
+          "履歴に内容がない"
+        ]
+      },
+      {
+        "title": "先に確認",
+        "lines": [
+          "git clean -n",
+          "予定だけ表示"
+        ]
+      },
+      {
+        "title": "範囲を広げる指定",
+        "lines": [
+          "-d はディレクトリ",
+          "-x は無視対象も"
+        ]
+      }
+    ]
+  },
+  "tips-data-loss-loss-unreachable": {
+    "title": "amend・stash・detached HEADの保存先を確かめる",
+    "takeaway": "保存したつもりで終わらず、どの名前から参照できるか確かめる。",
+    "cards": [
+      {
+        "title": "amend",
+        "lines": [
+          "置換後は別commit",
+          "元の版を見失い得る"
+        ]
+      },
+      {
+        "title": "detached HEAD",
+        "lines": [
+          "branch名がない",
+          "移動前に名前を付ける"
+        ]
+      },
+      {
+        "title": "stash と reflog",
+        "lines": [
+          "ローカルの退避や記録",
+          "永久保存は保証しない"
+        ]
+      }
+    ]
+  },
+  "tips-aliases-git-alias": {
+    "title": "Gitのaliasでよく使う引数をまとめる",
+    "takeaway": "Gitのaliasは git に続くコマンドを短くする。",
+    "cards": [
+      {
+        "title": "設定する",
+        "lines": [
+          "alias.st = status",
+          "適用範囲を選ぶ"
+        ]
+      },
+      {
+        "title": "実行する",
+        "lines": [
+          "git st",
+          "statusと同じ"
+        ]
+      },
+      {
+        "title": "確かめる",
+        "lines": [
+          "git config",
+          "aliasの内容を読む"
+        ]
+      }
+    ]
+  },
+  "tips-aliases-bash-alias": {
+    "title": "Bashではaliasと関数を使い分ける",
+    "takeaway": "Bashのaliasはシェル全体の省略。引数処理には関数。",
+    "cards": [
+      {
+        "title": "Gitの設定",
+        "lines": [
+          "git st",
+          "gitの中で展開"
+        ]
+      },
+      {
+        "title": "Bashのalias",
+        "lines": [
+          "gs",
+          "シェルで展開"
+        ]
+      },
+      {
+        "title": "Bashの関数",
+        "lines": [
+          "gshow HEAD",
+          "引数を渡す"
+        ]
+      }
+    ]
+  },
+  "tips-aliases-powershell-function": {
+    "title": "PowerShellでは引数付きの省略を関数にする",
+    "takeaway": "PowerShellでは固定引数を含む省略に関数を使う。",
+    "cards": [
+      {
+        "title": "Set-Alias",
+        "lines": [
+          "コマンド名の別名",
+          "固定引数は含めない"
+        ]
+      },
+      {
+        "title": "function",
+        "lines": [
+          "git status @args",
+          "追加引数も渡す"
+        ]
+      },
+      {
+        "title": "永続化",
+        "lines": [
+          "$PROFILE",
+          "シェルごとの設定先"
+        ]
+      }
+    ]
+  },
+  "tips-gh-gh-intro": {
+    "title": "ghはGitHub上の情報を扱うCLI",
+    "takeaway": "Gitは履歴、ghはGitHub。アカウントと対象を先に確認。",
+    "cards": [
+      {
+        "title": "git",
+        "lines": [
+          "commit / branch",
+          "履歴と作業を扱う"
+        ]
+      },
+      {
+        "title": "gh",
+        "lines": [
+          "Issue / PR",
+          "GitHubを操作"
+        ]
+      },
+      {
+        "title": "最初の確認",
+        "lines": [
+          "gh auth status",
+          "gh repo view"
+        ]
+      }
+    ]
+  },
+  "tips-gh-gh-issue-workflow": {
+    "title": "Issueを確認し、必要なものを作成する",
+    "takeaway": "既存Issueを読む → 内容を準備する → 対象を確かめて作成。",
+    "cards": [
+      {
+        "title": "読む",
+        "lines": [
+          "gh issue list",
+          "重複を確認"
+        ]
+      },
+      {
+        "title": "準備する",
+        "lines": [
+          "背景と再現手順",
+          "issue.md"
+        ]
+      },
+      {
+        "title": "作成する",
+        "lines": [
+          "gh issue create",
+          "返ったURLを確認"
+        ]
+      }
+    ]
+  },
+  "tips-gh-gh-pr-workflow": {
+    "title": "作業branchをpushしてPull requestを開く",
+    "takeaway": "baseとheadを区別し、変更理由と検証を添えてPRを作る。",
+    "cards": [
+      {
+        "title": "作業を共有",
+        "lines": [
+          "commit とテスト",
+          "branchをpush"
+        ]
+      },
+      {
+        "title": "PRを作る",
+        "lines": [
+          "base: main",
+          "head: feature/readme"
+        ]
+      },
+      {
+        "title": "結果を確認",
+        "lines": [
+          "gh pr view",
+          "gh pr checks"
+        ]
+      }
+    ]
+  }
+}

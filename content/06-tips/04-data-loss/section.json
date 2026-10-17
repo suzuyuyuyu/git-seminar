@@ -1,0 +1,81 @@
+{
+  "id": "data-loss",
+  "title": "Git管理していてもコードが消えてしまうケース",
+  "description": "記録前の変更と、参照を失ったcommitの違いから復旧の限界を考えます。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/curriculum-guide.svg"
+  },
+  "sources": [
+    {
+      "label": "Git: restore",
+      "url": "https://git-scm.com/docs/git-restore"
+    },
+    {
+      "label": "Git: stash",
+      "url": "https://git-scm.com/docs/git-stash"
+    },
+    {
+      "label": "Git公式: git-revert",
+      "url": "https://git-scm.com/docs/git-revert"
+    },
+    {
+      "label": "Git: commit",
+      "url": "https://git-scm.com/docs/git-commit"
+    },
+    {
+      "label": "Git: reset",
+      "url": "https://git-scm.com/docs/git-reset"
+    },
+    {
+      "label": "Git: clean",
+      "url": "https://git-scm.com/docs/git-clean"
+    },
+    {
+      "label": "Git: reflog",
+      "url": "https://git-scm.com/docs/git-reflog"
+    },
+    {
+      "label": "Git公式: git-cherry-pick",
+      "url": "https://git-scm.com/docs/git-cherry-pick"
+    },
+    {
+      "label": "Git公式: git-rebase",
+      "url": "https://git-scm.com/docs/git-rebase"
+    },
+    {
+      "label": "Git公式: git-push",
+      "url": "https://git-scm.com/docs/git-push"
+    },
+    {
+      "label": "Git公式: git-worktree",
+      "url": "https://git-scm.com/docs/git-worktree"
+    },
+    {
+      "label": "Git公式: git-submodule",
+      "url": "https://git-scm.com/docs/git-submodule"
+    },
+    {
+      "label": "Git公式: gitrevisions",
+      "url": "https://git-scm.com/docs/gitrevisions"
+    },
+    {
+      "label": "Git公式: git-tag",
+      "url": "https://git-scm.com/docs/git-tag"
+    },
+    {
+      "label": "Git公式: git-switch",
+      "url": "https://git-scm.com/docs/git-switch"
+    },
+    {
+      "label": "Git: checkout",
+      "url": "https://git-scm.com/docs/git-checkout"
+    }
+  ],
+  "steps": [
+    "loss-reset-checkout.md",
+    "loss-clean.md",
+    "amend.md",
+    "loss-unreachable.md"
+  ]
+}

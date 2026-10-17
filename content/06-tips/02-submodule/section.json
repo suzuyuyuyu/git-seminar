@@ -1,0 +1,75 @@
+{
+  "id": "submodule",
+  "title": "submodule",
+  "description": "別リポジトリを、特定のcommitを指す依存として扱います。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/curriculum-guide.svg"
+  },
+  "sources": [
+    {
+      "label": "Git公式: git-restore",
+      "url": "https://git-scm.com/docs/git-restore"
+    },
+    {
+      "label": "Git公式: git-stash",
+      "url": "https://git-scm.com/docs/git-stash"
+    },
+    {
+      "label": "Git公式: git-revert",
+      "url": "https://git-scm.com/docs/git-revert"
+    },
+    {
+      "label": "Git公式: git-commit",
+      "url": "https://git-scm.com/docs/git-commit"
+    },
+    {
+      "label": "Git公式: git-reset",
+      "url": "https://git-scm.com/docs/git-reset"
+    },
+    {
+      "label": "Git公式: git-clean",
+      "url": "https://git-scm.com/docs/git-clean"
+    },
+    {
+      "label": "Git公式: git-reflog",
+      "url": "https://git-scm.com/docs/git-reflog"
+    },
+    {
+      "label": "Git公式: git-cherry-pick",
+      "url": "https://git-scm.com/docs/git-cherry-pick"
+    },
+    {
+      "label": "Git公式: git-rebase",
+      "url": "https://git-scm.com/docs/git-rebase"
+    },
+    {
+      "label": "Git公式: git-push",
+      "url": "https://git-scm.com/docs/git-push"
+    },
+    {
+      "label": "Git公式: git-worktree",
+      "url": "https://git-scm.com/docs/git-worktree"
+    },
+    {
+      "label": "Git: submodule",
+      "url": "https://git-scm.com/docs/git-submodule"
+    },
+    {
+      "label": "Git公式: gitrevisions",
+      "url": "https://git-scm.com/docs/gitrevisions"
+    },
+    {
+      "label": "Git公式: git-tag",
+      "url": "https://git-scm.com/docs/git-tag"
+    },
+    {
+      "label": "Git公式: git-switch",
+      "url": "https://git-scm.com/docs/git-switch"
+    }
+  ],
+  "steps": [
+    "submodule.md",
+    "submodule-update.md"
+  ]
+}

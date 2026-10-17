@@ -1,0 +1,10 @@
+{
+  "id": "intro",
+  "number": "00",
+  "title": "はじめに",
+  "description": "教材の読み方と接続の準備を確認し、最初に全体の結論を見ます。",
+  "sections": [
+    "01-preparation",
+    "02-conclusion"
+  ]
+}

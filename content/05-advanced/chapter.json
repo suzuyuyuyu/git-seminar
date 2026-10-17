@@ -1,0 +1,13 @@
+{
+  "id": "advanced",
+  "number": "05",
+  "title": "Gitコマンド（応用）",
+  "description": "比較・調査・復元の道具を、目的に応じて選べるようにします。",
+  "sections": [
+    "01-inspect",
+    "02-remote",
+    "03-recover",
+    "04-tags",
+    "05-bisect"
+  ]
+}

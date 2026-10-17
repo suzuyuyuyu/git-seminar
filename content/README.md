@@ -1,114 +1,121 @@
 # 教材を追加・編集する
 
-**このフォルダーが教材の編集元です。1つのMarkdownが1つの節になります。** 本文・講義の要点・付箋・図の指定を同じファイルに書きます。自学習と講義のために別々の文章を管理する必要はありません。
+このフォルダーが教材の編集元です。階層は **Chapter → Section → Slide（Step）** で、Sectionごとに1ページ、Markdown 1ファイルが1Stepです。本文・講義の要点・付箋・図の指定を同じファイルに書きます。
 
-## まず既存の節を編集する
+## 既存のStepを編集する
 
-例：`02-record-changes/stage.md` を開き、本文や「## 要点」の文章を変更して保存します。
+例：`01-solo/03-essential/stage.md` の本文や「## 要点」を変更します。リポジトリのルートで `node tools/serve.cjs` を実行し、[ローカルプレビュー](http://127.0.0.1:4173/git-seminar/)を開きます。保存後にブラウザーを再読み込みすると反映されます。自動リロードはありません。
 
-リポジトリのルートで `node tools/serve.cjs` を実行し、http://127.0.0.1:4173/git-seminar/ を開きます。**保存後にブラウザーを再読み込みすると反映されます。サーバーの再起動や手動の変換は不要です。** 自動でブラウザーを再読み込みする機能はありません。
+## 3階層と順序
 
-## 節を追加する
-
-1. 同じ章の既存ファイル、または `_templates/section.md` をコピーします。
-2. 例として `02-record-changes/check-stage.md` という名前にします。ファイル名に順序の番号は不要です。
-3. 先頭の `id` を章内で重複しない名前にし、`title` と本文を書きます。付箋のIDも同じ章の他の付箋と重複しない名前にします。
-4. `diagram` に使う図、`state` にその図の表示状態を指定します。同じ図を続けて使うなら、コピー元のdiagramとstateをそのまま使えます。
-5. 同じ章の `lesson.json` の `sections` 配列にファイル名を追加します。配列の順番が、自学習の章内目次と講義の順番になります。
-6. 保存し、ブラウザーを再読み込みします。サーバーの再起動は不要です。
-
-## 順番を変える・下書きを置く
-
-章の `lesson.json` の `sections` に、章フォルダー直下のMarkdownファイル名を並べます。既存の設定項目に加える配列の例です。
-
-```json
-"sections": [
-  "working-tree.md",
-  "stage.md",
-  "check-stage.md",
-  "commit.md",
-  "push.md",
-  "operation-map.md"
-]
+```text
+content/
+  course.json
+  01-solo/
+    chapter.json
+    03-essential/
+      section.json
+      stage.md
+  graphs/
+    branches.json
+  diagram-models.json
 ```
 
-並べ替えは配列内の行を移動するだけです。ファイル名の変更は不要です。見出しの `title` に手書きの番号がある場合は、必要に応じてそちらも更新してください。
+Chapterは番号付きフォルダーの数値順です。`chapter.json` の `sections` には、Chapter直下のSectionフォルダー名を表示順に並べます。
 
-一覧にあるMarkdownだけが公開されます。下書きは `sections` に登録せず章フォルダーに置けます。生成・プレビュー・公開前チェック時に、未登録のMarkdownを下書きとして除外したことをターミナルに表示します（エラーにはなりません）。未登録の `README.md` は執筆メモとして扱い、通知しません。`_templates/` は章ではないため公開されません。
+```json
+{
+  "id": "solo",
+  "title": "個人開発を管理しよう",
+  "sections": ["01-motivation", "02-flow", "03-essential", "04-basic", "05-practice", "06-summary"]
+}
+```
 
-節を非公開にするには一覧から外します。完全に削除するなら一覧とMarkdownの両方を削除してください。一覧のファイル名の重複、存在しないファイル、章フォルダー外へのパスはエラーになります。URLに使うのはMarkdown内のidなので、並べ替えやファイル名の変更で節へのリンクは変わりません。
+Sectionの `section.json` は見出し・既定図・出典・Step順を持ちます。`steps` には同じSection直下のMarkdownファイル名を並べます。ファイル名に順序番号は不要です。
 
-## 書式
+```json
+{
+  "id": "essential",
+  "title": "Gitコマンド（超基本）絶対に覚える",
+  "diagram": { "type": "svg", "src": "assets/record-flow.svg" },
+  "sources": [{ "label": "Git add", "url": "https://git-scm.com/docs/git-add" }],
+  "steps": ["clone.md", "stage.md", "commit.md", "push.md", "pull.md", "status.md"]
+}
+```
 
-先頭の `---` で囲んだ部分は設定です。通常はid・title・diagram・stateを編集します。titleは普通の文章でも、JSON形式のダブルクォート付き文字列でも書けます。YAML全体の構文に対応する設定ではありません。
+Chapter IDは教材全体、Section IDはそのChapter内、Step IDはそのSection内で一意にします。別Chapterに同名のSectionを置けます。付箋IDは同じSection内で重複させません。
+
+## Stepを追加・並べ替えする
+
+1. 既存のStep、または `_templates/step.md` をSectionへコピーします。
+2. `id` をSection内で重複しない名前にし、`title`、本文、「## 要点」を書きます。
+3. `diagram` と `state` で図と表示状態を指定します。
+4. 同じSectionの `section.json` の `steps` にファイル名を追加します。
+5. 保存してブラウザーを再読み込みします。
+
+順序を変えるには `steps` の行を移動します。未登録のMarkdownは下書きとして除外し、ターミナルに `steps未登録` と通知します。README.mdは執筆メモとして扱い、通知しません。`_templates/` はChapterとして公開されません。
+
+登録済みファイルの欠落、一覧の重複、フォルダー外へのパスはエラーになります。非公開にする場合は一覧から外し、旧URLの転送先も確認してください。
+
+## Markdownの書式
+
+先頭の `---` で囲む設定は、以下のキーだけを扱う簡単な書式です。YAML全体の機能には対応していません。titleは通常の文字列かJSON形式のダブルクォート付き文字列で書けます。
 
 | 設定 | 意味 |
 | --- | --- |
-| id | 節のURLに使うID。半角英数字とハイフン。章内で一意 |
-| title | 見出し。必要なら「02」のような表示番号もここで編集 |
-| state | 図の表示状態。省略時はidと同じ |
-| diagram | この節で使うSVGのパス。`docs/` 基準で `assets/example.svg` と書く。動的なcommitグラフは `commit-graph` |
-| presentation-lines | 講義に抜粋するコマンドの行番号。0始まり、例 `0, 2, 3`。省略時は全行 |
+| id | StepのURLに使うID。半角英数字とハイフン |
+| title | 見出し |
+| state | 図の状態。省略時はStep ID |
+| diagram | docs基準のSVGパス、または `commit-graph`。省略時はSectionの既定図 |
+| presentation-lines | 講義のコマンド抜粋。0始まりの行番号、例 `0, 2, 3`。省略時は全行 |
+| wide | true / falseの互換設定。文章幅を変える設定には使わない |
 
-先頭の設定の後に書く文章が自学習の本文です。空行で段落を分けます。太字 `**強調**`、インラインコード、リンク、見出し、箇条書き、番号付きリスト、引用、コードブロックが使えます。入れ子リスト・表・HTML・画像記法には対応していません。図はSVGとしてdiagramで指定します。
+本文では段落、太字、インラインコード、リンク、見出し、箇条書き、番号付きリスト、引用、コードブロックを使えます。入れ子リスト・表・HTML・画像記法には対応していません。図は `diagram` で指定します。
 
-- **## 要点**：必須。図の下の説明と、講義表示の大きな要点として共用します。短い一文を推奨します。ここは書式なしの文章です。
-- **## コマンド**：任意。1つのコードブロックで囲みます。自学習と講義で同じコードを使います。
-- **## 付箋**：任意。各付箋を `### note-id` で区切ります。`### note-id [講義]` とすると講義でも表示します。本文と同じMarkdown書式を使えます。
+- **## 要点**：必須。図の下の説明と講義の大きな要点に共用する、書式なしの短い文章です。
+- **## コマンド**：任意。1つのコードブロックで囲みます。
+- **## 付箋**：任意。`### note-id` で区切り、`### note-id [講義]` とすると講義にも表示します。
 
-本文に上記3つと完全に同じ見出しを使うと、特別な領域の区切りになります。それ以外の見出しは本文として扱います。コードブロックの中の見出しは区切りになりません。
+これらと完全に一致する見出しは特別な領域の区切りになります。コードブロック内の見出しは区切りになりません。
 
-## 文章と図の接続を指定する
-
-**各節のMarkdown先頭に、使う図と表示状態を明記します。** 図との接続情報用の別ファイルへの登録は不要です。たとえば `02-record-changes/stage.md` は次のように指定します。
+## 文章と図をつなぐ
 
 ```text
 ---
 id: stage
-title: "02 次の記録に含める内容を選ぶ"
+title: 次の記録に含める内容を選ぶ
 state: stage
 diagram: assets/record-flow.svg
 ---
 ```
 
-- `diagram` は図のファイルを選びます。この例では `docs/assets/record-flow.svg` を表示します。
-- `state` はその図の中で表示・強調する状態を選びます。この例ではSVG内の `data-state="stage"` に対応します。表示側がSVGの `data-current-state` を `stage` に設定し、SVG内のCSSが強調を切り替えます。具体的な見せ方は各SVGで定義します。
-- 同じSVGの別の部分を説明するなら `state` を変更します。別の図を使うなら `diagram` と、その図にある `state` を指定します。
+`diagram` は公開SVGを選び、`state` はSVGの `data-state="stage"` に対応します。表示側が `data-current-state` を設定し、SVG内のCSSで強調を切り替えます。状態を持たないSVGは全体をそのまま表示します。自学習のスクロールと講義の前後移動は、どちらもStep単位で図を切り替えます。段落の途中で切り替えたい場合はStepを分けます。
 
-自学習ではスクロールで読む節が変わると、その節の図と状態に切り替わります。講義では前後ボタンや矢印キーで節を変えたときに切り替わります。Markdownの段落ごとの切り替えではなく、1つのMarkdown（1節）が切り替え単位です。別のタイミングで図を変えたい場合は節を分けます。
+動的commitグラフでは、Stepに `diagram: commit-graph` と `state: objects` のように記入します。Sectionの `section.json` に次を追加します。
 
-commitグラフを使う節では、先頭に次のように書きます。
-
-```text
-diagram: commit-graph
-state: objects
+```json
+"graph": "graphs/branches.json"
 ```
 
-これは保存済みSVGではなく、章の `lesson.json` の `graph` で指定した `graph.json` から図を描く指定です。`state` は `graph.json` の `states` のキー（この例では `objects`）に対応します。
+このパスは **contentルート基準** です。Sectionフォルダー基準ではありません。`state` は指定JSONの `states` のキーです。共通のノード・親子関係・参照を使い、Stepごとに画像を複製しません。
 
-各SVGの `data-state`、または `graph.json` の `states` がstateの候補です。図を独自に作る場合は、`docs/assets/` へSVGを保存しdiagramで指定します。状態を切り替えない普通のSVGも使えます。その場合はSVG全体を表示し、stateによる切り替えはありません。図の枠は16:9のまま、SVG全体が入るように表示します。古いwideは移行時の互換情報で、文章幅には影響しません。
+追加図 `curriculum-guide.svg` の文言や構造は `content/diagram-models.json` を編集し、`node tools/build-curriculum-diagrams.cjs` で生成します。`branch-model.svg` と `collaboration-integration.svg` は `tools/build-diagrams.cjs` を編集して `node tools/build-diagrams.cjs` で生成します。生成対象以外のSVGは `docs/assets/` 内で直接編集します。
 
-既存の全節にはdiagramとstateを明記しています。互換性のためdiagramの省略時は章の `lesson.json` のdiagram、stateの省略時は節のidを使いますが、新しい節も両方を記入すると対応をその場で確認できます。`docs/course.json` はこれらから生成する配信用データなので、接続を変更するときもMarkdownを編集してください。
+## Section・Chapterを追加する
 
-## 章を追加する
+SectionはChapter直下にフォルダーを作り、`section.json` とStepを置いて、Chapterの `chapter.json` の `sections` に登録します。Chapterは番号付きフォルダーと `chapter.json` を作ります。HTMLやJavaScriptへの目次追記は不要です。指定された章・Section順を変更する場合は教材構成のテストも確認します。
 
-章のフォルダーをコピーし、例として `09-new-topic/` にします。
+## URLと旧リンク
 
-- `lesson.json` のchapter.id、chapter.number、chapter.title等と、レッスンのid・title・descriptionを更新します。chapter.idとレッスンidは全体で一意です。
-- 必要なMarkdownを残して編集し、`lesson.json` の `sections` をファイル名と表示順に合わせます。章自体はフォルダー名の番号順にTOCへ自動登録されます。
-- commitグラフを使う章では、`lesson.json` のgraphで同じフォルダー内の `graph.json` を指定します。通常のSVGだけならgraphは不要です。
-- サイト全体のタイトル・説明は `course.json` で編集します。
+正規URLは `#study/chapter-id/section-id`、特定Stepは `#study/chapter-id/section-id/step-id` です。講義は `#present/chapter-id/section-id/step-id` を使います。ファイル名や表示順を変えてもIDが同じならURLは変わりません。
 
-## 公開前のチェック
+IDの変更やStepの移動では、`content/course.json` の `redirects` を更新します。キーは旧URLのモードに続く部分、値は存在する `chapter/section/step` です。たとえば `"review-and-resolve/markers": "collaboration/hands-on/markers"` と登録します。
+
+## 公開前の確認
 
 ```sh
+node --test tools/build-content.test.cjs
 node tools/check-content.cjs
 ```
 
-Markdownから配信用JSONを生成し、図のパスや状態、IDの重複、コマンド抜粋等を確認します。記入漏れや不明な設定はファイル名付きで報告します。`docs/course.json` は生成物なので直接編集しません。
-
-GitHub Pagesでファイル追加から自動公開する場合は、最初の1回だけSettings → Pages → Sourceを **GitHub Actions** にします。用意した `.github/workflows/pages.yml` がmainへのpush時に生成・検証してdocsを公開します。GitHub側の設定変更・push・デプロイは今回実行していません。
-
-従来の「Deploy from a branch / main / docs」を続ける場合は、push前に上のチェックコマンドを実行し、更新された `docs/course.json` も一緒にcommitしてください。Markdownだけをpushしても、この配信方式では生成されません。
-
-[開発・公開の補足](../DEVELOPMENT.md)
+`docs/course.json` は生成物なので直接編集しません。図モデルを変えた場合はSVGも再生成します。変更したSectionを自学習・講義・縦画面で目視してください。公開手順は [DEVELOPMENT.md](../DEVELOPMENT.md)、原資料との対応は [chapter-structure.md](../authoring/chapter-structure.md) を参照してください。

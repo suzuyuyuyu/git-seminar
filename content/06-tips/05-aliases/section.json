@@ -1,0 +1,24 @@
+{
+  "id": "aliases",
+  "title": "Git config エイリアスの設定とシェルスクリプトのエイリアス",
+  "description": "Gitの短縮コマンドと、シェルの別名・関数を使い分けます。",
+  "diagram": {
+    "type": "svg",
+    "src": "assets/curriculum-guide.svg"
+  },
+  "sources": [
+    {
+      "label": "Git: config",
+      "url": "https://git-scm.com/docs/git-config"
+    },
+    {
+      "label": "PowerShell: aliasと引数付き関数",
+      "url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_aliases"
+    }
+  ],
+  "steps": [
+    "git-alias.md",
+    "bash-alias.md",
+    "powershell-function.md"
+  ]
+}
