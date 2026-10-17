@@ -1,6 +1,6 @@
 # GitゼミのHTML教材
 
-このリポジトリをHTML教材の編集元とします。Chapter 00〜08の全9章・79節を収録しています。元の108スライドの主題をWeb教材へ再構成し、指定されたPDFの重要ページの比較構造・図・演習を補っています。対応は authoring/source-alignment.md を参照してください。
+教材は **Chapter → Section → Slide（Step）** の3階層です。Sectionを1ページとし、その中のStepを自学習では順に読み、講義では1枚ずつ表示します。現在の7章構成と原資料の対応は [authoring/chapter-structure.md](./authoring/chapter-structure.md) に記載しています。
 
 ## ローカルで確認する
 
@@ -10,71 +10,62 @@
 node tools/serve.cjs
 ```
 
-http://127.0.0.1:4173/git-seminar/ を開きます。GitHub Pagesと同じ /git-seminar/ 配下でCSS・JavaScript・SVGの相対パスを確認できます。終了は Ctrl+C です。
+[ローカルプレビュー](http://127.0.0.1:4173/git-seminar/)を開きます。終了はCtrl+Cです。Markdown・JSONの保存後にブラウザーを再読み込みすると教材データを再生成します。SVGもHTTP経由で読み込むため、HTMLのダブルクリックではなくサーバーから開いてください。公開サイトは静的ファイルだけで動きます。
 
-Markdownの保存・ファイル追加後にブラウザーを再読み込みすると、サーバーが内容を再生成します。サーバーの再起動は不要です。SVGと生成JSONはfetchで読み込むので、HTMLファイルのダブルクリックではなくHTTPサーバーから開いてください。Nodeはプレビュー・公開前の生成に使い、公開サイト自体は静的ファイルだけで動きます。
+自学習の正規URLは `#study/chapter-id/section-id`、Stepを指定する場合は `#study/chapter-id/section-id/step-id` です。講義は `#present/chapter-id/section-id/step-id` です。旧URLは `content/course.json` の `redirects` で新しいStepへ転送します。
 
-## GitHub Pagesに公開する
-
-1. 最初の1回、リポジトリの Settings → Pages → Sourceに **GitHub Actions** を選びます。
-2. content/内のMarkdown・JSONやSVGの変更をmainへcommit・pushします。
-3. .github/workflows/pages.yml がMarkdownの生成・テスト・教材検証を実行し、docs/を公開します。Pull Requestでは検証だけを実行します。
-4. 配信処理の完了後、Pages画面のURLから確認します。
-
-ワークフローを用意した段階であり、GitHub側の設定変更や公開はこの変更では行っていません。従来のDeploy from a branch / main / docsを維持する場合は、push前に `node tools/check-content.cjs` を実行し、生成されたdocs/course.jsonもcommitします。その場合、GitHub側でMarkdownの自動生成は行われません。
-
-標準の公開先は https://suzuyuyuyu.github.io/git-seminar/ です。公開の成否はGitHubのPages画面で確認してください。
-
-docs/.nojekyll は静的ファイルをそのまま配信するためのファイルです。既存のPDF・設定資料はリポジトリに残し、今回の公開対象は docs/ のみとしています。
-
-公式手順: https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
-
-## 編集元とSSOT
+## 編集元と生成物
 
 | ファイル | 役割 |
 | --- | --- |
-| content/README.md | 執筆・ファイル追加・章追加の手順 |
-| content/course.json | サイト全体のタイトル・説明 |
-| content/番号-章/lesson.json | 章・レッスンの見出し、説明、既定のSVG、出典、sectionsによる節の順序 |
-| content/番号-章/節名.md | 1ファイル1節。本文、コマンド、要点、付箋、図の指定 |
-| content/番号-章/graph.json | commitグラフのノード・参照・表示状態 |
-| tools/build-content.cjs | 章を番号順に探索し、lesson.jsonのsections順に教材データを生成 |
+| content/course.json | サイトのタイトル・説明・旧URLの転送先 |
+| content/NN-chapter/chapter.json | Chapterの見出し、Sectionフォルダー名の順序 |
+| content/NN-chapter/NN-section/section.json | Sectionの見出し・既定図・出典、Stepファイル名の順序 |
+| content/NN-chapter/NN-section/step.md | 1ファイル1Step。本文・コマンド・要点・付箋・図と状態 |
+| content/graphs/branches.json | commitグラフのノード・親子関係・表示状態 |
+| content/diagram-models.json | 追加図のタイトル・カード・矢印などのモデル |
+| tools/build-content.cjs | Markdown・JSONからschema v2の配信データを生成 |
+| tools/build-curriculum-diagrams.cjs | diagram-models.jsonからcurriculum-guide.svgを生成 |
+| tools/build-diagrams.cjs | branch-model.svgとcollaboration-integration.svgを生成 |
 | docs/course.json | 配信用の生成物。直接編集しない |
-| docs/assets/record-flow.svg | 自学習と本番が共用する図 |
-| docs/assets/version-history.svg | ファイルの複製・履歴管理・共有の導入図 |
-| docs/commit-graph.js | 共通のcommit・branch・HEADデータからSVGを生成 |
-| docs/app.js | 同じ教材から3種類の表示を生成 |
+| docs/assets/ | 公開SVGと共通イラスト |
+| docs/commit-graph.js | commitグラフを共通データから描画 |
+| docs/app.js | 教材の目次・自学習・講義表示 |
 | docs/markdown.js・markdown.css | 本文・付箋のMarkdown表示 |
-| docs/styles.css | 色・フォント・余白・画面幅別の配置 |
-| docs/index.html | 表示の枠組み |
-| authoring/CONTENT-NOTES.md | 原資料との対応と未収録項目 |
-| authoring/foundations.md・collaboration.md・recovery.md | 追加した章の参照元・補完・操作前提 |
+| docs/styles.css・index.html | 配置・見た目と表示の枠組み |
 
-本文・要点・付箋はcontent/内のMarkdownを編集し、本番表示のために同じ文章を別ファイルへコピーしません。`### note-id [講義]` と書くと本番にも出ます。図はSVGを一度編集すれば両表示に反映されます。長い操作例を本番で抜粋する場合はfront matterのpresentation-linesで元のコマンドの行番号を参照し、コマンド文字列自体は複製しません。
+追加・並べ替え・Markdown書式は [content/README.md](./content/README.md) を参照してください。本文・コマンド・図を自学習と講義用に複製せず、同じStepを使います。講義のコマンド抜粋には `presentation-lines`、付箋には `[講義]` を指定します。
 
-Markdownを追加し、同じ章のlesson.jsonのsectionsにファイル名を登録します。配列の順番が節の表示順です。ファイル名に番号は不要で、並べ替えは配列の行を移動します。未登録のMarkdownは下書きとして除外し、ターミナルに通知します。章を増やす場合は番号付きの章フォルダーとlesson.jsonを追加します。JSやHTMLへ追記する必要はありません。HTMLは生成されたcourse.jsonを読み込みます。書式の詳細とテンプレートはcontent/README.mdを参照してください。旧content.js・lessons/*.js・curriculum.jsは編集元から外し、ワークスペースのtmp/markdown-migration/legacyに移行前の控えを保存しました。
+図の編集元に応じて再生成し、生成されたSVGもcommitします。
 
-commitグラフは章フォルダーのgraph.jsonにノード・親commit・branchの位置・HEADの参照先をまとめ、共通のSVG描画処理で表示します。状態ごとのSVG画像を別々にコピーして作りません。新しいレッスンはlesson.jsonのdiagram、またはgraphを指定し、同じ表示処理に載せます。
+```sh
+node tools/build-diagrams.cjs
+node tools/build-curriculum-diagrams.cjs
+node tools/build-content.cjs
+```
 
-CSSはブラウザ標準のネスト記法を使います。Sassのコンパイルは不要です。コンポーネント内の子要素・状態・画面幅別の変更を近くにまとめて管理します。
+生成対象以外のSVGはSVG自体を編集します。公開図にPNGやJPEGのスクリーンショットを埋め込みません。元PPT由来のベクター素材は `docs/assets/illustrations/` にまとめ、対応と出典を `manifest.json` に記録しています。比較図の調整記録は [authoring/diagram-refinement.md](./authoring/diagram-refinement.md) にあります。
 
-図はSVGを編集元と公開形式にします。SVGにPNGやJPEGのスクリーンショットを埋め込んで置き換えません。原資料を確認するためのページ画像は公開せず、元PPTから抽出できたベクター素材を docs/assets/illustrations/ にまとめて参照します。素材の対応と出典状況は同フォルダーの manifest.json に記録します。自学習・本番・拡大表示は同じSVGと教材データを使います。
-
-`branch-model.svg` と `collaboration-integration.svg` は `tools/build-diagrams.cjs` が編集元です。この2図の文言や配置を変える場合はスクリプトを編集し、`node tools/build-diagrams.cjs` で再生成して、SVGも一緒にcommitします。参考画像との対応と図の読み方は [authoring/diagram-refinement.md](./authoring/diagram-refinement.md) を参照してください。
-
-## 教材の整合性を確認する
+## 整合性を確認する
 
 ```sh
 node --test tools/build-content.test.cjs
 node tools/check-content.cjs
 ```
 
-全章の登録、重複ID、本文・要点・付箋のデータ形式、SVGへのパスと表示状態、commitグラフの参照先を検証します。教材を編集したらこの確認に加え、ブラウザーで自学習・本番の表示と縦画面を確認します。コマンドは説明用の例なので、この検証ではGit操作や認証を実行しません。
+Chapter・Section・Stepの順序、各階層のID、未登録の下書き、パス逸脱、旧URLの転送先、本文・付箋・コマンド、SVGの状態、commitグラフと出典参照を検証します。チェックは教材例のGit操作や認証を実行しません。
 
-## 操作
+文章や図を変えたら、影響するSectionの自学習・講義・縦画面をブラウザーで確認してください。生成データの検証だけでは、文字の欠けや配置の読みやすさを保証できません。
 
-自学習はスクロールに合わせて図の強調を切り替え、付箋を対応する説明の横に表示します。図の枠は16:9で、PC幅では図の中央が画面の上下中央に来るよう追従します。スマホ幅（760px以下、または縦画面かつ1000px以下）では画面上部へ固定します。図の種類によって文章の幅は変えません。縦長の図も全体を表示し、余白を残します。各節のリンクから直接参照できます。
+## GitHub Pagesに公開する
 
-本番は前後ボタン、左右キー、PageUp / PageDownで切り替えます。Home / Endで最初・最後へ移動できます。表示モードを変えても対応する説明を開けます。
+1. リポジトリのSettings → Pages → Sourceで **GitHub Actions** を選びます。
+2. 編集元・生成SVGの変更をmainへcommit・pushします。
+3. `.github/workflows/pages.yml` が生成・テスト・教材検証を実行し、`docs/` を公開します。Pull Requestでは検証を行います。
+4. 配信の完了と公開URLをGitHubのPages画面で確認します。
 
-ページに表示するコマンドは教材例です。ブラウザからGitを実行する機能はありません。
+従来のDeploy from a branch / main / docsを使う場合は、push前に `node tools/check-content.cjs` を実行し、生成された `docs/course.json` もcommitします。標準の公開先は [Git seminar](https://suzuyuyuyu.github.io/git-seminar/) です。`docs/.nojekyll` は静的ファイルをそのまま配信するためのファイルです。
+
+## 表示の操作
+
+自学習では同じSection内のStepへスクロールすると図の状態が切り替わります。講義は前後ボタン、左右キー、PageUp / PageDownで切り替え、Home / Endで最初・最後へ移動します。表示モードを変えても対応するStepを参照します。表示されるコマンドは教材例で、ブラウザーからGitを実行する機能はありません。

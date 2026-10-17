@@ -1,5 +1,20 @@
 # Gitゼミ教材の編集メモ
 
+## 現在の構成（2026-10-18）
+
+元PPT `ppt-src.pptx` の108スライドを再び読み、全スライドのテキストを抽出できた。教材は依頼された順序の7 Chapterへ再構成し、Chapter → Section → Slide（Step）の3階層、Sectionごとに1ページとした。現在は30 Section・111 Step。正規URLは `#study/chapter/section[/step]`、旧URLの転送は `content/course.json` の `redirects` に記載する。
+
+Chapterの順序は番号付きフォルダー、Sectionは `chapter.json` の `sections`、Stepは各Sectionの `section.json` の `steps` で定義する。1つのMarkdownが1Stepであり、共通のgraphはcontentルート基準の `graphs/branches.json` を参照する。本文・要点・付箋・コマンド・図の状態を自学習と講義で共用する。
+
+`tools/build-content.cjs` が `docs/course.json` を生成する。追加図は `content/diagram-models.json` → `tools/build-curriculum-diagrams.cjs` → `docs/assets/curriculum-guide.svg` の順で生成する。branchと競合の比較図2点は引き続き `tools/build-diagrams.cjs` から生成する。
+
+PPT末尾にはTipsの主題一覧と補助図があるが、多くの説明は補筆した。新規の応用コマンドやghなどを、元PPTに完成済みの本文があったものとして扱わない。PPTの対応表・補足事項は [chapter-structure.md](./chapter-structure.md)、編集手順は [content/README.md](../content/README.md) を参照する。原PPTと同梱PDFは変更していない。
+
+schema v2の7テストと教材整合性チェックは通過している。以下は過去の設計・移行を追うための記録で、旧番号・旧パス・旧検証範囲を含む。現在の構成を示す箇所ではない。
+
+---
+
+# 過去の制作記録（2026-10-14〜17）
 ## 今回の範囲
 
 元資料はワークスペース直下の `ppt-src.pptx`（108スライド）。PowerPoint内のXMLテキストと同梱PDFの図を参照し、原本は変更していない。HTML教材はChapter 00〜08の全9章を収録する。スライドごとの複製ではなく、主題を説明・要点・付箋・SVG図に再構成した。参考PDF `presentation/git-seminar.pdf` も変更していない。
