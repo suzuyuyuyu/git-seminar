@@ -74,5 +74,21 @@
       "label": "Git公式: git-switch",
       "url": "https://git-scm.com/docs/git-switch"
     }
+  ],
+  "sections": [
+    "restore-worktree.md",
+    "restore-index.md",
+    "stash.md",
+    "revert.md",
+    "amend.md",
+    "reset.md",
+    "clean.md",
+    "reflog.md",
+    "cherry-pick.md",
+    "rebase.md",
+    "worktree.md",
+    "submodule.md",
+    "revisions.md",
+    "detached.md"
   ]
 }

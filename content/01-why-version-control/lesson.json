@@ -12,5 +12,12 @@
   "diagram": {
     "type": "svg",
     "src": "assets/version-history.svg"
-  }
+  },
+  "sections": [
+    "save-data.md",
+    "sharing.md",
+    "dvcs.md",
+    "copies.md",
+    "repository.md"
+  ]
 }

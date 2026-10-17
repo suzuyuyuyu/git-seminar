@@ -38,5 +38,19 @@
       "label": "GitHub Docs：ブラウザで競合を解消する",
       "url": "https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/resolving-a-merge-conflict-on-github"
     }
+  ],
+  "sections": [
+    "publish.md",
+    "review.md",
+    "sync.md",
+    "conflict-setup.md",
+    "conflict-history.md",
+    "diverge.md",
+    "conflict-choice.md",
+    "conflict-merge.md",
+    "markers.md",
+    "resolve.md",
+    "record.md",
+    "alternatives.md"
   ]
 }

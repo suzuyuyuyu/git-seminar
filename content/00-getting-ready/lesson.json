@@ -46,5 +46,14 @@
       "label": "RFC 8709：SSHでのEd25519署名",
       "url": "https://www.rfc-editor.org/rfc/rfc8709.html"
     }
+  ],
+  "sections": [
+    "tools.md",
+    "identity.md",
+    "authentication.md",
+    "keys.md",
+    "register.md",
+    "config.md",
+    "connect.md"
   ]
 }

@@ -608,6 +608,7 @@ button {
   padding-top: 15px;
 
   @media (max-width: 760px), (orientation: portrait) and (max-width: 1000px) {
+    top: 0;
     padding: 10px 0 8px;
     background: var(--paper);
     z-index: 5;

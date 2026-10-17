@@ -4,7 +4,7 @@
 
 元資料はワークスペース直下の `ppt-src.pptx`（108スライド）。PowerPoint内のXMLテキストと同梱PDFの図を参照し、原本は変更していない。HTML教材はChapter 00〜08の全9章を収録する。スライドごとの複製ではなく、主題を説明・要点・付箋・SVG図に再構成した。参考PDF `presentation/git-seminar.pdf` も変更していない。
 
-編集元は2026-10-15に `content/` へ移行した。本文・要点・付箋は番号付きMarkdown、章の設定はlesson.json、Chapter 06のノード・親子関係・branchとHEADはgraph.jsonに一度だけ定義する。tools/build-content.cjsがdocs/course.jsonを生成し、自学習と本番は同じtakeawayとnotesを参照する。本番の付箋はMarkdownの `[講義]`、図の状態は先頭設定のstateで選ぶ。手順はcontent/README.mdを参照。下記の個別作成メモに旧JSファイル名がある場合は移行前の実装名である。
+編集元は2026-10-15に `content/` へ移行した。本文・要点・付箋はMarkdown、章の設定と節の並び順（sections）はlesson.json、Chapter 06のノード・親子関係・branchとHEADはgraph.jsonに一度だけ定義する。2026-10-16にMarkdownファイル名の番号を外し、lesson.jsonのsections配列による順序指定へ移行した。tools/build-content.cjsがdocs/course.jsonを生成し、自学習と本番は同じtakeawayとnotesを参照する。本番の付箋はMarkdownの `[講義]`、図とその状態は先頭設定のdiagramとstateで選ぶ。手順はcontent/README.mdを参照。下記の個別作成メモに旧JSファイル名がある場合は移行前の実装名である。
 
 ## 元スライドとの対応
 

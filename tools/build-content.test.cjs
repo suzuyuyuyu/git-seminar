@@ -24,24 +24,51 @@ test('記入漏れと重複設定をファイル名付きで報告する', () =>
   assert.throws(() => parseSection(section() + '\n```\n閉じ忘れ'), /コードブロックを閉じ/);
 });
 
-test('ファイルの追加・削除を自動検出し、番号順に並べ、ID重複を拒否する', () => {
+test('sectionsの順序・登録・下書き・不正な一覧を検証する', () => {
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'git-seminar-content-'));
   try {
     const directory = path.join(temp, '00-example');
     fs.mkdirSync(directory);
     fs.writeFileSync(path.join(temp, 'course.json'), JSON.stringify({ title: 'Test' }));
-    fs.writeFileSync(path.join(directory, 'lesson.json'), JSON.stringify({ chapter: { id: 'example' }, id: 'example', diagram: { type: 'svg', src: 'assets/record-flow.svg' } }));
+    const configure = sections => fs.writeFileSync(path.join(directory, 'lesson.json'), JSON.stringify({ chapter: { id: 'example' }, id: 'example', diagram: { type: 'svg', src: 'assets/record-flow.svg' }, sections }));
     const file = (name, id) => fs.writeFileSync(path.join(directory, name), section(id));
-    file('20-second.md', 'second');
-    file('10-first.md', 'first');
-    fs.writeFileSync(path.join(directory, 'README.md'), '未公開のメモ');
-    const build = () => buildCourse({ contentRoot: temp, output: null });
-    assert.deepEqual(build().lessons[0].sections.map(s => s.id), ['first', 'second']);
-    file('15-added.md', 'added');
-    assert.deepEqual(build().lessons[0].sections.map(s => s.id), ['first', 'added', 'second']);
-    fs.unlinkSync(path.join(directory, '15-added.md'));
-    assert.equal(build().lessons[0].sections.length, 2);
-    file('30-duplicate.md', 'first');
+    const warnings = [];
+    const build = () => buildCourse({ contentRoot: temp, output: null, onWarning: message => warnings.push(message) });
+    const ids = () => build().lessons[0].sections.map(s => s.id);
+    file('alpha.md', 'first');
+    file('zulu.md', 'second');
+    fs.writeFileSync(path.join(directory, 'README.md'), '執筆メモ');
+    configure(['zulu.md', 'alpha.md']);
+    assert.deepEqual(ids(), ['second', 'first']);
+    assert.equal(warnings.length, 0);
+    configure(['alpha.md', 'zulu.md']);
+    assert.deepEqual(ids(), ['first', 'second']);
+    fs.writeFileSync(path.join(directory, 'draft.md'), 'まだ書式を整えていない下書き');
+    assert.deepEqual(ids(), ['first', 'second']);
+    assert.match(warnings.at(-1), /draft.md: sections未登録/);
+    file('draft.md', 'added');
+    configure(['alpha.md', 'draft.md', 'zulu.md']);
+    warnings.length = 0;
+    assert.deepEqual(ids(), ['first', 'added', 'second']);
+    assert.equal(warnings.length, 0);
+    configure(['alpha.md', 'zulu.md']);
+    assert.deepEqual(ids(), ['first', 'second']);
+    configure(['alpha.md', 'missing.md']);
+    assert.throws(build, /lesson.json: sectionsのMarkdownが見つかりません: missing.md/);
+    for (const invalid of [undefined, [], 'alpha.md']) {
+      configure(invalid);
+      assert.throws(build, /sectionsにMarkdownファイル名の配列/);
+    }
+    for (const invalid of ['../outside.md', 'nested/file.md', 'nested\\file.md', '/absolute.md', 'C:\\outside.md', 'graph.json', null]) {
+      configure([invalid]);
+      assert.throws(build, /章フォルダー直下のMarkdownファイル名/);
+    }
+    for (const duplicate of ['alpha.md', 'ALPHA.md']) {
+      configure(['alpha.md', duplicate]);
+      assert.throws(build, /sectionsのファイル名が重複/);
+    }
+    file('duplicate.md', 'first');
+    configure(['alpha.md', 'duplicate.md']);
     assert.throws(build, /節のidが重複: first/);
   } finally {
     // Only the exact temporary directory created above is removed.

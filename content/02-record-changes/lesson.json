@@ -13,5 +13,12 @@
     "src": "assets/record-flow.svg",
     "wide": true
   },
-  "description": "clone済みのリポジトリで、hello.pyの挨拶を「Hello, world!」から「Hello, everyone!」へ変更します。mainブランチで作業し、originに共有する例です。"
+  "description": "clone済みのリポジトリで、hello.pyの挨拶を「Hello, world!」から「Hello, everyone!」へ変更します。mainブランチで作業し、originに共有する例です。",
+  "sections": [
+    "working-tree.md",
+    "stage.md",
+    "commit.md",
+    "push.md",
+    "operation-map.md"
+  ]
 }

@@ -35,10 +35,10 @@ docs/.nojekyll は静的ファイルをそのまま配信するためのファ�
 | --- | --- |
 | content/README.md | 執筆・ファイル追加・章追加の手順 |
 | content/course.json | サイト全体のタイトル・説明 |
-| content/番号-章/lesson.json | 章・レッスンの見出し、説明、既定のSVG、出典 |
-| content/番号-章/番号-節.md | 1ファイル1節。本文、コマンド、要点、付箋、図の指定 |
+| content/番号-章/lesson.json | 章・レッスンの見出し、説明、既定のSVG、出典、sectionsによる節の順序 |
+| content/番号-章/節名.md | 1ファイル1節。本文、コマンド、要点、付箋、図の指定 |
 | content/番号-章/graph.json | commitグラフのノード・参照・表示状態 |
-| tools/build-content.cjs | 番号順にファイルを探索し、教材データを生成 |
+| tools/build-content.cjs | 章を番号順に探索し、lesson.jsonのsections順に教材データを生成 |
 | docs/course.json | 配信用の生成物。直接編集しない |
 | docs/assets/record-flow.svg | 自学習と本番が共用する図 |
 | docs/assets/version-history.svg | ファイルの複製・履歴管理・共有の導入図 |
@@ -52,7 +52,7 @@ docs/.nojekyll は静的ファイルをそのまま配信するためのファ�
 
 本文・要点・付箋はcontent/内のMarkdownを編集し、本番表示のために同じ文章を別ファイルへコピーしません。`### note-id [講義]` と書くと本番にも出ます。図はSVGを一度編集すれば両表示に反映されます。長い操作例を本番で抜粋する場合はfront matterのpresentation-linesで元のコマンドの行番号を参照し、コマンド文字列自体は複製しません。
 
-番号付きのMarkdownを置くだけで節を登録します。章を増やす場合は番号付きの章フォルダーとlesson.jsonを追加します。一覧のJSやHTMLへ追記する必要はありません。HTMLは生成されたcourse.jsonを読み込みます。書式の詳細とテンプレートはcontent/README.mdを参照してください。旧content.js・lessons/*.js・curriculum.jsは編集元から外し、ワークスペースのtmp/markdown-migration/legacyに移行前の控えを保存しました。
+Markdownを追加し、同じ章のlesson.jsonのsectionsにファイル名を登録します。配列の順番が節の表示順です。ファイル名に番号は不要で、並べ替えは配列の行を移動します。未登録のMarkdownは下書きとして除外し、ターミナルに通知します。章を増やす場合は番号付きの章フォルダーとlesson.jsonを追加します。JSやHTMLへ追記する必要はありません。HTMLは生成されたcourse.jsonを読み込みます。書式の詳細とテンプレートはcontent/README.mdを参照してください。旧content.js・lessons/*.js・curriculum.jsは編集元から外し、ワークスペースのtmp/markdown-migration/legacyに移行前の控えを保存しました。
 
 commitグラフは章フォルダーのgraph.jsonにノード・親commit・branchの位置・HEADの参照先をまとめ、共通のSVG描画処理で表示します。状態ごとのSVG画像を別々にコピーして作りません。新しいレッスンはlesson.jsonのdiagram、またはgraphを指定し、同じ表示処理に載せます。
 
@@ -71,7 +71,7 @@ node tools/check-content.cjs
 
 ## 操作
 
-自学習はスクロールに合わせて図の強調を切り替え、付箋を対応する説明の横に表示します。図の枠は16:9で、図の中央が画面の上下中央に来るよう追従します。図の種類によって文章の幅は変えません。縦長の図も全体を表示し、余白を残します。各節のリンクから直接参照できます。
+自学習はスクロールに合わせて図の強調を切り替え、付箋を対応する説明の横に表示します。図の枠は16:9で、PC幅では図の中央が画面の上下中央に来るよう追従します。スマホ幅（760px以下、または縦画面かつ1000px以下）では画面上部へ固定します。図の種類によって文章の幅は変えません。縦長の図も全体を表示し、余白を残します。各節のリンクから直接参照できます。
 
 本番は前後ボタン、左右キー、PageUp / PageDownで切り替えます。Home / Endで最初・最後へ移動できます。表示モードを変えても対応する説明を開けます。
 

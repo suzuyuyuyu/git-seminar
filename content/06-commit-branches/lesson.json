@@ -42,5 +42,25 @@
       "url": "https://git-scm.com/docs/git-push"
     }
   ],
-  "graph": "graph.json"
+  "graph": "graph.json",
+  "sections": [
+    "dotgit.md",
+    "objects.md",
+    "head.md",
+    "detached.md",
+    "commit-change.md",
+    "branch-growth.md",
+    "merge-model.md",
+    "misconception.md",
+    "first-parent.md",
+    "second-parent.md",
+    "quiz.md",
+    "summary.md",
+    "clone.md",
+    "create.md",
+    "switch.md",
+    "edit.md",
+    "feature-commit.md",
+    "push-pr.md"
+  ]
 }

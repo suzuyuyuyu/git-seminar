@@ -2,6 +2,7 @@
 id: new-section
 title: 新しい節のタイトル
 state: stage
+diagram: assets/record-flow.svg
 ---
 
 ここに自学習用の本文を書きます。空行で段落を分けます。

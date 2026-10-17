@@ -1,0 +1,2 @@
+# Keep text line endings consistent on Windows and in GitHub Pages builds.
+* text=auto eol=lf

@@ -38,5 +38,13 @@
       "label": "git pullと--ff-only",
       "url": "https://git-scm.com/docs/git-pull"
     }
+  ],
+  "sections": [
+    "clone.md",
+    "status.md",
+    "diff.md",
+    "log.md",
+    "fetch.md",
+    "pull.md"
   ]
 }

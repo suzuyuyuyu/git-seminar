@@ -77,14 +77,14 @@ function parseSection(source, file = 'section.md') {
   return section;
 }
 
-function buildCourse({ contentRoot = path.join(root, 'content'), output = path.join(root, 'docs/course.json') } = {}) {
+function buildCourse({ contentRoot = path.join(root, 'content'), output = path.join(root, 'docs/course.json'), onWarning = console.warn } = {}) {
   const course = readJSON(path.join(contentRoot, 'course.json'));
   const chapters = [], lessons = [], chapterIds = new Set(), lessonIds = new Set();
   const folders = fs.readdirSync(contentRoot, { withFileTypes: true }).filter(entry => entry.isDirectory() && /^\d+-/.test(entry.name)).sort((a, b) => a.name.localeCompare(b.name, 'en', { numeric: true }));
   for (const folder of folders) {
     const directory = path.join(contentRoot, folder.name);
     const metadataPath = path.join(directory, 'lesson.json');
-    const { chapter, graph, ...lesson } = readJSON(metadataPath);
+    const { chapter, graph, sections: files, ...lesson } = readJSON(metadataPath);
     if (!chapter?.id || !lesson.id || !lesson.diagram) fail(metadataPath, 'chapter、lessonのid、diagramが必要です。');
     if (chapterIds.has(chapter.id) || lessonIds.has(lesson.id)) fail(metadataPath, '章またはレッスンのidが重複しています。');
     chapterIds.add(chapter.id); lessonIds.add(lesson.id);
@@ -95,8 +95,23 @@ function buildCourse({ contentRoot = path.join(root, 'content'), output = path.j
       if (!graphPath.startsWith(directory + path.sep)) fail(metadataPath, 'graphは章フォルダー内のJSONを指定してください。');
       lesson.graph = readJSON(graphPath);
     }
-    const files = fs.readdirSync(directory).filter(name => /^\d+-.*\.md$/.test(name)).sort((a, b) => a.localeCompare(b, 'en', { numeric: true }));
-    if (!files.length) fail(metadataPath, '番号付きMarkdownが1つ以上必要です。');
+    if (!Array.isArray(files) || !files.length) fail(metadataPath, 'sectionsにMarkdownファイル名の配列を1件以上指定してください。');
+    const filenames = new Set();
+    for (const name of files) {
+      if (typeof name !== 'string' || !/^[^\\/:*?"<>|\s]+\.md$/.test(name) || name.startsWith('.')) {
+        fail(metadataPath, `sectionsには章フォルダー直下のMarkdownファイル名を指定してください: ${JSON.stringify(name)}`);
+      }
+      const key = name.toLowerCase();
+      if (filenames.has(key)) fail(metadataPath, `sectionsのファイル名が重複: ${name}`);
+      filenames.add(key);
+      const file = path.join(directory, name);
+      if (!fs.existsSync(file) || !fs.statSync(file).isFile()) fail(metadataPath, `sectionsのMarkdownが見つかりません: ${name}`);
+    }
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+      if (entry.isFile() && /\.md$/i.test(entry.name) && !/^readme\.md$/i.test(entry.name) && !files.includes(entry.name)) {
+        onWarning(`${path.relative(root, path.join(directory, entry.name))}: sections未登録のため下書きとして除外します。公開する場合はlesson.jsonのsectionsへ追加してください。`);
+      }
+    }
     lesson.sections = files.map(name => {
       const file = path.join(directory, name);
       return parseSection(fs.readFileSync(file, 'utf8'), file);

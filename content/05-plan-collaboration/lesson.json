@@ -34,5 +34,13 @@
       "label": "GitHub Docs：Issue",
       "url": "https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/about-issues"
     }
+  ],
+  "sections": [
+    "readme.md",
+    "ignore.md",
+    "license.md",
+    "markdown.md",
+    "issue.md",
+    "workflow.md"
   ]
 }

@@ -34,5 +34,13 @@
       "label": "git push",
       "url": "https://git-scm.com/docs/git-push"
     }
+  ],
+  "sections": [
+    "init.md",
+    "edit.md",
+    "record.md",
+    "remote.md",
+    "publish.md",
+    "exercise.md"
   ]
 }

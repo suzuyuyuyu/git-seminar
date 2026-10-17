@@ -144,7 +144,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "tools"
+          "diagramState": "tools",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-prepare.svg"
+          }
         },
         {
           "id": "identity",
@@ -161,7 +165,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "identity"
+          "diagramState": "identity",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-prepare.svg"
+          }
         },
         {
           "id": "authentication",
@@ -210,7 +218,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "keys"
+          "diagramState": "keys",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-prepare.svg"
+          }
         },
         {
           "id": "register",
@@ -227,7 +239,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "register"
+          "diagramState": "register",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-prepare.svg"
+          }
         },
         {
           "id": "config",
@@ -244,7 +260,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "config"
+          "diagramState": "config",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-prepare.svg"
+          }
         },
         {
           "id": "connect",
@@ -266,7 +286,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "connect"
+          "diagramState": "connect",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-prepare.svg"
+          }
         }
       ]
     },
@@ -295,7 +319,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "save-data"
+          "diagramState": "save-data",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/version-history.svg"
+          }
         },
         {
           "id": "sharing",
@@ -317,7 +345,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "sharing"
+          "diagramState": "sharing",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/version-history.svg"
+          }
         },
         {
           "id": "dvcs",
@@ -334,7 +366,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "dvcs"
+          "diagramState": "dvcs",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/version-history.svg"
+          }
         },
         {
           "id": "copies",
@@ -351,7 +387,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "copies"
+          "diagramState": "copies",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/version-history.svg"
+          }
         },
         {
           "id": "repository",
@@ -373,7 +413,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "repository"
+          "diagramState": "repository",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/version-history.svg"
+          }
         }
       ]
     },
@@ -408,7 +452,12 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "working-tree"
+          "diagramState": "working-tree",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/record-flow.svg",
+            "wide": true
+          }
         },
         {
           "id": "stage",
@@ -430,7 +479,12 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "stage"
+          "diagramState": "stage",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/record-flow.svg",
+            "wide": true
+          }
         },
         {
           "id": "commit",
@@ -452,7 +506,12 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "commit"
+          "diagramState": "commit",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/record-flow.svg",
+            "wide": true
+          }
         },
         {
           "id": "push",
@@ -474,7 +533,12 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "push"
+          "diagramState": "push",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/record-flow.svg",
+            "wide": true
+          }
         },
         {
           "id": "operation-map",
@@ -578,7 +642,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "status"
+          "diagramState": "status",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-inspect.svg"
+          }
         },
         {
           "id": "diff",
@@ -595,7 +663,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "diff"
+          "diagramState": "diff",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-inspect.svg"
+          }
         },
         {
           "id": "log",
@@ -612,7 +684,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "log"
+          "diagramState": "log",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-inspect.svg"
+          }
         },
         {
           "id": "fetch",
@@ -707,7 +783,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "init"
+          "diagramState": "init",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-practice.svg"
+          }
         },
         {
           "id": "edit",
@@ -724,7 +804,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "edit"
+          "diagramState": "edit",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-practice.svg"
+          }
         },
         {
           "id": "record",
@@ -741,7 +825,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "record"
+          "diagramState": "record",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-practice.svg"
+          }
         },
         {
           "id": "remote",
@@ -763,7 +851,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "remote"
+          "diagramState": "remote",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-practice.svg"
+          }
         },
         {
           "id": "publish",
@@ -780,7 +872,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "publish"
+          "diagramState": "publish",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/foundations-practice.svg"
+          }
         },
         {
           "id": "exercise",
@@ -853,7 +949,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "readme"
+          "diagramState": "readme",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-planning.svg"
+          }
         },
         {
           "id": "ignore",
@@ -875,7 +975,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "ignore"
+          "diagramState": "ignore",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-planning.svg"
+          }
         },
         {
           "id": "license",
@@ -892,7 +996,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "license"
+          "diagramState": "license",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-planning.svg"
+          }
         },
         {
           "id": "markdown",
@@ -909,7 +1017,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "markdown"
+          "diagramState": "markdown",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-planning.svg"
+          }
         },
         {
           "id": "issue",
@@ -926,7 +1038,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "issue"
+          "diagramState": "issue",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-planning.svg"
+          }
         },
         {
           "id": "workflow",
@@ -943,7 +1059,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "workflow"
+          "diagramState": "workflow",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-planning.svg"
+          }
         }
       ]
     },
@@ -1753,7 +1873,10 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "objects"
+          "diagramState": "objects",
+          "diagram": {
+            "type": "commit-graph"
+          }
         },
         {
           "id": "head",
@@ -1791,7 +1914,10 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "detached"
+          "diagramState": "detached",
+          "diagram": {
+            "type": "commit-graph"
+          }
         },
         {
           "id": "commit-change",
@@ -1850,7 +1976,10 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "merge-model"
+          "diagramState": "merge-model",
+          "diagram": {
+            "type": "commit-graph"
+          }
         },
         {
           "id": "misconception",
@@ -1888,7 +2017,10 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "first-parent"
+          "diagramState": "first-parent",
+          "diagram": {
+            "type": "commit-graph"
+          }
         },
         {
           "id": "second-parent",
@@ -1905,7 +2037,10 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "second-parent"
+          "diagramState": "second-parent",
+          "diagram": {
+            "type": "commit-graph"
+          }
         },
         {
           "id": "quiz",
@@ -1922,7 +2057,10 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "quiz"
+          "diagramState": "quiz",
+          "diagram": {
+            "type": "commit-graph"
+          }
         },
         {
           "id": "summary",
@@ -1961,6 +2099,9 @@
             }
           ],
           "diagramState": "clone",
+          "diagram": {
+            "type": "commit-graph"
+          },
           "presentationCommandLines": [
             1,
             3,
@@ -2003,7 +2144,10 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "switch"
+          "diagramState": "switch",
+          "diagram": {
+            "type": "commit-graph"
+          }
         },
         {
           "id": "edit",
@@ -2020,7 +2164,10 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "edit"
+          "diagramState": "edit",
+          "diagram": {
+            "type": "commit-graph"
+          }
         },
         {
           "id": "feature-commit",
@@ -2037,7 +2184,10 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "feature-commit"
+          "diagramState": "feature-commit",
+          "diagram": {
+            "type": "commit-graph"
+          }
         },
         {
           "id": "push-pr",
@@ -2119,6 +2269,10 @@
             }
           ],
           "diagramState": "publish",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-integration.svg"
+          },
           "presentationCommandLines": [
             1,
             2,
@@ -2146,7 +2300,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "review"
+          "diagramState": "review",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-integration.svg"
+          }
         },
         {
           "id": "sync",
@@ -2163,7 +2321,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "sync"
+          "diagramState": "sync",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-integration.svg"
+          }
         },
         {
           "id": "conflict-setup",
@@ -2181,6 +2343,10 @@
             }
           ],
           "diagramState": "conflict-setup",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-integration.svg"
+          },
           "presentationCommandLines": [
             2,
             12,
@@ -2208,7 +2374,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "conflict-history"
+          "diagramState": "conflict-history",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-integration.svg"
+          }
         },
         {
           "id": "diverge",
@@ -2230,7 +2400,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "diverge"
+          "diagramState": "diverge",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-integration.svg"
+          }
         },
         {
           "id": "conflict-choice",
@@ -2252,7 +2426,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "conflict-choice"
+          "diagramState": "conflict-choice",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-integration.svg"
+          }
         },
         {
           "id": "conflict-merge",
@@ -2274,7 +2452,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "conflict-merge"
+          "diagramState": "conflict-merge",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-integration.svg"
+          }
         },
         {
           "id": "markers",
@@ -2292,6 +2474,10 @@
             }
           ],
           "diagramState": "markers",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-integration.svg"
+          },
           "presentationCommandLines": [
             0
           ]
@@ -2312,6 +2498,10 @@
             }
           ],
           "diagramState": "resolve",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-integration.svg"
+          },
           "presentationCommandLines": [
             5
           ]
@@ -2331,7 +2521,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "record"
+          "diagramState": "record",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-integration.svg"
+          }
         },
         {
           "id": "alternatives",
@@ -2348,7 +2542,11 @@
               "showInPresentation": true
             }
           ],
-          "diagramState": "alternatives"
+          "diagramState": "alternatives",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/collaboration-integration.svg"
+          }
         }
       ]
     },
@@ -2444,7 +2642,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "restore-worktree"
+          "diagramState": "restore-worktree",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
         },
         {
           "id": "restore-index",
@@ -2466,7 +2668,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "restore-index"
+          "diagramState": "restore-index",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
         },
         {
           "id": "stash",
@@ -2488,7 +2694,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "stash"
+          "diagramState": "stash",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
         },
         {
           "id": "revert",
@@ -2510,7 +2720,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "revert"
+          "diagramState": "revert",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
         },
         {
           "id": "amend",
@@ -2532,7 +2746,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "amend"
+          "diagramState": "amend",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
         },
         {
           "id": "reset",
@@ -2554,7 +2772,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "reset"
+          "diagramState": "reset",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
         },
         {
           "id": "clean",
@@ -2576,7 +2798,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "clean"
+          "diagramState": "clean",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
         },
         {
           "id": "reflog",
@@ -2598,7 +2824,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "reflog"
+          "diagramState": "reflog",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
         },
         {
           "id": "cherry-pick",
@@ -2620,7 +2850,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "cherry-pick"
+          "diagramState": "cherry-pick",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
         },
         {
           "id": "rebase",
@@ -2642,7 +2876,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "rebase"
+          "diagramState": "rebase",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
         },
         {
           "id": "worktree",
@@ -2664,7 +2902,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "worktree"
+          "diagramState": "worktree",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
         },
         {
           "id": "submodule",
@@ -2686,7 +2928,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "submodule"
+          "diagramState": "submodule",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
         },
         {
           "id": "revisions",
@@ -2708,7 +2954,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "revisions"
+          "diagramState": "revisions",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
         },
         {
           "id": "detached",
@@ -2730,7 +2980,11 @@
               "showInPresentation": false
             }
           ],
-          "diagramState": "detached"
+          "diagramState": "detached",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/recovery.svg"
+          }
         }
       ]
     }
