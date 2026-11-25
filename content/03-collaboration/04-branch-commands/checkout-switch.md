@@ -1,8 +1,8 @@
 ---
 id: "checkout-switch"
-title: "checkoutとswitch：切り替える対象を確認する"
+title: "switch / checkout"
 state: "branch-commands-switch-checkout-switch"
-diagram: "assets/curriculum-guide.svg"
+diagram: "assets/commands/branch-commands-checkout-switch.svg"
 ---
 
 branchの切り替えにはgit switch branch-name、新しいbranchを作って切り替えるにはgit switch -c branch-nameを使います。過去のcommitを直接見る操作はgit switch --detach commit-idです。
@@ -11,14 +11,19 @@ branchの切り替えにはgit switch branch-name、新しいbranchを作って�
 
 切り替え前にstatusを確認します。未commitの変更は切り替えに伴って持ち越される場合もあり、上書きの恐れがある場合は拒否されます。切り替えれば必ず作業が保存されるわけではありません。
 
+## スライド説明
+
+switchはブランチを切り替え、作業ファイルをその版へ合わせます。古い資料ではcheckoutを使います。
+
+別ブランチの作業へ移るときに使います。切り替える前にstatusで途中の変更を確認します。
+
+`switch -c 名前` は作成して切り替えます。`--detach ID` はcommitを直接開きます。`checkout -- ファイル` は編集を破棄する別操作です。
+
 ## コマンド
 
 ```sh
-git status
 git switch main
-# 古い書き方では git checkout main
-# 作成と切り替えを同時に行う場合
-git switch -c feature/new-work
+git switch -c feature/readme
 ```
 
 ## 要点

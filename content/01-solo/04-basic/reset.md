@@ -1,8 +1,8 @@
 ---
 id: "reset"
-title: "resetの3つの対象を見分ける"
+title: "reset"
 state: "reset"
-diagram: "assets/recovery.svg"
+diagram: "assets/commands/basic-reset.svg"
 ---
 
 コミット指定のresetは、現在のブランチの先端を指定コミットへ動かします。--softはインデックスと作業ツリーを維持し、--mixed（既定）はインデックスも指定先へ戻して作業ツリーを維持します。
@@ -11,13 +11,19 @@ diagram: "assets/recovery.svg"
 
 以下は互いに代替となる比較例で、連続実行しません。作業を別途保護した練習用リポジトリでのみ扱います。reset --hardにdry-runはありません。status、diff、diff --cached、logで対象を確認しても、破棄の危険はなくなりません。
 
+## スライド説明
+
+commitを指定すると、現在のブランチの先端をそのcommitへ移動します。
+
+未共有の履歴を整理するときに使います。共有済みの変更を打ち消す場合はrevertを検討します。
+
+`--soft` は先端だけ、`--mixed` はindexも、`--hard` は作業ツリーも更新します。hardは未commitの変更を破棄します。
+
 ## コマンド
 
 ```sh
-# いずれか1つを比較する例。連続実行しない
+# 比較例。いずれか一つを選びます
 git reset --soft 'HEAD~1'
-git reset --mixed 'HEAD~1'
-git reset --hard 'HEAD~1'
 ```
 
 ## 要点

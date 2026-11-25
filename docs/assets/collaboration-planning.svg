@@ -3,20 +3,20 @@
 <desc id="collaboration-planning-desc">README、除外設定、利用条件、Markdown、Issue、ブランチとPRの順に共同開発の準備を説明します。現在読んでいる節の図だけを表示します。矢印は作業の順番です。</desc>
 <style><![CDATA[
 svg.collaboration-planning {
- background:#fbfcf9; font-family:"Noto Sans JP","Yu Gothic",Meiryo,sans-serif;
- text {fill:#24352e; font-size:22px;}
- .strong {font-weight:700; fill:#31664b;}
+ background:#fbfdfc; font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",Meiryo,sans-serif;
+ text {fill:#1a211e; font-size:22px;}
+ .strong {font-weight:700; fill:#218358;}
  .heading {font-size:26px; font-weight:700;}
  .mono {font-family:Consolas,"Yu Gothic",monospace; font-size:22px;}
- .muted {fill:#65736a;}
- .red {fill:#a74238;}
- .card {fill:#edf3eb;stroke:#c4d3c5;stroke-width:2;}
- .note {fill:#f5eac8;stroke:#dfd2a4;stroke-width:1.5;}
- .link {fill:none;stroke:#a2ada5;stroke-width:3;}
- .arrow {fill:none;stroke:#31664b;stroke-width:2.5;}
- .commit {fill:#6f9e78;stroke:#31664b;stroke-width:2;}
- .branch {fill:none;stroke:#31664b;stroke-width:2;}
- .focus {fill:none;stroke:#a74238;stroke-width:3;}
+ .muted {fill:#5f6563;}
+ .red {fill:#d13415;}
+ .card {fill:#f7f9f8;stroke:#cbcfcd;stroke-width:2;}
+ .note {fill:#fefbe9;stroke:#f3d673;stroke-width:1.5;}
+ .link {fill:none;stroke:#868e8b;stroke-width:3;}
+ .arrow {fill:none;stroke:#218358;stroke-width:2.5;}
+ .commit {fill:#30a46c;stroke:#218358;stroke-width:2;}
+ .branch {fill:none;stroke:#218358;stroke-width:2;}
+ .focus {fill:none;stroke:#d13415;stroke-width:3;}
  [data-state] {display:none;}
  &[data-current-state="readme"] [data-state="readme"],
 &[data-current-state="ignore"] [data-state="ignore"],

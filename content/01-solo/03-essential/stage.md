@@ -1,18 +1,27 @@
 ---
 id: "stage"
-title: "次の記録に含める内容を選ぶ"
+title: "add"
 state: "stage"
-diagram: "assets/record-flow.svg"
+diagram: "assets/commands/essential-stage.svg"
 ---
 
 git add hello.pyを実行すると、実行した時点のhello.pyの内容がindexに反映されます。indexは、次のcommitに含める状態を準備する場所です。staging areaとも呼びます。
 
 addしても履歴はまだ増えません。今回の挨拶の変更を記録する準備ができた状態です。
 
+## スライド説明
+
+指定したファイルの現在の内容を、次のcommitに入れる準備場所（index）へ反映します。
+
+編集のうち、今回まとめて記録する変更を選ぶときに使います。
+
+`-p` は変更箇所ごとに選択します。`-A` はリポジトリ全体の追加・変更・削除を準備します。
+
 ## コマンド
 
 ```sh
 git add hello.py
+git diff --staged
 ```
 
 ## 要点

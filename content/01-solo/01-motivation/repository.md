@@ -2,7 +2,7 @@
 id: "repository"
 title: "履歴をrepositoryにまとめる"
 state: "repository"
-diagram: "assets/version-history.svg"
+diagram: "assets/version-repository-source.svg"
 ---
 
 Git導入前の図にはCode_origin、Code_v01、Code_v02_editなど、8つのフォルダーが並んでいます。履歴をフォルダー名で管理すると、どの版を使うか、何を変えたかを読み取るのが難しくなります。

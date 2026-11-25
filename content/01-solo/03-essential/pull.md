@@ -1,18 +1,25 @@
 ---
 id: "pull"
-title: "分岐していなければmainを進める"
+title: "pull"
 state: "pull"
-diagram: "assets/operation-map.svg"
+diagram: "assets/commands/essential-pull.svg"
 ---
 
 ここではmainにいて、git statusで未記録の変更がないことを確認します。git pull --ff-only origin mainは取得に続けて、手元のmainを単純に進められる場合だけ更新します。更新されると作業ファイルにも反映されます。
 
 手元と共有先で履歴が分岐していると、この方法では拒否されます。forceで押し通さず状態を確認し、「共同開発を管理しよう」のハンズオンで統合の流れを確認しましょう。pullの統合方法は指定や設定で異なるため、この教材では--ff-onlyを明示します。
 
+## スライド説明
+
+リモートの履歴を取得し、現在のブランチへ統合します。作業ファイルも更新されます。
+
+共同作業者の更新を、手元の作業へ取り込むときに使います。
+
+`--ff-only` は先端を進められる場合だけ統合します。履歴が分岐している場合は停止します。
+
 ## コマンド
 
 ```sh
-git status
 git pull --ff-only origin main
 ```
 

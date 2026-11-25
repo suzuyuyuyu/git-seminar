@@ -22,7 +22,7 @@ function parseStep(source, file = 'step.md') {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(meta.id || '') || !meta.title) fail(file, 'id（半角英数とハイフン）とtitleが必要です。');
   const blocks = { body: [] };
   let block = 'body', fence = null;
-  const headings = { '## コマンド': 'command', '## 要点': 'takeaway', '## 付箋': 'notes' };
+  const headings = { '## コマンド': 'command', '## 要点': 'takeaway', '## 付箋': 'notes', '## スライド説明': 'slideDescription' };
   for (const line of text.slice(front[0].length).split('\n')) {
     const marker = line.match(/^\s*(`{3,}|~{3,})/);
     if (marker && !fence) fence = marker[1];
@@ -62,6 +62,7 @@ function parseStep(source, file = 'step.md') {
     }),
     diagramState: meta.state || meta.id,
   };
+  if (value('slideDescription')) section.slideDescription = value('slideDescription');
   if (meta.diagram) {
     section.diagram = meta.diagram === 'commit-graph' ? { type: 'commit-graph' } : { type: 'svg', src: meta.diagram };
     if (meta.wide) {

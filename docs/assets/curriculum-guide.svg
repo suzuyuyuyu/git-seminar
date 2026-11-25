@@ -2,24 +2,24 @@
 <title id="curriculum-title">Git教材の追加説明図</title>
 <desc id="curriculum-desc">現在のStepに対応する説明図です。3つの枠で対象や操作の違いを整理します。4領域の流れではadd・commit・pushを、履歴図ではHEADとほかの参照から到達するcommitの違いを示します。丸はcommit、実線は親子関係です。</desc>
 <style><![CDATA[
-svg.curriculum-guide {background:#fbfcf9;font-family:"Noto Sans JP","Yu Gothic",Meiryo,sans-serif;}
-svg.curriculum-guide text {fill:#24352e;font-size:28px;white-space:pre;}
+svg.curriculum-guide {background:#fbfdfc;font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",Meiryo,sans-serif;}
+svg.curriculum-guide text {fill:#1a211e;font-size:28px;white-space:pre;}
 svg.curriculum-guide .heading {font-size:30px;font-weight:700;}
-svg.curriculum-guide .strong {fill:#31664b;font-weight:700;}
+svg.curriculum-guide .strong {fill:#218358;font-weight:700;}
 svg.curriculum-guide .small {font-size:24px;}
 svg.curriculum-guide .tiny {font-size:21px;}
 svg.curriculum-guide .footer {font-size:22px;}
 svg.curriculum-guide .mono {font-family:Consolas,monospace;}
-svg.curriculum-guide .muted {fill:#65736a;}
-svg.curriculum-guide .blue {fill:#486d9b;}
-svg.curriculum-guide .card {fill:#edf3eb;stroke:#c4d3c5;stroke-width:2;}
-svg.curriculum-guide .blue-card {fill:#eef2f8;stroke:#a7bad4;}
-svg.curriculum-guide .divider {fill:none;stroke:#d8dfd6;stroke-width:1.5;}
-svg.curriculum-guide .edge {fill:none;stroke:#a2ada5;stroke-width:3;}
-svg.curriculum-guide .action {fill:none;stroke:#31664b;stroke-width:2.5;}
-svg.curriculum-guide .commit {fill:#6f9e78;stroke:#31664b;stroke-width:2;}
-svg.curriculum-guide .faded {fill:#f1f3f0;stroke:#b9c2ba;stroke-dasharray:3 3;}
-svg.curriculum-guide .reference {fill:none;stroke:#31664b;stroke-width:2.5;}
+svg.curriculum-guide .muted {fill:#5f6563;}
+svg.curriculum-guide .blue {fill:#0d74ce;}
+svg.curriculum-guide .card {fill:#f7f9f8;stroke:#cbcfcd;stroke-width:2;}
+svg.curriculum-guide .blue-card {fill:#e6f4fe;stroke:#acd8fc;}
+svg.curriculum-guide .divider {fill:none;stroke:#d7dad9;stroke-width:1.5;}
+svg.curriculum-guide .edge {fill:none;stroke:#868e8b;stroke-width:3;}
+svg.curriculum-guide .action {fill:none;stroke:#218358;stroke-width:2.5;}
+svg.curriculum-guide .commit {fill:#30a46c;stroke:#218358;stroke-width:2;}
+svg.curriculum-guide .faded {fill:#f7f9f8;stroke:#b8bcba;stroke-dasharray:3 3;}
+svg.curriculum-guide .reference {fill:none;stroke:#218358;stroke-width:2.5;}
 svg.curriculum-guide > g[data-state] {display:none;}
 svg.curriculum-guide[data-current-state="intro-preparation-notice"] > g[data-state="intro-preparation-notice"],
 svg.curriculum-guide[data-current-state="intro-conclusion-conclusion"] > g[data-state="intro-conclusion-conclusion"],
@@ -55,7 +55,9 @@ svg.curriculum-guide[data-current-state="tips-aliases-bash-alias"] > g[data-stat
 svg.curriculum-guide[data-current-state="tips-aliases-powershell-function"] > g[data-state="tips-aliases-powershell-function"],
 svg.curriculum-guide[data-current-state="tips-gh-gh-intro"] > g[data-state="tips-gh-gh-intro"],
 svg.curriculum-guide[data-current-state="tips-gh-gh-issue-workflow"] > g[data-state="tips-gh-gh-issue-workflow"],
-svg.curriculum-guide[data-current-state="tips-gh-gh-pr-workflow"] > g[data-state="tips-gh-gh-pr-workflow"] {display:block;}
+svg.curriculum-guide[data-current-state="tips-gh-gh-pr-workflow"] > g[data-state="tips-gh-gh-pr-workflow"],
+svg.curriculum-guide[data-current-state="collaboration-summary-workflow"] > g[data-state="collaboration-summary-workflow"],
+svg.curriculum-guide[data-current-state="collaboration-summary-review"] > g[data-state="collaboration-summary-review"] {display:block;}
 ]]></style>
 <g data-state="intro-preparation-notice"><text x="36" y="50" class="heading">ことわり・はじめに</text><rect x="40" y="170" width="320" height="340" rx="12" class="card"/><text x="64" y="220" class="strong">読む</text><text x="64" y="290" class="small">コマンドと出力</text><text x="64" y="338" class="small">記号は入力しない</text><rect x="400" y="170" width="320" height="340" rx="12" class="card"/><text x="424" y="220" class="strong">試す</text><text x="424" y="290" class="small">自分の練習場所</text><text x="424" y="338" class="small">statusで確認</text><rect x="760" y="170" width="320" height="340" rx="12" class="card blue-card"/><text x="784" y="220" class="strong">読み返す</text><text x="784" y="290" class="small">全部を暗記しない</text><text x="784" y="338" class="small">必要なSectionへ</text><path d="M36 552 H1084" class="divider"/><text x="36" y="588" class="footer">入力するコマンドと出力を見分け、少しずつ手を動かして学ぶ。</text></g>
 <g data-state="intro-conclusion-conclusion"><text x="36" y="50" class="heading">まずは結論：記録して、共有する</text><rect x="40" y="170" width="320" height="340" rx="12" class="card"/><text x="64" y="220" class="strong">作業ファイル</text><text x="64" y="290" class="small">編集して保存</text><text x="64" y="338" class="small">statusで確認</text><rect x="400" y="170" width="320" height="340" rx="12" class="card"/><text x="424" y="220" class="strong">手元の履歴</text><text x="424" y="290" class="small">addで選ぶ</text><text x="424" y="338" class="small">commitで記録</text><rect x="760" y="170" width="320" height="340" rx="12" class="card blue-card"/><text x="784" y="220" class="strong">共有先の履歴</text><text x="784" y="290" class="small">pushで送る</text><text x="784" y="338" class="small">pullで取り込む</text><path d="M36 552 H1084" class="divider"/><text x="36" y="588" class="footer">保存の次にadd・commitで履歴を残し、pushで共有先へ送る。</text></g>
@@ -92,4 +94,6 @@ svg.curriculum-guide[data-current-state="tips-gh-gh-pr-workflow"] > g[data-state
 <g data-state="tips-gh-gh-intro"><text x="36" y="50" class="heading">ghはGitHub上の情報を扱うCLI</text><rect x="40" y="170" width="320" height="340" rx="12" class="card"/><text x="64" y="220" class="strong">git</text><text x="64" y="290" class="small">commit / branch</text><text x="64" y="338" class="small">履歴と作業を扱う</text><rect x="400" y="170" width="320" height="340" rx="12" class="card"/><text x="424" y="220" class="strong">gh</text><text x="424" y="290" class="small">Issue / PR</text><text x="424" y="338" class="small">GitHubを操作</text><rect x="760" y="170" width="320" height="340" rx="12" class="card blue-card"/><text x="784" y="220" class="strong">最初の確認</text><text x="784" y="290" class="small">gh auth status</text><text x="784" y="338" class="small">gh repo view</text><path d="M36 552 H1084" class="divider"/><text x="36" y="588" class="footer">Gitは履歴、ghはGitHub。アカウントと対象を先に確認。</text></g>
 <g data-state="tips-gh-gh-issue-workflow"><text x="36" y="50" class="heading">Issueを確認し、必要なものを作成する</text><rect x="40" y="170" width="320" height="340" rx="12" class="card"/><text x="64" y="220" class="strong">読む</text><text x="64" y="290" class="small">gh issue list</text><text x="64" y="338" class="small">重複を確認</text><rect x="400" y="170" width="320" height="340" rx="12" class="card"/><text x="424" y="220" class="strong">準備する</text><text x="424" y="290" class="small">背景と再現手順</text><text x="424" y="338" class="small">issue.md</text><rect x="760" y="170" width="320" height="340" rx="12" class="card blue-card"/><text x="784" y="220" class="strong">作成する</text><text x="784" y="290" class="small">gh issue create</text><text x="784" y="338" class="small">返ったURLを確認</text><path d="M36 552 H1084" class="divider"/><text x="36" y="588" class="footer">既存Issueを読む → 内容を準備する → 対象を確かめて作成。</text></g>
 <g data-state="tips-gh-gh-pr-workflow"><text x="36" y="50" class="heading">作業branchをpushしてPull requestを開く</text><rect x="40" y="170" width="320" height="340" rx="12" class="card"/><text x="64" y="220" class="strong">作業を共有</text><text x="64" y="290" class="small">commit とテスト</text><text x="64" y="338" class="small">branchをpush</text><rect x="400" y="170" width="320" height="340" rx="12" class="card"/><text x="424" y="220" class="strong">PRを作る</text><text x="424" y="290" class="small">base: main</text><text x="424" y="338" class="small">head: feature/readme</text><rect x="760" y="170" width="320" height="340" rx="12" class="card blue-card"/><text x="784" y="220" class="strong">結果を確認</text><text x="784" y="290" class="small">gh pr view</text><text x="784" y="338" class="small">gh pr checks</text><path d="M36 552 H1084" class="divider"/><text x="36" y="588" class="footer">baseとheadを区別し、変更理由と検証を添えてPRを作る。</text></g>
+<g data-state="collaboration-summary-workflow"><text x="36" y="50" class="heading">共同開発の一巡</text><rect x="40" y="170" width="320" height="340" rx="12" class="card"/><text x="64" y="220" class="strong">1. Issue</text><text x="64" y="290" class="small">目的を共有する</text><text x="64" y="338" class="small">完了条件をそろえる</text><rect x="400" y="170" width="320" height="340" rx="12" class="card"/><text x="424" y="220" class="strong">2. 作業ブランチ</text><text x="424" y="290" class="small">変更を小さく作る</text><text x="424" y="338" class="small">commitしてpush</text><rect x="760" y="170" width="320" height="340" rx="12" class="card blue-card"/><text x="784" y="220" class="strong">3. Pull Request</text><text x="784" y="290" class="small">差分と動作を確認</text><text x="784" y="338" class="small">レビューして統合</text><path d="M36 552 H1084" class="divider"/><text x="36" y="588" class="footer">目的を共有し、変更を確かめて統合した後、手元のmainも更新する。</text></g>
+<g data-state="collaboration-summary-review"><text x="36" y="50" class="heading">迷ったときに確かめる情報</text><rect x="40" y="170" width="320" height="340" rx="12" class="card"/><text x="64" y="220" class="strong">status</text><text x="64" y="290" class="small">いまのbranch</text><text x="64" y="338" class="small">記録前の変更状態</text><rect x="400" y="170" width="320" height="340" rx="12" class="card"/><text x="424" y="220" class="strong">diff</text><text x="424" y="290" class="small">何が変わったか</text><text x="424" y="338" class="small">次に記録する差分</text><rect x="760" y="170" width="320" height="340" rx="12" class="card blue-card"/><text x="784" y="220" class="strong">log</text><text x="784" y="290" class="small">記録済みのcommit</text><text x="784" y="338" class="small">履歴の分岐と統合</text><path d="M36 552 H1084" class="divider"/><text x="36" y="588" class="footer">操作する前に、状態・差分・履歴を読み分ける。</text></g>
 </svg>

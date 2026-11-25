@@ -1,19 +1,27 @@
 ---
 id: "clone"
-title: "既存リポジトリを手元に複製する"
+title: "clone"
 state: "clone"
-diagram: "assets/operation-map.svg"
+diagram: "assets/commands/essential-clone.svg"
 ---
 
-既存のリポジトリから始めるときはcloneを使います。GitHubのCodeからSSH URLをコピーし、下のYOUR_ACCOUNTとYOUR_REPOSITORYを置き換えます。コピーを置きたい親フォルダーで実行します。
+既存のリポジトリから始めるときはcloneを使います。GitHubのCodeからSSH URLをコピーし、使用例の<URL>をそのURLに置き換えます。コピーを置きたい親フォルダーで実行します。
 
-cloneは新しい作業フォルダーとローカルの履歴を作ります。ここでは取得先のフォルダー名をgit-seminar-copyと指定しています。同名の作業フォルダーがない場所で行い、完了したらその中へ移動します。
+cloneは新しい作業フォルダーとローカルの履歴を作ります。ここでは取得先のフォルダー名をmy-projectと指定しています。同名の作業フォルダーがない場所で行い、完了したらその中へ移動します。
+
+## スライド説明
+
+既存リポジトリの履歴を複製し、作業フォルダーを作ります。接続先は通常originとして登録されます。
+
+プロジェクトへ初めて参加するときや、別のPCで作業を始めるときに使います。
+
+`--recursive` はサブモジュールも取得します。`--depth <n>` は履歴の深さを制限し、`-b <branch name>` は最初に開くブランチを指定します。
 
 ## コマンド
 
 ```sh
-git clone git@github.com:YOUR_ACCOUNT/YOUR_REPOSITORY.git git-seminar-copy
-cd git-seminar-copy
+git clone <URL> my-project
+cd my-project
 ```
 
 ## 要点

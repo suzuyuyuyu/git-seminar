@@ -54,27 +54,27 @@
         snapshot.description || `下ほど古く、上ほど新しいコミットです。丸はコミットで、横の短いIDはそのコミットを識別します。灰色の実線は親子関係です。四角の目印はブランチの先端にある一つのコミットを囲みます。${detached ? `HEADは${detached}を直接指すdetached HEADです。` : head ? `HEADは現在のブランチ${head}を指します。` : "この図ではHEAD表示を省略しています。"}${branches.map(([name, id]) => `${name}は${id}を指します。`).join("")}`),
       element("style", {}, `
         svg#${prefix} {
-          background: #fbfcf9;
-          font-family: "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
-          text { fill: #24352e; font-size: 22px; }
-          .parent-link { stroke: #a2ada5; stroke-width: 3; fill: none; }
-          .time-axis { stroke: #b9c2ba; stroke-width: 2; stroke-dasharray: 4 7; }
-          .time-label { fill: #65736a; }
-          .commit { fill: #6f9e78; stroke: #31664b; stroke-width: 2; }
+          background: #fbfdfc;
+          font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+          text { fill: #1a211e; font-size: 22px; }
+          .parent-link { stroke: #868e8b; stroke-width: 3; fill: none; }
+          .time-axis { stroke: #b8bcba; stroke-width: 2; stroke-dasharray: 4 7; }
+          .time-label { fill: #5f6563; }
+          .commit { fill: #30a46c; stroke: #218358; stroke-width: 2; }
           .commit-id { font-family: ui-monospace, Consolas, monospace; }
-          .focus { fill: none; stroke: #a74238; stroke-width: 3; }
-          .branch-marker { fill: none; stroke: #31664b; stroke-width: 2; }
-          .branch-connector { fill: none; stroke: #31664b; stroke-width: 1.5; }
+          .focus { fill: none; stroke: #d13415; stroke-width: 3; }
+          .branch-marker { fill: none; stroke: #218358; stroke-width: 2; }
+          .branch-connector { fill: none; stroke: #218358; stroke-width: 1.5; }
           .branch-label {
-            rect { fill: #e6f0e7; stroke: #b4c8b7; }
-            text { fill: #31664b; font-size: 24px; font-weight: 600; }
+            rect { fill: #e6f6eb; stroke: #cbcfcd; }
+            text { fill: #218358; font-size: 24px; font-weight: 600; }
           }
           .head-label {
-            rect { fill: #f8e8e4; }
-            text { fill: #a74238; font-size: 22px; font-weight: 700; }
-            path { fill: none; stroke: #a74238; stroke-width: 2; }
+            rect { fill: #feebe7; }
+            text { fill: #d13415; font-size: 22px; font-weight: 700; }
+            path { fill: none; stroke: #d13415; stroke-width: 2; }
           }
-          .legend { fill: #54665b; }
+          .legend { fill: #5f6563; }
           .annotation { font-size: 24px; }
           .highlight-path { fill: none; stroke-width: 5; stroke-linecap: round; opacity: .65; }
         }
@@ -87,7 +87,7 @@
       markerWidth: 6, markerHeight: 6, orient: "auto",
     });
     timeArrow.append(element("path", {
-      d: "M 1 1 L 8 5 L 1 9", fill: "none", stroke: "#b9c2ba", "stroke-width": 1.5,
+      d: "M 1 1 L 8 5 L 1 9", fill: "none", stroke: "#b8bcba", "stroke-width": 1.5,
     }));
     definitions.append(timeArrow);
     svg.append(definitions);
@@ -118,7 +118,7 @@
       const points = route.nodes.map(id => byId.get(id)).filter(Boolean);
       if (points.length < 2) return;
       svg.append(element("path", {
-        class: "highlight-path", stroke: route.color || "#31664b",
+        class: "highlight-path", stroke: route.color || "#218358",
         d: points.map((node, index) => `${index ? "L" : "M"} ${node.x} ${node.y}`).join(" "),
       }));
     });

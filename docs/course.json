@@ -166,7 +166,8 @@
         "markdown",
         "issues",
         "hands-on",
-        "branch-commands"
+        "branch-commands",
+        "summary"
       ]
     },
     {
@@ -537,7 +538,7 @@
           "diagramState": "copies",
           "diagram": {
             "type": "svg",
-            "src": "assets/version-history.svg"
+            "src": "assets/version-copies-source.svg"
           }
         },
         {
@@ -563,7 +564,7 @@
           "diagramState": "repository",
           "diagram": {
             "type": "svg",
-            "src": "assets/version-history.svg"
+            "src": "assets/version-repository-source.svg"
           }
         }
       ]
@@ -688,11 +689,11 @@
       "steps": [
         {
           "id": "clone",
-          "title": "既存リポジトリを手元に複製する",
+          "title": "clone",
           "body": [
-            "既存のリポジトリから始めるときはcloneを使います。GitHubのCodeからSSH URLをコピーし、下のYOUR_ACCOUNTとYOUR_REPOSITORYを置き換えます。コピーを置きたい親フォルダーで実行します。\n\ncloneは新しい作業フォルダーとローカルの履歴を作ります。ここでは取得先のフォルダー名をgit-seminar-copyと指定しています。同名の作業フォルダーがない場所で行い、完了したらその中へ移動します。"
+            "既存のリポジトリから始めるときはcloneを使います。GitHubのCodeからSSH URLをコピーし、使用例の<URL>をそのURLに置き換えます。コピーを置きたい親フォルダーで実行します。\n\ncloneは新しい作業フォルダーとローカルの履歴を作ります。ここでは取得先のフォルダー名をmy-projectと指定しています。同名の作業フォルダーがない場所で行い、完了したらその中へ移動します。"
           ],
-          "command": "git clone git@github.com:YOUR_ACCOUNT/YOUR_REPOSITORY.git git-seminar-copy\ncd git-seminar-copy",
+          "command": "git clone <URL> my-project\ncd my-project",
           "takeaway": "cloneは、既存の履歴と作業用フォルダーを手元に用意する。",
           "notes": [
             {
@@ -702,18 +703,19 @@
             }
           ],
           "diagramState": "clone",
+          "slideDescription": "既存リポジトリの履歴を複製し、作業フォルダーを作ります。接続先は通常originとして登録されます。\n\nプロジェクトへ初めて参加するときや、別のPCで作業を始めるときに使います。\n\n`--recursive` はサブモジュールも取得します。`--depth <n>` は履歴の深さを制限し、`-b <branch name>` は最初に開くブランチを指定します。",
           "diagram": {
             "type": "svg",
-            "src": "assets/operation-map.svg"
+            "src": "assets/commands/essential-clone.svg"
           }
         },
         {
           "id": "stage",
-          "title": "次の記録に含める内容を選ぶ",
+          "title": "add",
           "body": [
             "git add hello.pyを実行すると、実行した時点のhello.pyの内容がindexに反映されます。indexは、次のcommitに含める状態を準備する場所です。staging areaとも呼びます。\n\naddしても履歴はまだ増えません。今回の挨拶の変更を記録する準備ができた状態です。"
           ],
-          "command": "git add hello.py",
+          "command": "git add hello.py\ngit diff --staged",
           "takeaway": "addは、次のcommitに含める状態を準備する。",
           "notes": [
             {
@@ -728,14 +730,15 @@
             }
           ],
           "diagramState": "stage",
+          "slideDescription": "指定したファイルの現在の内容を、次のcommitに入れる準備場所（index）へ反映します。\n\n編集のうち、今回まとめて記録する変更を選ぶときに使います。\n\n`-p` は変更箇所ごとに選択します。`-A` はリポジトリ全体の追加・変更・削除を準備します。",
           "diagram": {
             "type": "svg",
-            "src": "assets/record-flow.svg"
+            "src": "assets/commands/essential-stage.svg"
           }
         },
         {
           "id": "commit",
-          "title": "手元に履歴を記録する",
+          "title": "commit",
           "body": [
             "git commitは、indexに準備した状態を新しいcommitとしてローカルリポジトリに記録します。commitには、ファイルの状態に加え、親commitや作者、メッセージなどの情報が残ります。\n\n今回の記録は「挨拶を変更した」というひとつのまとまりです。メッセージを付けておくと、あとで履歴を読む人が変更の意図を理解しやすくなります。"
           ],
@@ -754,18 +757,19 @@
             }
           ],
           "diagramState": "commit",
+          "slideDescription": "indexに準備した内容を、新しいcommitとして手元の履歴に記録します。\n\n動作する変更や、一つの目的にまとまった変更を保存するときに使います。\n\n`-m` を省略すると設定されたエディターが開き、`--verbose` で差分も確認できます。`--amend` は直前のcommitを作り直します。メッセージのprefixはチームの運用に合わせます。",
           "diagram": {
             "type": "svg",
-            "src": "assets/record-flow.svg"
+            "src": "assets/commands/essential-commit.svg"
           }
         },
         {
           "id": "push",
-          "title": "記録した履歴を共有する",
+          "title": "push",
           "body": [
             "git push origin mainは、手元のmainにあるcommitをoriginという名前のリモートへ送り、リモートのmainを更新します。ここで初めて、挨拶の変更を含む履歴が共有先に届きます。\n\nGitHubやGitLabはリモートリポジトリを置くサービスです。共有先の履歴を確認すると、送ったcommitと変更したファイルを見ることができます。"
           ],
-          "command": "git push origin main",
+          "command": "git push -u origin main",
           "takeaway": "pushは、記録済みの履歴をリモートに送る。",
           "notes": [
             {
@@ -780,18 +784,19 @@
             }
           ],
           "diagramState": "push",
+          "slideDescription": "手元のcommitをリモートへ送り、指定したリモートブランチを更新します。\n\n自分の変更を共有するときや、レビューを依頼する前に使います。\n\n`-u` は送信と同時にupstream（追跡先）を設定します。未commitの編集は送信されません。",
           "diagram": {
             "type": "svg",
-            "src": "assets/record-flow.svg"
+            "src": "assets/commands/essential-push.svg"
           }
         },
         {
           "id": "pull",
-          "title": "分岐していなければmainを進める",
+          "title": "pull",
           "body": [
             "ここではmainにいて、git statusで未記録の変更がないことを確認します。git pull --ff-only origin mainは取得に続けて、手元のmainを単純に進められる場合だけ更新します。更新されると作業ファイルにも反映されます。\n\n手元と共有先で履歴が分岐していると、この方法では拒否されます。forceで押し通さず状態を確認し、「共同開発を管理しよう」のハンズオンで統合の流れを確認しましょう。pullの統合方法は指定や設定で異なるため、この教材では--ff-onlyを明示します。"
           ],
-          "command": "git status\ngit pull --ff-only origin main",
+          "command": "git pull --ff-only origin main",
           "takeaway": "pullは取得と統合。今回は単純に進められる場合だけ。",
           "notes": [
             {
@@ -801,18 +806,19 @@
             }
           ],
           "diagramState": "pull",
+          "slideDescription": "リモートの履歴を取得し、現在のブランチへ統合します。作業ファイルも更新されます。\n\n共同作業者の更新を、手元の作業へ取り込むときに使います。\n\n`--ff-only` は先端を進められる場合だけ統合します。履歴が分岐している場合は停止します。",
           "diagram": {
             "type": "svg",
-            "src": "assets/operation-map.svg"
+            "src": "assets/commands/essential-pull.svg"
           }
         },
         {
           "id": "status",
-          "title": "statusで作業の状態を読む",
+          "title": "status",
           "body": [
             "statusは、現在のbranch、indexに準備した変更、まだ準備していない変更、未追跡のファイルなどを表示します。何か操作する前後に確認する習慣を付けましょう。\n\nChanges not staged for commitは未ステージ、Changes to be committedは記録の準備済みです。Untracked filesはまだGitが追跡していないファイルです。cleanは未記録の変更がないことを示し、push済みという意味ではありません。"
           ],
-          "command": "git status",
+          "command": "git status\ngit status -sb",
           "takeaway": "状態を確認してから、次の操作を選ぶ。",
           "notes": [
             {
@@ -822,9 +828,10 @@
             }
           ],
           "diagramState": "status",
+          "slideDescription": "現在のブランチと、ステージ済み・未ステージ・未追跡の変更を表示します。\n\n作業を始める前や、add・commitの前後に状態を確認するときに使います。\n\n`-s` は短い形式、`-b` はブランチ情報も表示します。ahead/behindは手元の追跡情報との比較です。",
           "diagram": {
             "type": "svg",
-            "src": "assets/foundations-inspect.svg"
+            "src": "assets/commands/essential-status.svg"
           }
         }
       ]
@@ -1667,11 +1674,11 @@
       "steps": [
         {
           "id": "init",
-          "title": "新しい練習場所を作る",
+          "title": "init",
           "body": [
-            "既存のリポジトリの外にある、書き込み可能な親フォルダーへ移動して始めます。pwdで場所を確認し、新しいgit-seminar-practiceを作成して中に入ります。同名のものがあれば別名を使います。\n\ngit init -b mainで、最初のbranch名をmainとしてGit管理を始めます。.gitに管理情報が作られますが、この時点ではまだcommitはありません。-bが使えない古いGitは、事前に更新します。"
+            "既存のリポジトリの外にある、書き込み可能な親フォルダーへ移動して始めます。pwdで場所を確認し、新しいmy-projectを作成して中に入ります。同名のものがあれば別名を使います。\n\ngit init -b mainで、最初のbranch名をmainとしてGit管理を始めます。.gitに管理情報が作られますが、この時点ではまだcommitはありません。-bが使えない古いGitは、事前に更新します。"
           ],
-          "command": "pwd\nmkdir git-seminar-practice\ncd git-seminar-practice\ngit init -b main\ngit status",
+          "command": "mkdir my-project\ncd my-project\ngit init -b main",
           "takeaway": "新しい場所でinitし、まだ空の履歴から始める。",
           "notes": [
             {
@@ -1681,18 +1688,19 @@
             }
           ],
           "diagramState": "init",
+          "slideDescription": "現在のフォルダーに.gitを作り、Gitによる管理を始めます。履歴はまだ空です。\n\n既存リポジトリを複製せず、新しいプロジェクトを手元で始めるときに使います。\n\n`-b main` は最初のブランチ名を指定します。既存のリポジトリの外で実行します。",
           "diagram": {
             "type": "svg",
-            "src": "assets/foundations-practice.svg"
+            "src": "assets/commands/basic-init.svg"
           }
         },
         {
           "id": "reset",
-          "title": "resetの3つの対象を見分ける",
+          "title": "reset",
           "body": [
             "コミット指定のresetは、現在のブランチの先端を指定コミットへ動かします。--softはインデックスと作業ツリーを維持し、--mixed（既定）はインデックスも指定先へ戻して作業ツリーを維持します。\n\n--hardはインデックスと作業ツリーも指定先に合わせ、追跡ファイルの未コミット変更を破棄します。書き込みの邪魔になる未追跡ファイルやディレクトリも消す場合があります。共有済み履歴では通常revertを使い、ファイルだけならrestoreを先に検討します。\n\n以下は互いに代替となる比較例で、連続実行しません。作業を別途保護した練習用リポジトリでのみ扱います。reset --hardにdry-runはありません。status、diff、diff --cached、logで対象を確認しても、破棄の危険はなくなりません。"
           ],
-          "command": "# いずれか1つを比較する例。連続実行しない\ngit reset --soft 'HEAD~1'\ngit reset --mixed 'HEAD~1'\ngit reset --hard 'HEAD~1'",
+          "command": "# 比較例。いずれか一つを選びます\ngit reset --soft 'HEAD~1'",
           "takeaway": "softは先端、mixedは先端とindex、hardは作業ツリーまで変える。",
           "notes": [
             {
@@ -1707,18 +1715,19 @@
             }
           ],
           "diagramState": "reset",
+          "slideDescription": "commitを指定すると、現在のブランチの先端をそのcommitへ移動します。\n\n未共有の履歴を整理するときに使います。共有済みの変更を打ち消す場合はrevertを検討します。\n\n`--soft` は先端だけ、`--mixed` はindexも、`--hard` は作業ツリーも更新します。hardは未commitの変更を破棄します。",
           "diagram": {
             "type": "svg",
-            "src": "assets/recovery.svg"
+            "src": "assets/commands/basic-reset.svg"
           }
         },
         {
           "id": "clean",
-          "title": "未追跡ファイルは、削除候補を先に見る",
+          "title": "clean",
           "body": [
             "cleanはGitが追跡していないファイルを削除します。コミットにない解析データや実験メモも対象になり得るので、消してよいこととバックアップを確認する用途に限ります。\n\ngit clean -n は未追跡ファイルの削除候補を表示し、確認後に -f で実際に削除します。-nd は未追跡ディレクトリも含む候補を表示し、それを削除する場合は -fd です。同じ作業場所・同じ条件の候補を確認してから判断します。確認後にファイルが増えれば対象も変わります。"
           ],
-          "command": "git status --short\ngit clean -n\n# 候補を確認し、必要なデータを退避した後に限る\ngit clean -f\n# ディレクトリも対象にする場合は、別途確認する\ngit clean -nd\n# 確認後の削除例: git clean -fd",
+          "command": "git clean -n\n# 候補確認・退避後だけ git clean -f",
           "takeaway": "cleanは未追跡を削除。-nで候補を見てから判断する。",
           "notes": [
             {
@@ -1733,18 +1742,19 @@
             }
           ],
           "diagramState": "clean",
+          "slideDescription": "Gitが追跡していないファイルを削除します。履歴にないデータはGitから復元できません。\n\n不要な生成物などを片付けるときに、削除候補とバックアップを確認して使います。\n\n`-n` は候補の表示だけ、`-f` は実際の削除です。`-d` は未追跡フォルダーも対象にします。",
           "diagram": {
             "type": "svg",
-            "src": "assets/recovery.svg"
+            "src": "assets/commands/basic-clean.svg"
           }
         },
         {
           "id": "stash",
-          "title": "途中の変更を一時退避する",
+          "title": "stash",
           "body": [
             "別の作業へ切り替えたいとき、git stash push で作業ツリーとインデックスの変更を退避します。-u は未追跡ファイルも含めますが、無視対象は含みません。\n\n変更がある状態でpushし、listの先頭に新しい「途中の解析」ができたことを確認してからapplyします。「No local changes to save」なら新しい退避は作られていないので、続くapplyは実行しません。applyは退避を残し、popは適用が成功したときに退避を削除します。以下の例でapplyした後、続けてpopする必要はありません。"
           ],
-          "command": "git stash push -u -m \"途中の解析\"\ngit stash list\n# 先頭に新しい「途中の解析」があると確認してから\ngit stash apply 'stash@{0}'",
+          "command": "git stash push -u -m \"途中の解析\"\ngit stash list",
           "takeaway": "stashは一時退避。applyは残し、popは成功時に消す。",
           "notes": [
             {
@@ -1759,33 +1769,35 @@
             }
           ],
           "diagramState": "stash",
+          "slideDescription": "作業ツリーとindexの途中の変更を、手元のstashへ一時退避します。\n\ncommitする前に別の作業へ切り替えたいときに使います。\n\n`push -m \"説明\"` で退避に名前を付けます。`-u` は未追跡も含め、`apply` は退避を残して戻します。",
           "diagram": {
             "type": "svg",
-            "src": "assets/recovery.svg"
+            "src": "assets/commands/basic-stash.svg"
           }
         },
         {
           "id": "stash-options",
-          "title": "stashの既定・apply・pop・-u・saveを区別する",
+          "title": "stash（操作一覧）",
           "body": [
             "git stashだけでも退避できますが、何を退避するかが分かるよう、この教材ではgit stash push -mを使います。既定で追跡ファイルの変更を退避し、-uを付けると未追跡ファイルも含みます。無視対象のファイルは-uに含まれません。\n\napplyは退避を残したまま適用します。popは適用に成功すると退避を削除しますが、競合した場合は残ります。両方を続けて実行するのではなく、目的に応じて片方を選びます。古い資料のstash saveは従来の書き方で、新しく覚える操作はpushです。\n\nlistで対象を選び、show -pで中身を確認します。stashは手元だけの一時退避で、pushでGitHubへ送られるcommitの代わりにはなりません。"
           ],
-          "command": "git stash list\ngit stash show -p 'stash@{0}'\n# apply または pop のどちらかを選ぶ\ngit stash apply 'stash@{0}'",
+          "command": "git stash show -p 'stash@{0}'\n# 内容を確認してから適用\ngit stash apply 'stash@{0}'",
           "takeaway": "pushで退避し、listで選び、applyかpopで戻す。-uは未追跡も含む。",
           "notes": [],
           "diagramState": "solo-basic-stash-options",
+          "slideDescription": "退避する対象と、戻した後に退避を残すかを指定できます。\n\n複数の退避から対象を選び、中身を確認して戻すときに使います。\n\n`list` は一覧、`show -p` は差分、`apply` は退避を残し、`pop` は適用成功時に退避を削除します。",
           "diagram": {
             "type": "svg",
-            "src": "assets/curriculum-guide.svg"
+            "src": "assets/commands/basic-stash-options.svg"
           }
         },
         {
           "id": "merge-model",
-          "title": "二つの親を持つmerge commit",
+          "title": "merge",
           "body": [
-            "別々に進んだ作業をmainへ統合した例です。mainへ切り替えてgit merge add/new-algorithmを実行し、m5で作業側を取り込みました。m5の第一親は取り込み先だったm4、第二親は作業側のb2です。その後mainにはm6、m7も記録されています。\n\n図のadd/new-algorithmはb2のままです。mergeしたからといって、取り込まれた側のブランチまでmainへ移動しません。ここでは競合せずmerge commitを作る例を示しています。履歴が分岐していない場合は、目印を進めるfast-forwardになり、新しいmerge commitを作らないこともあります。"
+            "別々に進んだ作業をmainへ統合する例です。mainへ切り替えてgit merge feature/readmeを実行します。新しいmerge commitの第一親はmainの元の先端、第二親はfeature/readmeの先端です。\n\n取り込んだfeature/readmeの目印は、元の先端に残ります。mergeしたからといって、取り込まれた側のブランチまでmainへ移動しません。ここでは競合せずmerge commitを作る例を示しています。履歴が分岐していない場合は、目印を進めるfast-forwardになり、新しいmerge commitを作らないこともあります。"
           ],
-          "command": "git switch main\ngit merge add/new-algorithm",
+          "command": "git switch main\ngit merge feature/readme",
           "takeaway": "merge commitは、統合前の二つのcommitを親として残す。",
           "notes": [
             {
@@ -1795,17 +1807,19 @@
             }
           ],
           "diagramState": "merge-model",
+          "slideDescription": "別のブランチの履歴を現在のブランチへ統合します。分岐している場合は通常merge commitを作ります。\n\n別ブランチで完成した変更を、履歴を残して取り込むときに使います。\n\n`--ff-only` は分岐があると停止します。`--no-ff` はfast-forward可能な場合もmerge commitを作ります。",
           "diagram": {
-            "type": "commit-graph"
+            "type": "svg",
+            "src": "assets/commands/basic-merge-model.svg"
           }
         },
         {
           "id": "cherry-pick",
-          "title": "必要な変更だけを別の枝へ適用する",
+          "title": "cherry-pick",
           "body": [
-            "別ブランチの特定コミットの変更だけが必要な場合、cherry-pickで現在のブランチへ適用できます。元のコミットを移動するのではなく、通常は別IDの新しいコミットを作ります。\n\n対象のIDと差分、適用先ブランチを確認して使います。依存する変更が別コミットにあれば、1つだけ取っても動くとは限りません。競合時は解消してadd後に --continue、取りやめるなら --abort です。"
+            "別ブランチの特定コミットの変更だけが必要な場合、cherry-pickで現在のブランチへ適用できます。元のコミットを移動するのではなく、通常は別IDの新しいコミットを作ります。\n\n適用先のブランチで実行します。使用例のCOMMIT_HASHを実際のIDに置き換え、差分を確認して使います。依存する変更が別コミットにあれば、1つだけ取っても動くとは限りません。競合時は解消してadd後に --continue、取りやめるなら --abort です。"
           ],
-          "command": "git switch release\ngit show abc1234\ngit cherry-pick abc1234",
+          "command": "git show COMMIT_HASH\ngit cherry-pick COMMIT_HASH",
           "takeaway": "コミット全体の履歴ではなく、選んだ変更を別の枝へ。",
           "notes": [
             {
@@ -1820,9 +1834,10 @@
             }
           ],
           "diagramState": "cherry-pick",
+          "slideDescription": "指定したcommitの変更を現在のブランチへ適用し、通常は別IDのcommitを作ります。\n\n別ブランチの修正を、一つだけ選んで取り込みたいときに使います。\n\n`--no-commit` はcommitせず適用します。競合解消後は`--continue`、中止する場合は`--abort`です。",
           "diagram": {
             "type": "svg",
-            "src": "assets/recovery.svg"
+            "src": "assets/commands/basic-cherry-pick.svg"
           }
         }
       ]
@@ -3599,7 +3614,7 @@
           "id": "head",
           "title": "HEADは作業している場所を表す",
           "body": [
-            "現在の作業の基準を表すのがHEADです。通常は、HEADが現在のブランチを指し、そのブランチが一つのcommitを指します。図の左列はHEAD → main → 先端のcommitという関係です。ファイルを編集して保存しただけでは、まだこの関係は変わりません。\n\n右の四列は、mainの位置を保ったまま、HEADがそれぞれ異なる過去のcommitを直接指す比較です。原資料ではHEADを「commitの現在地」と説明しています。到達するcommitだけでなく、間にブランチがあるかにも注目しましょう。ブランチの切り替えと、commitを直接読む操作では、次に記録するときの挙動が違います。"
+            "現在の作業の基準を表すのがHEADです。通常は、HEADが現在のブランチを指し、そのブランチが一つのcommitを指します。図の左列はHEAD → main → 先端のcommitという関係です。ファイルを編集して保存しただけでは、まだこの関係は変わりません。\n\n右列は、mainの位置を保ったまま、HEADが過去のcommitであるc2を直接指す例です。原資料ではHEADを「commitの現在地」と説明しています。到達するcommitだけでなく、間にブランチがあるかにも注目しましょう。ブランチの切り替えと、commitを直接読む操作では、次に記録するときの挙動が違います。"
           ],
           "command": "git status",
           "takeaway": "通常はHEAD → branch → commitという関係。",
@@ -3677,21 +3692,15 @@
           "id": "misconception",
           "title": "branchを線全体で囲むと読み違える",
           "body": [
-            "左右は同じcommitと親子関係です。左は誤解しやすい描き方で、branchが線上のcommit一式を包んでいます。右が今回の読み方で、ブランチの四角は一つの先端commitだけを囲みます。上段は別々に進んだ例、下段は統合後の例です。\n\n過去のcommitは親をたどって到達できるため、ブランチから履歴を読むことができます。しかし過去のcommitが、そのブランチにだけ所有されているわけではありません。明示的に統合するまでは、作業ブランチのcommitでmainの目印が自動的に進むこともありません。"
+            "左右は同じcommitと親子関係です。左は誤解しやすい描き方で、branchが線上のcommit一式を包んでいます。右が今回の読み方で、ブランチの四角は一つの先端commitだけを囲みます。それぞれの比較の中で、左側は別々に進んだ例、右側は統合後の例です。\n\n過去のcommitは親をたどって到達できるため、ブランチから履歴を読むことができます。しかし過去のcommitが、そのブランチにだけ所有されているわけではありません。明示的に統合するまでは、作業ブランチのcommitでmainの目印が自動的に進むこともありません。"
           ],
           "command": null,
           "takeaway": "branchは線ではなく、あくまでも一つのcommitを指す。",
-          "notes": [
-            {
-              "id": "misconception-note",
-              "body": "誤解の比較は原資料59・64・65の要点です。左右の丸と線の形を保ち、四角の範囲だけを比較します。",
-              "showInPresentation": true
-            }
-          ],
+          "notes": [],
           "diagramState": "misconception",
           "diagram": {
             "type": "svg",
-            "src": "assets/branch-model.svg"
+            "src": "assets/branch-misconception-source.svg"
           }
         },
         {
@@ -6205,67 +6214,70 @@
       "steps": [
         {
           "id": "branch",
-          "title": "branch：一覧・作成・削除を使い分ける",
+          "title": "branch",
           "body": [
             "git branchはローカルbranchの一覧を表示し、現在のbranchに*を付けます。-rはリモート追跡branch、-aはその両方を表示します。branch名を渡すと現在のcommitに新しい目印を作りますが、切り替えません。切り替えはswitchです。\n\n削除は別のbranchへ移ってからgit branch -d branch-nameを使います。これは通常、upstream（なければHEAD）へ統合済みか確認します。削除対象の未共有commitを必要に応じて保護し、確認を飛ばす-Dを安易に使わないでください。ローカルbranchの削除は、GitHubのbranch削除とは別です。"
           ],
-          "command": "git branch\ngit branch -a\ngit branch feature/name\n# 切り替えは別の操作\ngit switch feature/name",
+          "command": "git branch -a\ngit branch feature/readme",
           "takeaway": "branchは目印の管理。作成と切り替え、手元と共有先の削除を区別する。",
           "notes": [],
           "diagramState": "branch-commands-branch-branch",
+          "slideDescription": "ブランチの一覧表示・作成・削除を行います。作成だけでは作業先は切り替わりません。\n\n作業に名前を付けるときや、手元・リモートのブランチを確認するときに使います。\n\n`-a` はリモート追跡も表示し、`-vv` は追跡先を表示します。`-d` は統合済みか確認して削除します。",
           "diagram": {
             "type": "svg",
-            "src": "assets/curriculum-guide.svg"
+            "src": "assets/commands/branch-commands-branch.svg"
           }
         },
         {
           "id": "checkout-switch",
-          "title": "checkoutとswitch：切り替える対象を確認する",
+          "title": "switch / checkout",
           "body": [
             "branchの切り替えにはgit switch branch-name、新しいbranchを作って切り替えるにはgit switch -c branch-nameを使います。過去のcommitを直接見る操作はgit switch --detach commit-idです。\n\n古い資料では同じ目的にcheckoutを使います。checkout branch-nameはbranchへの切り替え、checkout commit-idはdetached HEADへの移動です。さらにcheckout -- fileはファイルの未ステージ変更を破棄する別の用途なので、文字の似たコマンドを取り違えないようにします。ファイルの復元は次のrestore Sectionで扱います。\n\n切り替え前にstatusを確認します。未commitの変更は切り替えに伴って持ち越される場合もあり、上書きの恐れがある場合は拒否されます。切り替えれば必ず作業が保存されるわけではありません。"
           ],
-          "command": "git status\ngit switch main\n# 古い書き方では git checkout main\n# 作成と切り替えを同時に行う場合\ngit switch -c feature/new-work",
+          "command": "git switch main\ngit switch -c feature/readme",
           "takeaway": "branchへの切り替えはswitch。checkoutにはファイル復元の用途もある。",
           "notes": [],
           "diagramState": "branch-commands-switch-checkout-switch",
+          "slideDescription": "switchはブランチを切り替え、作業ファイルをその版へ合わせます。古い資料ではcheckoutを使います。\n\n別ブランチの作業へ移るときに使います。切り替える前にstatusで途中の変更を確認します。\n\n`switch -c 名前` は作成して切り替えます。`--detach ID` はcommitを直接開きます。`checkout -- ファイル` は編集を破棄する別操作です。",
           "diagram": {
             "type": "svg",
-            "src": "assets/curriculum-guide.svg"
+            "src": "assets/commands/branch-commands-checkout-switch.svg"
           }
         },
         {
           "id": "rebase",
-          "title": "同じ分岐をrebaseとmergeで比べる",
+          "title": "rebase",
           "body": [
-            "原資料の図は、同じ共通commitからmainとfeat/popupが分かれ、その両方にcommitが増えた状態を出発点にしています。mainでgit rebase feat/popupを行うと、main側だけにあった変更をfeat/popupの先端の上へ順に適用し直します。mainの元のcommitは別IDのcommitへ作り直され、mainの目印がその先へ進みます。\n\n比較対象のgit merge feat/popupは、同じ分岐前の状態からmainで実行する別の選択肢です。両方の既存履歴を残し、2つの親を持つmerge commitをmainに追加します。図のrebase後とmerge後は、コマンドを連続で実行した結果ではありません。\n\nどの枝の履歴を作り直すかが重要です。この原図はmainを作り直す比較なので、未共有の練習用mainに限る例です。実際の共有済みmainでは実行せず、共有前の作業ブランチで扱います。競合時は解消・add後にgit rebase --continue、中止はgit rebase --abortです。"
+            "左図は、mainとfeat/popupが分岐した同じ状態から、rebaseとmergeを比較しています。mainでgit rebase feat/popupを実行すると、main固有の変更をfeat/popupの先端へ適用し直し、mainの目印を新しいcommitへ動かします。\n\nmainでgit merge feat/popupを実行する方は、同じ出発点からの別の選択肢です。既存のcommitを残してmerge commitでつなぎます。rebase後に続けてmergeする例ではありません。図のmainは未共有の練習用履歴を前提にします。共有済みの履歴を書き換える場合は共同作業者と合意します。"
           ],
-          "command": "# 未共有の練習用mainで、どちらかを比較する\ngit switch main\ngit rebase feat/popup\n# 同じ出発点での代替案。上の直後に実行しない\ngit merge feat/popup",
+          "command": "# 未共有の練習用mainで比較\ngit switch main\ngit rebase feat/popup",
           "takeaway": "rebaseは適用し直し、mergeは元の履歴をつなぐ。",
           "notes": [
             {
               "id": "rebase-lecture",
-              "body": "原図のmainを書き換える例は、未共有の練習用履歴に限ります。",
+              "body": "共有前の作業ブランチで履歴を整理します。共有済みの履歴の書き換えには合意が必要です。",
               "showInPresentation": true
             },
             {
               "id": "rebase-study",
-              "body": "PDF85の「最新へ乗せ直す」は、指定したブランチを新しい土台にする意味です。常に最新になるとは限りません。共有済み履歴を変更するなら共同作業者との合意が必要で、--force-with-leaseも万能ではありません。期待値省略はリモート追跡参照に依存し、バックグラウンドfetchで保護が弱まる場合があります。",
+              "body": "「履歴を乗せ直す」とは、指定したブランチを新しい土台にする意味です。常に最新になるとは限りません。共有済み履歴を変更するなら共同作業者との合意が必要で、--force-with-leaseも万能ではありません。期待値省略はリモート追跡参照に依存し、バックグラウンドfetchで保護が弱まる場合があります。",
               "showInPresentation": false
             }
           ],
           "diagramState": "rebase",
+          "slideDescription": "現在のブランチ固有の変更を、指定したブランチの先端へ適用し直します。左図ではmainの変更をfeat/popupの上へ乗せ直し、commitのIDも変わります。\n\n未共有の履歴を整理するときに使います。左図はmainで2つの方法を比較するため、未共有の練習用履歴として読みます。\n\n`-i` はcommitの並べ替えやまとめに使います。競合解消後は`--continue`、中止する場合は`--abort`です。",
           "diagram": {
             "type": "svg",
-            "src": "assets/recovery.svg"
+            "src": "assets/commands/branch-commands-rebase.svg"
           }
         },
         {
           "id": "restore-worktree",
-          "title": "削除した追跡ファイルを復元する",
+          "title": "restore",
           "body": [
-            "原資料の例は、Gitで管理していたファイルを誤って削除した場合です。hello.pyを作業フォルダーで削除しても、まだ削除をステージしていなければ、インデックスには記録した内容が残っています。git statusでdeleted: hello.pyと表示されることを確認します。\n\ngit restore -- hello.pyで、インデックスの内容を使って作業ツリーへファイルを戻せます。ここでは削除コマンドを実行する練習にはせず、誤って削除した状況からの復元手順を示します。HEADやブランチの位置は変わりません。\n\n削除をすでにステージした場合は、通常のrestoreだけでは同じ復元元がありません。次の節の--stagedでインデックスをHEADへ戻し、その後に作業ツリーを復元する、という対象の違いを確かめます。"
+            "Gitで管理していたファイルを誤って削除した場合を考えます。hello.pyを作業フォルダーで削除しても、まだ削除をステージしていなければ、インデックスには記録した内容が残っています。git statusでdeleted: hello.pyと表示されることを確認します。\n\ngit restore -- hello.pyで、インデックスの内容を使って作業ツリーへファイルを戻せます。ここでは削除コマンドを実行する練習にはせず、誤って削除した状況からの復元手順を示します。HEADやブランチの位置は変わりません。\n\n削除をすでにステージした場合は、通常のrestoreだけでは同じ復元元がありません。次の節の--stagedでインデックスをHEADへ戻し、その後に作業ツリーを復元する、という対象の違いを確かめます。"
           ],
-          "command": "git status\ngit diff -- hello.py\ngit restore -- hello.py\ngit status",
+          "command": "git diff -- hello.py\ngit restore -- hello.py",
           "takeaway": "statusで削除したパスを確かめ、追跡ファイルを復元する。",
           "notes": [
             {
@@ -6275,23 +6287,24 @@
             },
             {
               "id": "restore-worktree-study",
-              "body": "PDF86は削除したGit管理ファイルの復旧を説明しています。restoreは編集の取り消しにも使えますが、未コミットの編集を上書きします。過去版を明示する例は git restore --source=v1.0 -- hello.py。残したい変更は先に保存・退避します。",
+              "body": "restoreは編集の取り消しにも使えますが、未コミットの編集を上書きします。過去版を明示する例は git restore --source=v1.0 -- hello.py。残したい変更は先に保存・退避します。",
               "showInPresentation": false
             }
           ],
           "diagramState": "restore-worktree",
+          "slideDescription": "指定した追跡ファイルを復元します。既定の復元元はindex、変更する場所は作業ツリーです。\n\nまだステージしていない編集を取り消すときや、誤って削除した追跡ファイルを戻すときに使います。\n\n`--source=版` は復元元を指定します。未commitの編集を上書きするため、先にdiffで内容を確認します。",
           "diagram": {
             "type": "svg",
-            "src": "assets/recovery.svg"
+            "src": "assets/commands/branch-commands-restore-worktree.svg"
           }
         },
         {
           "id": "restore-index",
-          "title": "削除をステージした場合は、対象を分けて戻す",
+          "title": "restore --staged",
           "body": [
             "削除をgit addでステージ済みなら、インデックスからもファイルが取り除かれています。git restore --staged -- hello.pyは、インデックスをHEADの内容に戻します。この時点では作業ツリーのhello.pyはまだ存在しません。\n\n続いてgit restore -- hello.pyを実行すると、戻したインデックスから作業ツリーへファイルを復元できます。編集済みファイルを単にステージから外す場合も--stagedを使い、その場合は作業ツリーの編集が残ります。ここでは最初のcommitがあるリポジトリを前提にしています。"
           ],
-          "command": "# 削除をすでにステージした場合\ngit restore --staged -- hello.py\ngit restore -- hello.py\ngit status",
+          "command": "git restore --staged -- hello.py\n# 削除したファイルも戻す場合\ngit restore -- hello.py",
           "takeaway": "HEAD→indexとindex→作業ツリーは、別の復元。",
           "notes": [
             {
@@ -6301,14 +6314,105 @@
             },
             {
               "id": "restore-index-study",
-              "body": "PDF86の説明を補う節です。path指定のgit reset HEAD -- hello.pyもindexだけを更新します。両方をHEADへ合わせる--staged --worktreeの指定もありますが、この例は対象の違いを見るため2段階で示します。",
+              "body": "path指定のgit reset HEAD -- hello.pyもindexだけを更新します。両方をHEADへ合わせる--staged --worktreeの指定もありますが、この例は対象の違いを見るため2段階で示します。",
               "showInPresentation": false
             }
           ],
           "diagramState": "restore-index",
+          "slideDescription": "indexをHEADの内容へ戻し、指定したファイルをステージから外します。\n\naddの対象を選び直すときに使います。作業ツリーにある編集はそのまま残ります。\n\n`--staged` はindexを更新します。削除済みファイルを戻す場合は、その後に通常のrestoreで作業ツリーも復元します。",
           "diagram": {
             "type": "svg",
-            "src": "assets/recovery.svg"
+            "src": "assets/commands/branch-commands-restore-index.svg"
+          }
+        }
+      ]
+    },
+    {
+      "id": "summary",
+      "title": "00〜03の全まとめ",
+      "description": "準備、個人の記録、ブランチ、共同開発を一つの流れで振り返ります。",
+      "diagram": {
+        "type": "svg",
+        "src": "assets/course-overview.svg"
+      },
+      "sources": [],
+      "chapterId": "collaboration",
+      "route": "collaboration/summary",
+      "steps": [
+        {
+          "id": "overview",
+          "title": "00〜03の全体像",
+          "body": [
+            "Chapter 00ではGitを使う環境を整え、作者情報とSSH認証を準備しました。Chapter 01では変更を手元の履歴に記録し、リモートと共有しました。Chapter 02では、その履歴をcommit・branch・HEADの関係から読みました。Chapter 03では、Issueから作業を始め、PRで確認して変更を統合しました。\n\nこれらは別々の知識ではありません。自分の変更を説明できる単位で記録し、その記録をほかの人と確認して積み重ねるための流れです。"
+          ],
+          "command": null,
+          "takeaway": "準備した環境で変更を記録し、履歴を読みながら共同開発へつなげる。",
+          "notes": [],
+          "diagramState": "overview",
+          "slideDescription": "00では、Gitの作者情報とSSH接続を準備しました。名前・メールの設定と、共有先に接続する認証は別の役割です。\n\n01では、編集した内容をaddで選び、commitで記録し、pushで共有しました。\n\n02では、commitが記録、branchが目印、HEADが現在地を表すことを確認しました。\n\n03では、Issueで目的を共有し、作業ブランチで変更を作り、PRで確認・統合しました。"
+        },
+        {
+          "id": "record",
+          "title": "変更を記録し、共有する",
+          "body": [
+            "working treeは編集するファイル、indexは次のcommitに入れる内容を準備する場所です。ローカルリポジトリには記録済みの履歴があり、リモートリポジトリを通じてその履歴を共有します。\n\naddは実行した時点の内容をindexへ反映し、commitはそのindexの状態を記録します。pushは記録済みのcommitを送ります。エディターで保存するだけでは、commitにも共有先の更新にもなりません。"
+          ],
+          "command": null,
+          "takeaway": "保存・add・commit・pushは、反映する場所がそれぞれ違う。",
+          "notes": [],
+          "diagramState": "push",
+          "slideDescription": "編集する場所はworking treeです。`git diff`で変更を読み、`git add`で今回の記録に入れる内容をindexへ反映します。\n\n`git diff --staged`で準備した差分を確かめ、`git commit`で手元の履歴に記録します。add後にさらに編集した内容は、もう一度addするまで今回の記録に入りません。\n\n`git push`で記録済みの履歴を共有します。ほかの人の更新を取り込むときは、手元の作業を整理したうえでpullします。",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/record-flow.svg"
+          }
+        },
+        {
+          "id": "branches",
+          "title": "commit・branch・HEADの関係",
+          "body": [
+            "commitはファイルのスナップショットと親commitなどを持つ記録です。branchは一つのcommitを指す名前付きの目印で、通常はそのbranchでcommitすると先端へ進みます。HEADは通常、現在作業しているbranchを指します。\n\nswitchは作業先の切り替え、mergeは別の履歴の統合、rebaseは変更の適用し直しです。記録そのものと参照の位置を区別すると、これらの操作を履歴図で追えます。"
+          ],
+          "command": null,
+          "takeaway": "記録・目印・現在地を分けると、ブランチ操作を履歴から理解できる。",
+          "notes": [],
+          "diagramState": "summary",
+          "slideDescription": "commitはある時点の状態を参照する記録で、親子関係を持ちます。branchは履歴の線そのものではなく、特定のcommitを指す名前です。\n\nHEADは通常、作業中のbranchを指します。commitを直接指すdetached HEADでは、残したい作業にbranchの名前を付けておきます。\n\nswitchは作業先を切り替え、mergeは履歴をつなぎます。rebaseは変更を適用し直すため、commitのIDが変わります。共有済みの履歴を作り直す場合は、共同作業者との合意が必要です。",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/branch-model.svg"
+          }
+        },
+        {
+          "id": "workflow",
+          "title": "IssueからPR、統合後の更新まで",
+          "body": [
+            "Issueで目的や完了条件を共有し、作業ブランチで変更を作ります。READMEやPRの説明をMarkdownで整えると、変更の背景や確認方法をほかの人へ伝えられます。変更は小さくcommitし、pushしてPRを作ります。\n\nレビューでは、目的・差分・動作を確認します。修正は同じ作業ブランチへcommit・pushすると、既存のPRにも反映されます。統合後は手元のmainも更新します。競合した場合は両方の意図を確かめ、内容を編集して動作確認を行い、addして進行中の統合操作を完了します。"
+          ],
+          "command": null,
+          "takeaway": "目的の共有、変更の記録、レビュー、統合後の更新までを一巡する。",
+          "notes": [],
+          "diagramState": "collaboration-summary-workflow",
+          "slideDescription": "Issueで「なぜ変更するか」と完了条件を共有します。作業ブランチで変更を作り、小さくcommitしてpushします。\n\nPRでは、目的に合う差分か、必要な動作確認ができているかをレビューします。説明やREADMEをMarkdownで整えることも、共同作業の一部です。\n\n競合したときは両方の変更意図を確認し、残す内容を編集します。動作を確かめてaddし、mergeやrebaseなど進行中の操作を完了します。\n\n共有先で統合した後は、手元のmainへ切り替えて更新を取り込みます。mainがorigin/mainを追跡し、履歴をそのまま進められる場合は`git pull --ff-only`を使います。",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/curriculum-guide.svg"
+          }
+        },
+        {
+          "id": "review",
+          "title": "状態・差分・履歴を確かめる",
+          "body": [
+            "操作に迷ったら、今いるbranch、未記録の変更、記録済みの履歴を順に確認します。status・diff・logは、それぞれ違う情報を表示するコマンドです。エラーを消すためだけに、reset --hardやcleanを実行しないようにします。\n\n自分のコードで小さな変更を一つ選び、目的を説明し、差分を確認してcommitし、PRで共有するところまで再現してみてください。コマンドの暗記よりも、何が変わる操作なのかを説明できることが大切です。"
+          ],
+          "command": "git status\ngit diff\ngit diff --staged\ngit log --oneline --graph --decorate --all",
+          "takeaway": "状態を読み、差分を確認し、目的が伝わる変更を記録・共有する。",
+          "notes": [],
+          "diagramState": "collaboration-summary-review",
+          "slideDescription": "次の操作を決める前に、statusで現在のbranchと変更の状態を確かめます。diffで変更内容を読み、logで記録済みの履歴をたどります。\n\nエラーや競合が出ても、まず状態を読みます。未commitの編集や未追跡ファイルがGitから必ず戻せるとは限りません。\n\n小さな変更を一つ選び、目的の説明からcommit、PR、統合後の更新までを自分で一巡できれば、00〜03の内容を実際の作業につなげられます。",
+          "diagram": {
+            "type": "svg",
+            "src": "assets/curriculum-guide.svg"
           }
         }
       ]
@@ -6966,7 +7070,7 @@
       "steps": [
         {
           "id": "diff",
-          "title": "何が変わったかをdiffで読む",
+          "title": "diff",
           "body": [
             "git diffはworking treeとindexを比べ、まだaddしていない編集を表示します。git diff --stagedはindexと現在のcommitを比べ、次のcommitに入る変更を表示します。\n\n同じファイルでもaddの前後で表示先が変わります。未追跡ファイルの中身は通常のdiffには出ません。ファイルをエディターで確認してからaddします。"
           ],
@@ -6980,14 +7084,15 @@
             }
           ],
           "diagramState": "diff",
+          "slideDescription": "二つの状態を比較し、追加・削除した行を表示します。既定では未ステージの編集を表示します。\n\ncommitする内容を確認するときや、版の間で何が変わったか調べるときに使います。\n\n`--staged` は次のcommitに入る差分、`--stat` は変更量の要約を表示します。`-- ファイル` で対象を絞れます。",
           "diagram": {
             "type": "svg",
-            "src": "assets/foundations-inspect.svg"
+            "src": "assets/commands/advanced-diff.svg"
           }
         },
         {
           "id": "log",
-          "title": "commitのつながりを読む",
+          "title": "log",
           "body": [
             "logは記録済みのcommitを表示します。--onelineで1件を短く、--graphで親子関係を線で、--decorateでbranchなどの目印を表示します。\n\n--allを付けると、複数のbranchなどの参照からたどれる履歴をまとめて見られます。未commitの編集はこの図には出ません。HEADやbranchの関係は「Gitの難関 “branch” を理解する」のまとめでも確認できます。"
           ],
@@ -7001,33 +7106,35 @@
             }
           ],
           "diagramState": "log",
+          "slideDescription": "記録済みcommitのメッセージと親子関係を表示します。未commitの編集は表示しません。\n\n変更の経緯や、ブランチの分岐・統合を確認するときに使います。\n\n`--oneline` は1行表示、`--graph` は親子関係、`--decorate` は参照名、`--all` は各参照からたどれる履歴を表示します。",
           "diagram": {
             "type": "svg",
-            "src": "assets/foundations-inspect.svg"
+            "src": "assets/commands/advanced-log.svg"
           }
         },
         {
           "id": "show-and-blame",
-          "title": "変更の由来を show と blame でたどる",
+          "title": "show / blame",
           "body": [
             "`git show HEAD` は最新commitの説明と差分を読みます。`git blame README.md` は各行を最後に変更したcommitを示します。気になる行のハッシュを `git show` に渡すと、変更理由を調べられます。\n\nblameの名前だけで原因を決めず、commit全体と周辺の履歴を読みましょう。整形だけの変更が直近の履歴になる場合もあります。どちらも履歴を読む操作で、ファイルは変わりません。"
           ],
-          "command": "git show HEAD\ngit blame README.md",
+          "command": "git blame -L 10,20 README.md\ngit show COMMIT_HASH",
           "takeaway": "行からcommitへ進み、差分と説明を合わせて読む。",
           "notes": [],
           "diagramState": "advanced-inspect-show-and-blame",
+          "slideDescription": "showは指定commitの説明と差分を、blameはファイルの各行を最後に変更したcommitを表示します。\n\n気になる行から変更の経緯や理由を調べるときに使います。\n\n`blame -L 10,20` は10〜20行に絞ります。見つけたIDを`show`に渡し、変更全体を確認します。",
           "diagram": {
             "type": "svg",
-            "src": "assets/curriculum-guide.svg"
+            "src": "assets/commands/advanced-show-and-blame.svg"
           }
         },
         {
           "id": "fetch",
-          "title": "共有先の履歴だけを取得する",
+          "title": "fetch",
           "body": [
             "git fetch originは、originからcommitなどを取得し、origin/mainなどのリモート追跡branchを更新します。origin/mainは、最後に取得した共有先のmainの状態を手元で表す目印です。\n\nfetchだけでは作業中のmainやworking treeのファイルを切り替えません。取得後にstatusやlogを見て、手元と共有先の違いを確認できます。"
           ],
-          "command": "git fetch origin\ngit status\ngit log --oneline --graph --decorate --all",
+          "command": "git fetch --prune origin\ngit log --oneline --all --graph",
           "takeaway": "fetchは追跡情報を更新し、作業ファイルは変えない。",
           "notes": [
             {
@@ -7037,14 +7144,15 @@
             }
           ],
           "diagramState": "fetch",
+          "slideDescription": "リモートから履歴を取得し、origin/mainなどのリモート追跡ブランチを更新します。\n\n作業ファイルを変えずに、共有先の更新を調べるときに使います。\n\n`--prune` はリモートで削除されたブランチの追跡参照も整理します。取得後にlogやdiffで違いを確認します。",
           "diagram": {
             "type": "svg",
-            "src": "assets/operation-map.svg"
+            "src": "assets/commands/advanced-fetch.svg"
           }
         },
         {
           "id": "remote-and-tracking",
-          "title": "接続先と追跡先を確認する",
+          "title": "remote / branch -vv",
           "body": [
             "`origin` は接続先に付けた名前です。`git remote -v` で取得先・送信先のURLを、`git branch -vv` で各ローカルbranchのupstreamを確認できます。`origin/main` はfetchした時点のリモート追跡branchです。\n\n新しいbranchを共有するときは、送信先を確認してから `git push -u origin feature/readme` のようにupstreamを設定します。以後の引数なしのpullやpushの動作にも設定が関係するため、意図した相手か確認しましょう。"
           ],
@@ -7052,18 +7160,19 @@
           "takeaway": "originのURLとbranchの追跡先は別々に確認する。",
           "notes": [],
           "diagramState": "advanced-remote-remote-and-tracking",
+          "slideDescription": "remoteは接続先の名前とURLを、branch -vvは各ローカルブランチの追跡先を確認します。\n\npushやpullがどのリポジトリ・ブランチを相手にするか確認するときに使います。\n\n`remote -v` は取得・送信URLを表示します。`push -u origin ブランチ名` は送信時に追跡先も設定します。",
           "diagram": {
             "type": "svg",
-            "src": "assets/curriculum-guide.svg"
+            "src": "assets/commands/advanced-remote-and-tracking.svg"
           }
         },
         {
           "id": "revert",
-          "title": "共有済みの変更は、新しいコミットで打ち消す",
+          "title": "revert",
           "body": [
-            "共有した履歴を取り消すときは、まずrevertを考えます。対象コミットの変更を逆向きに適用した新しいコミットを作り、既存の履歴を残します。\n\n作業ツリーをきれいにして対象の差分を確認します。例のabc1234は、実際の通常コミットのIDに置き換えてください。競合する場合は解消後に --continue、取りやめるなら --abort を使います。"
+            "共有した履歴を取り消すときは、まずrevertを考えます。対象コミットの変更を逆向きに適用した新しいコミットを作り、既存の履歴を残します。\n\n作業ツリーをきれいにして対象の差分を確認します。例のCOMMIT_HASHは、実際の通常コミットのIDに置き換えてください。競合する場合は解消後に --continue、取りやめるなら --abort を使います。"
           ],
-          "command": "git show abc1234\ngit revert abc1234",
+          "command": "git show COMMIT_HASH\ngit revert COMMIT_HASH",
           "takeaway": "履歴を消さずに、変更を打ち消す記録を追加する。",
           "notes": [
             {
@@ -7078,18 +7187,19 @@
             }
           ],
           "diagramState": "revert",
+          "slideDescription": "指定commitの変更を逆向きに適用し、打ち消すための新しいcommitを追加します。\n\n共有済みの変更を取り消し、既存の履歴を残したいときに使います。\n\n`--no-commit` はcommitせず適用します。競合解消後は`--continue`、中止する場合は`--abort`です。",
           "diagram": {
             "type": "svg",
-            "src": "assets/recovery.svg"
+            "src": "assets/commands/advanced-revert.svg"
           }
         },
         {
           "id": "reflog",
-          "title": "見失ったコミットは、参照の履歴から探す",
+          "title": "reflog",
           "body": [
-            "reflogは、このローカルリポジトリでHEADやブランチなどの参照が動いた記録です。resetやdetached HEADで見失ったコミットが残っていれば、IDを確認して救済用ブランチを付けられます。\n\ngit reflogで候補を見て、git showで内容を確認し、実際のIDに置き換えてgit branch rescueを作ります。先にreset --hardで上書きする必要はありません。"
+            "reflogは、このローカルリポジトリでHEADやブランチなどの参照が動いた記録です。resetやdetached HEADで見失ったコミットが残っていれば、IDを確認して救済用ブランチを付けられます。\n\ngit reflogで候補を見て、git showで内容を確認し、実際のIDに置き換えてgit branch rescue COMMIT_HASHで救済用の名前を付けます。先にreset --hardで上書きする必要はありません。"
           ],
-          "command": "git reflog\ngit show abc1234\ngit branch rescue abc1234",
+          "command": "git reflog\ngit show COMMIT_HASH",
           "takeaway": "見つかったコミットに、まずブランチの名前を付ける。",
           "notes": [
             {
@@ -7104,33 +7214,35 @@
             }
           ],
           "diagramState": "reflog",
+          "slideDescription": "このリポジトリでHEADやブランチなどの参照が動いた記録を表示します。\n\nreset後などに見失ったcommitのIDを探すときに使います。\n\n`show main` はmainの記録を表示します。記録には保存期限があり、未commitの編集の復元は保証しません。",
           "diagram": {
             "type": "svg",
-            "src": "assets/recovery.svg"
+            "src": "assets/commands/advanced-reflog.svg"
           }
         },
         {
           "id": "rescue-branch",
-          "title": "見つけたcommitに救出用branchを付ける",
+          "title": "branch（commitの救出）",
           "body": [
             "resetやamendの後で元のcommitを探す場合は、`git reflog` で過去のHEADの移動を確認します。候補のハッシュを `git show` で読み、必要な内容か確かめます。\n\n候補が見つかったら `git branch rescue/work ハッシュ` で名前を付けます。現在の作業ファイルを切り替えずにcommitを参照できるため、そこから比較やcherry-pickを検討できます。reflogは各端末の記録で、未記録のファイル内容や永久保存を保証するものではありません。"
           ],
-          "command": "git reflog\n# 候補を確認し、実際のハッシュに置き換える\ngit show COMMIT_HASH\ngit branch rescue/work COMMIT_HASH",
+          "command": "git show COMMIT_HASH\ngit branch rescue/work COMMIT_HASH",
           "takeaway": "戻す前に内容を確かめ、救出用の名前を付ける。",
           "notes": [],
           "diagramState": "advanced-recover-rescue-branch",
+          "slideDescription": "見つけたcommitに救出用のブランチ名を付け、そこから履歴を参照できるようにします。\n\nreflogで見つけた変更を、作業ファイルを切り替えずに確保するときに使います。\n\n`branch 名前 ID` は参照を作る操作です。内容をshowで確認した後に名前を付けます。",
           "diagram": {
             "type": "svg",
-            "src": "assets/curriculum-guide.svg"
+            "src": "assets/commands/advanced-rescue-branch.svg"
           }
         },
         {
           "id": "revisions",
-          "title": "相対参照とタグで、見る版を指定する",
+          "title": "リビジョン指定（~ / ^）",
           "body": [
-            "HEAD~2は第一親を2回たどったコミットです。HEAD^またはHEAD^1は第一親、HEAD^2は第二親を指定します。^2は「2つ前」ではなく、第二親があるマージコミットなどで使います。\n\nタグは特定の版に名前を付けます。例のv1.0を作ると、以後はgit show v1.0でその版を確認できます。タグはブランチのように新しいコミットへ自動で進みません。~や^を含む指定はシェルに解釈させないようクォートしています。"
+            "HEAD~2は第一親を2回たどったコミットです。HEAD^またはHEAD^1は第一親、HEAD^2は第二親を指定します。^2は「2つ前」ではなく、第二親があるマージコミットなどで使います。\n\nタグは特定の版に名前を付けます。既存のタグはgit show v1.0のように参照できます。タグの作成は次のスライドで扱います。タグはブランチのように新しいコミットへ自動で進みません。~や^を含む指定はシェルに解釈させないようクォートしています。"
           ],
-          "command": "git show 'HEAD~2'\n# HEADがマージコミットの場合だけ\ngit show 'HEAD^2'\ngit tag -a v1.0 -m \"解析の基準版\"\ngit show v1.0",
+          "command": "git show 'HEAD~2'\n# HEAD に第二親がある場合\ngit show 'HEAD^2'",
           "takeaway": "~は第一親をたどる回数、^はどの親を選ぶか。",
           "notes": [
             {
@@ -7145,54 +7257,58 @@
             }
           ],
           "diagramState": "revisions",
+          "slideDescription": "HEADやブランチ名から親commitをたどり、表示・比較する版を指定します。\n\n過去の版や、merge commitの親を調べるときに使います。\n\n`HEAD~2` は第一親を2回たどります。`HEAD^2` は第二親を選ぶ指定で、2つ前という意味ではありません。",
           "diagram": {
             "type": "svg",
-            "src": "assets/recovery.svg"
+            "src": "assets/commands/advanced-revisions.svg"
           }
         },
         {
           "id": "release-tag",
-          "title": "tagで公開した版に名前を付ける",
+          "title": "tag",
           "body": [
             "branchはcommitに伴って先へ進みます。tagは、公開版などの特定のcommitを指す名前として使います。注釈付きtagには説明や作成者、日時も記録できます。\n\n作業内容とテスト結果を確認したcommitで `git tag -a v1.0.0 -m \"First release\"` を作り、`git show v1.0.0` で対象を確かめます。tagはローカルで作成されるので、共有するときは `git push origin v1.0.0` と対象を明示します。"
           ],
-          "command": "git tag -a v1.0.0 -m \"First release\"\ngit show v1.0.0\n# 共有するときだけ実行する例\n# git push origin v1.0.0",
+          "command": "git tag -a v1.0.0 -m \"First release\"\ngit show v1.0.0",
           "takeaway": "branchは作業の先端、tagは版の目印。",
           "notes": [],
           "diagramState": "advanced-tags-release-tag",
+          "slideDescription": "公開版などの特定commitに名前を付けます。branchと違い、新しいcommitへ自動では進みません。\n\nリリースや解析の基準として、同じ版を後から参照するときに使います。\n\n`-a` は注釈付きtag、`-m` は説明を指定します。共有は`push origin タグ名`で対象を明示します。",
           "diagram": {
             "type": "svg",
-            "src": "assets/curriculum-guide.svg"
+            "src": "assets/commands/advanced-release-tag.svg"
           }
         },
         {
           "id": "bisect-start",
-          "title": "bisectで不具合が入ったcommitを絞る",
+          "title": "bisect",
           "body": [
             "「この版では正常」「この版では不具合が出る」という2点と、同じ条件で再現できる確認手順を用意します。作業中の変更は先に保存し、調査中に何度も作業ファイルが切り替わることを理解して始めます。\n\n下の `BAD_COMMIT` と `GOOD_COMMIT` は実際に確認したハッシュへ置き換えます。bisectが選ぶ途中のcommitで同じ確認を繰り返し、正常ならgood、不具合が出ればbadと伝えます。"
           ],
-          "command": "git status\n# 以下の2語を実際のハッシュに置き換える\ngit bisect start\ngit bisect bad BAD_COMMIT\ngit bisect good GOOD_COMMIT",
+          "command": "git bisect start\ngit bisect bad BAD_COMMIT\ngit bisect good GOOD_COMMIT",
           "takeaway": "正常な版と不具合のある版の間を、半分ずつ調べる。",
           "notes": [],
           "diagramState": "advanced-bisect-bisect-start",
+          "slideDescription": "正常だった版と不具合のある版の間を二分探索し、原因候補のcommitを絞ります。\n\n同じ確認手順で、不具合を再現できる版を調べるときに使います。\n\n`start` で開始し、`good` と`bad`で既知の版を指定します。途中の版に作業ファイルが切り替わります。",
           "diagram": {
             "type": "svg",
-            "src": "assets/curriculum-guide.svg"
+            "src": "assets/commands/advanced-bisect-start.svg"
           }
         },
         {
           "id": "bisect-finish",
-          "title": "判定を繰り返し、調査を終了する",
+          "title": "bisect（判定・終了）",
           "body": [
             "選ばれたcommitをビルド・実行して、結果に応じて `git bisect good` または `git bisect bad` を一方だけ実行します。依存関係などの理由で判定できない版には `git bisect skip` が使えますが、候補が一つに絞れない場合もあります。\n\n原因候補が表示されたらハッシュを控え、`git bisect reset` で調査前の位置に戻ります。その後に差分を読み、原因の仮説を検証します。ここでのresetはbisectを終えるサブコマンドです。"
           ],
-          "command": "# 確認結果に応じて一方を実行する例\n# git bisect good\n# git bisect bad\n# 結果のハッシュを控えて終了\ngit bisect reset",
+          "command": "git bisect good\n# 原因候補のIDを控えてから終了\ngit bisect reset",
           "takeaway": "判定条件を揃え、終わったら bisect reset。",
           "notes": [],
           "diagramState": "advanced-bisect-bisect-finish",
+          "slideDescription": "選ばれた版を同じ条件で確認し、正常か不具合かをGitへ伝えます。\n\n原因候補が絞れるまで判定を繰り返し、終了時に元の作業位置へ戻ります。\n\n`good` / `bad` は判定結果、`skip` は判定不能、`reset` は調査終了です。skipで候補が一つに絞れない場合もあります。",
           "diagram": {
             "type": "svg",
-            "src": "assets/curriculum-guide.svg"
+            "src": "assets/commands/advanced-bisect-finish.svg"
           }
         }
       ]

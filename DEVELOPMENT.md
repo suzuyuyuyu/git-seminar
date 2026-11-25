@@ -40,16 +40,29 @@ node tools/serve.cjs
 
 ```sh
 node tools/build-diagrams.cjs
+node tools/build-command-diagrams.cjs
 node tools/build-curriculum-diagrams.cjs
 node tools/build-content.cjs
 ```
 
 生成対象以外のSVGはSVG自体を編集します。公開図にPNGやJPEGのスクリーンショットを埋め込みません。元PPT由来のベクター素材は `docs/assets/illustrations/` にまとめ、対応と出典を `manifest.json` に記録しています。比較図の調整記録は [authoring/diagram-refinement.md](./authoring/diagram-refinement.md) にあります。
 
+Illustratorで保持した原図45枚（PDF34ページとPPT追加11枚）は [authoring/source-assets/illustrator/](./authoring/source-assets/illustrator/README.md) にあります。`version-copies-source.svg`、`version-repository-source.svg`、`branch-misconception-source.svg`は対応するAIを編集してSVGへ書き出し、ページ番号・フッター・隅のテンプレート装飾を取り除き、既存ファイルと同じ代替説明・スタイルの適用範囲を保って更新します。生成スクリプトでは上書きしません。
+
+## デザイン（2026-11-02）
+
+利用者指定の `~/.dotfiles/llm/rule-design.md` を自学習ページとWebの講義スライド表示へ適用する。配色は[Radix Colorsの用途](https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale)に合わせ、Sage 1–3を背景、6–7を罫線、11–12を文字に使用する。UIのリンクは淡い背景でも読めるGreen 12、図の意味を表す緑・青・赤は同系統のRadix色を使う。原資料保管用のAI/SVG、イラスト、公式ロゴは原色を保持する。
+
+UIの文字サイズは12・16・24・32pxの4種類。本文は16px、補助情報は12pxとする。UI罫線は0.5px、角丸は操作部品の4pxに限定し、色付きの左罫線と装飾的なブランドマークを使用しない。フォーカス輪郭は視認性のため2pxを保持する。図中の矢印・履歴線の太さと、原図のアウトライン文字は意味と形を保つ。
+
+目次の節名から自学習を開き、その横に講義リンクだけを置く。講義の前後ボタンは節をまたいで移動するため、重複する節ナビは置かない。拡大表示では縦画面の図を縮小せず、横スクロールして読めるようにする。元PPTのテンプレートは編集せず、Web表示用の共通CSSと公開SVGを調整する。
+
+検証：目次・自学習・講義を1280pxと390px幅で確認し、図の拡大と節をまたぐ移動を確認した。53ファイルの配色、UI文字色のコントラスト、罫線幅、公開3図のパス保持を検証した。教材チェックと既存10テストは成功。全116 Stepの個別目視と実機投影は未実施。
+
 ## 整合性を確認する
 
 ```sh
-node --test tools/build-content.test.cjs
+node --test tools/build-content.test.cjs tools/command-reference.test.cjs
 node tools/check-content.cjs
 ```
 

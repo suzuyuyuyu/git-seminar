@@ -2,33 +2,33 @@
 <title id="collaboration-integration-title">変更の統合と競合解消</title>
 <desc id="collaboration-integration-desc">共通のコードから二つの変更が分かれ、競合を編集してからmerge commitを作る過程を示します。丸はcommit、実線は親子関係、四角はbranch。青は取り込む側を識別します。点線のcommitは未作成の予定であり、競合停止中にmainは進みません。現在の節の図だけを表示します。</desc>
 <style><![CDATA[
-svg.collaboration-integration {background:#fbfcf9;font-family:"Noto Sans JP","Yu Gothic",Meiryo,sans-serif;}
-svg.collaboration-integration text {fill:#24352e;font-size:28px;white-space:pre;}
+svg.collaboration-integration {background:#fbfdfc;font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",Meiryo,sans-serif;}
+svg.collaboration-integration text {fill:#1a211e;font-size:28px;white-space:pre;}
 svg.collaboration-integration .heading {font-size:32px;font-weight:700;}
-svg.collaboration-integration .strong {fill:#31664b;font-weight:700;}
+svg.collaboration-integration .strong {fill:#218358;font-weight:700;}
 svg.collaboration-integration .small {font-size:24px;}
 svg.collaboration-integration .tiny {font-size:21px;}
 svg.collaboration-integration .mono {font-family:Consolas,"Yu Gothic",monospace;}
-svg.collaboration-integration .muted {fill:#65736a;}
-svg.collaboration-integration .red {fill:#a74238;}
-svg.collaboration-integration .blue {fill:#486d9b;}
-svg.collaboration-integration .link {fill:none;stroke:#a2ada5;stroke-width:3;}
-svg.collaboration-integration .divider {fill:none;stroke:#d8dfd6;stroke-width:1.5;}
-svg.collaboration-integration .arrow, svg.collaboration-integration .ref {fill:none;stroke:#31664b;stroke-width:2.5;}
-svg.collaboration-integration .head-arrow {fill:none;stroke:#a74238;stroke-width:2.5;}
-svg.collaboration-integration .commit {fill:#6f9e78;stroke:#31664b;stroke-width:2;}
-svg.collaboration-integration .incoming {fill:#b5c8df;stroke:#486d9b;}
-svg.collaboration-integration .marker {fill:none;stroke:#31664b;stroke-width:2.5;}
-svg.collaboration-integration .wrong {fill:#f1d5ce;fill-opacity:.5;stroke:#a74238;stroke-width:2;}
-svg.collaboration-integration .card {fill:#edf3eb;stroke:#c4d3c5;stroke-width:2;}
-svg.collaboration-integration .label-box {fill:#e6f0e7;stroke:#b4c8b7;stroke-width:1.5;}
-svg.collaboration-integration .blue-card {fill:#eef2f8;stroke:#a7bad4;stroke-width:2;}
-svg.collaboration-integration .note {fill:#f5eac8;stroke:#dfd2a4;stroke-width:1.5;}
-svg.collaboration-integration .planned {fill:#f5eac8;stroke:#b59842;stroke-width:2.5;stroke-dasharray:7 6;}
-svg.collaboration-integration .planned-link {fill:none;stroke:#b59842;stroke-width:2.5;stroke-dasharray:7 6;}
-svg.collaboration-integration .terminal {fill:#303d35;}
-svg.collaboration-integration .terminal-text {fill:#faf9f4;font-family:Consolas,"Yu Gothic",monospace;font-size:24px;}
-svg.collaboration-integration .terminal-error {fill:#ffcfb3;font-family:Consolas,monospace;font-size:24px;}
+svg.collaboration-integration .muted {fill:#5f6563;}
+svg.collaboration-integration .red {fill:#d13415;}
+svg.collaboration-integration .blue {fill:#0d74ce;}
+svg.collaboration-integration .link {fill:none;stroke:#868e8b;stroke-width:3;}
+svg.collaboration-integration .divider {fill:none;stroke:#d7dad9;stroke-width:1.5;}
+svg.collaboration-integration .arrow, svg.collaboration-integration .ref {fill:none;stroke:#218358;stroke-width:2.5;}
+svg.collaboration-integration .head-arrow {fill:none;stroke:#d13415;stroke-width:2.5;}
+svg.collaboration-integration .commit {fill:#30a46c;stroke:#218358;stroke-width:2;}
+svg.collaboration-integration .incoming {fill:#acd8fc;stroke:#0d74ce;}
+svg.collaboration-integration .marker {fill:none;stroke:#218358;stroke-width:2.5;}
+svg.collaboration-integration .wrong {fill:#feebe7;fill-opacity:.5;stroke:#d13415;stroke-width:2;}
+svg.collaboration-integration .card {fill:#f7f9f8;stroke:#cbcfcd;stroke-width:2;}
+svg.collaboration-integration .label-box {fill:#e6f6eb;stroke:#cbcfcd;stroke-width:1.5;}
+svg.collaboration-integration .blue-card {fill:#e6f4fe;stroke:#acd8fc;stroke-width:2;}
+svg.collaboration-integration .note {fill:#fefbe9;stroke:#f3d673;stroke-width:1.5;}
+svg.collaboration-integration .planned {fill:#fefbe9;stroke:#ab6400;stroke-width:2.5;stroke-dasharray:7 6;}
+svg.collaboration-integration .planned-link {fill:none;stroke:#ab6400;stroke-width:2.5;stroke-dasharray:7 6;}
+svg.collaboration-integration .terminal {fill:#1a211e;}
+svg.collaboration-integration .terminal-text {fill:#fbfdfc;font-family:Consolas,"Yu Gothic",monospace;font-size:24px;}
+svg.collaboration-integration .terminal-error {fill:#fdbdaf;font-family:Consolas,monospace;font-size:24px;}
 svg.collaboration-integration > g[data-state] {display:none;}
 svg.collaboration-integration[data-current-state="publish"] > g[data-state="publish"],
 svg.collaboration-integration[data-current-state="review"] > g[data-state="review"],

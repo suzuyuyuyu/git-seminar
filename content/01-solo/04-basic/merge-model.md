@@ -1,19 +1,27 @@
 ---
 id: "merge-model"
-title: "二つの親を持つmerge commit"
+title: "merge"
 state: "merge-model"
-diagram: "commit-graph"
+diagram: "assets/commands/basic-merge-model.svg"
 ---
 
-別々に進んだ作業をmainへ統合した例です。mainへ切り替えてgit merge add/new-algorithmを実行し、m5で作業側を取り込みました。m5の第一親は取り込み先だったm4、第二親は作業側のb2です。その後mainにはm6、m7も記録されています。
+別々に進んだ作業をmainへ統合する例です。mainへ切り替えてgit merge feature/readmeを実行します。新しいmerge commitの第一親はmainの元の先端、第二親はfeature/readmeの先端です。
 
-図のadd/new-algorithmはb2のままです。mergeしたからといって、取り込まれた側のブランチまでmainへ移動しません。ここでは競合せずmerge commitを作る例を示しています。履歴が分岐していない場合は、目印を進めるfast-forwardになり、新しいmerge commitを作らないこともあります。
+取り込んだfeature/readmeの目印は、元の先端に残ります。mergeしたからといって、取り込まれた側のブランチまでmainへ移動しません。ここでは競合せずmerge commitを作る例を示しています。履歴が分岐していない場合は、目印を進めるfast-forwardになり、新しいmerge commitを作らないこともあります。
+
+## スライド説明
+
+別のブランチの履歴を現在のブランチへ統合します。分岐している場合は通常merge commitを作ります。
+
+別ブランチで完成した変更を、履歴を残して取り込むときに使います。
+
+`--ff-only` は分岐があると停止します。`--no-ff` はfast-forward可能な場合もmerge commitを作ります。
 
 ## コマンド
 
 ```sh
 git switch main
-git merge add/new-algorithm
+git merge feature/readme
 ```
 
 ## 要点

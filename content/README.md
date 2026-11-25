@@ -119,3 +119,9 @@ node tools/check-content.cjs
 ```
 
 `docs/course.json` は生成物なので直接編集しません。図モデルを変えた場合はSVGも再生成します。変更したSectionを自学習・講義・縦画面で目視してください。公開手順は [DEVELOPMENT.md](../DEVELOPMENT.md)、原資料との対応は [chapter-structure.md](../authoring/chapter-structure.md) を参照してください。
+
+### コマンドの解説スライド
+
+コマンドを主題にするStepは、titleにコマンド名を指定します。`## スライド説明` に動作・用途・オプションを短い段落で記載すると、自学習と講義の両方に表示します。「何をするか」などの定型見出しは付けず、そのまま読める説明文にします。詳細な本文は自学習用に保持します。`## コマンド` はそのスライドで読む短い使用例にします。
+
+左側のコマンド資料は `content/command-diagrams.json` を編集し、`node tools/build-command-diagrams.cjs` で再生成します。`syntax` が書式、`paragraphs` が説明、`groups` がオプション・引数・サブコマンドの表です。`source` にPPT・PDFの対応ページと、原資料の再構成／原資料の補足／補足教材の区別を記録します。`figure` は原資料にあるadd・pull・rebaseの図を指定します。原資料を確認せずに、独自の操作図へ置き換えないでください。対応と補足は [原資料との対応](../authoring/source-alignment-commands.md) を参照してください。

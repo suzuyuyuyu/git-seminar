@@ -3,26 +3,26 @@
   <desc id="record-desc">原資料21ページの並びを保ち、左から作業ツリー、インデックス、ローカルリポジトリ、リモートリポジトリを示します。addは記録する状態の準備、commitは手元の履歴への記録、pushは共有先への送信です。</desc>
   <style><![CDATA[
     svg.record-flow {
-      background:#fbfcf9;font-family:"Yu Gothic",Meiryo,sans-serif;
-      text {fill:#24352e;font-size:24px;}
+      background:#fbfdfc;font-family:"Yu Gothic",Meiryo,sans-serif;
+      text {fill:#1a211e;font-size:24px;}
       .heading {font-size:23px;font-weight:700;}
-      .region {fill:#f1f4ef;stroke:#cdd6ce;stroke-width:2;}
-      .connection {stroke:#9ca79f;stroke-width:4;fill:none;}
-      .pill {fill:#f5eac8;}
+      .region {fill:#f7f9f8;stroke:#d7dad9;stroke-width:2;}
+      .connection {stroke:#868e8b;stroke-width:4;fill:none;}
+      .pill {fill:#fefbe9;}
       .command {font-family:Consolas,monospace;font-weight:700;}
-      .sub {font-size:22px;fill:#5c6c61;}
+      .sub {font-size:22px;fill:#5f6563;}
       &[data-current-state="working-tree"] [data-state="working-tree"] .region,
       &[data-current-state="stage"] [data-state="stage"] .region,
       &[data-current-state="commit"] [data-state="commit"] .region,
-      &[data-current-state="push"] [data-state="push"] .region {fill:#e6f0e7;stroke:#31664b;stroke-width:4;}
+      &[data-current-state="push"] [data-state="push"] .region {fill:#e6f6eb;stroke:#218358;stroke-width:4;}
     }
   ]]></style>
-  <defs><marker id="record-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 9 5 1 9" fill="#9ca79f"/></marker></defs>
+  <defs><marker id="record-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 9 5 1 9" fill="#868e8b"/></marker></defs>
   <image href="illustrations/computer.svg" x="25" y="22" width="68" height="48"/>
   <a href="https://git-scm.com/" target="_blank"><image href="illustrations/git-logo.svg" x="110" y="22" width="100" height="48"/></a>
   <image href="illustrations/cloud.svg" x="790" y="14" width="65" height="60"/>
   <a href="https://github.com/" target="_blank"><image href="illustrations/github-wordmark.svg" x="870" y="25" width="110" height="40"/></a>
-  <path d="M750 85V390" stroke="#a8b1a9" stroke-width="2" stroke-dasharray="6 7"/>
+  <path d="M750 85V390" stroke="#868e8b" stroke-width="2" stroke-dasharray="6 7"/>
   <g data-state="working-tree"><rect class="region" x="20" y="100" width="190" height="220" rx="12"/><text class="heading" x="115" y="137" text-anchor="middle">working tree</text><text x="115" y="174" text-anchor="middle">作業する場所</text><image href="illustrations/file.svg" x="82" y="195" width="65" height="80"/><text class="sub" x="115" y="303" text-anchor="middle">hello.pyを編集</text></g>
   <g data-state="stage"><rect class="region" x="270" y="100" width="190" height="220" rx="12"/><text class="heading" x="365" y="137" text-anchor="middle">index</text><text x="365" y="174" text-anchor="middle">次に残す状態</text><image href="illustrations/file.svg" x="332" y="195" width="65" height="80"/><text class="sub" x="365" y="303" text-anchor="middle">add時点の内容</text></g>
   <g data-state="commit"><rect class="region" x="520" y="100" width="190" height="220" rx="12"/><text class="heading" x="615" y="137" text-anchor="middle">local repository</text><text x="615" y="174" text-anchor="middle">保存した履歴</text><image href="illustrations/file.svg" x="582" y="195" width="65" height="80"/><text class="sub" x="615" y="303" text-anchor="middle">手元にcommit</text></g>

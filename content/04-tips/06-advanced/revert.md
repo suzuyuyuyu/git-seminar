@@ -1,19 +1,27 @@
 ---
 id: "revert"
-title: "共有済みの変更は、新しいコミットで打ち消す"
+title: "revert"
 state: "revert"
-diagram: "assets/recovery.svg"
+diagram: "assets/commands/advanced-revert.svg"
 ---
 
 共有した履歴を取り消すときは、まずrevertを考えます。対象コミットの変更を逆向きに適用した新しいコミットを作り、既存の履歴を残します。
 
-作業ツリーをきれいにして対象の差分を確認します。例のabc1234は、実際の通常コミットのIDに置き換えてください。競合する場合は解消後に --continue、取りやめるなら --abort を使います。
+作業ツリーをきれいにして対象の差分を確認します。例のCOMMIT_HASHは、実際の通常コミットのIDに置き換えてください。競合する場合は解消後に --continue、取りやめるなら --abort を使います。
+
+## スライド説明
+
+指定commitの変更を逆向きに適用し、打ち消すための新しいcommitを追加します。
+
+共有済みの変更を取り消し、既存の履歴を残したいときに使います。
+
+`--no-commit` はcommitせず適用します。競合解消後は`--continue`、中止する場合は`--abort`です。
 
 ## コマンド
 
 ```sh
-git show abc1234
-git revert abc1234
+git show COMMIT_HASH
+git revert COMMIT_HASH
 ```
 
 ## 要点

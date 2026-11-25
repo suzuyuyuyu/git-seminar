@@ -26,7 +26,8 @@ jobs:
           node-version: '22'
       - run: node tools/build-diagrams.cjs
       - run: node tools/build-curriculum-diagrams.cjs
-      - run: node --test tools/build-content.test.cjs
+      - run: node tools/build-command-diagrams.cjs
+      - run: node --test tools/build-content.test.cjs tools/command-reference.test.cjs
       - run: node tools/check-content.cjs
       - uses: actions/configure-pages@v5
         if: github.event_name != 'pull_request'

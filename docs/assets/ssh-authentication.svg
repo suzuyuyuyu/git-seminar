@@ -1,24 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" class="ssh-authentication" viewBox="0 0 900 680" role="img" aria-labelledby="ssh-auth-title ssh-auth-desc" data-current-state="authentication">
   <title id="ssh-auth-title">SSH公開鍵認証：秘密鍵で署名し、公開鍵で検証する</title>
   <desc id="ssh-auth-desc">左はPC、右はサーバー。事前にPCで鍵ペアを生成し、公開鍵だけを登録する。接続時はPCで今回の接続に結び付く認証情報へ秘密鍵で署名し、署名をサーバーへ送る。サーバーは登録公開鍵で署名を検証する。秘密鍵そのものは送らない。接続先認証や通信路確立の詳細は省略した概念図。</desc>
-  <defs><marker id="ssh-auth-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#858d89"/></marker></defs>
+  <defs><marker id="ssh-auth-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#868e8b"/></marker></defs>
   <style><![CDATA[
     svg.ssh-authentication {
-      background:#fff; font-family:"Noto Sans JP","Yu Gothic",Meiryo,sans-serif;
+      background:#fff; font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",Meiryo,sans-serif;
       [data-state] { display:none; }
       &[data-current-state="authentication"] [data-state="authentication"] { display:block; }
-      text { fill:#24332b; font-size:22px; }
+      text { fill:#1a211e; font-size:22px; }
       .title { font-size:28px; font-weight:700; }
       .column { font-size:25px; font-weight:700; }
       .step { font-size:24px; font-weight:600; }
-      .panel { fill:#f2f3f1; }
-      .box { fill:white; stroke:#bfcac1; stroke-width:2; }
-      .signed { fill:#e6eafb; stroke:#6a80dc; stroke-width:2; }
-      .verified { fill:#e4f3e7; stroke:#419452; stroke-width:2; }
-      .divider { stroke:#c5cdc7; stroke-width:1; }
-      .arrow { fill:none; stroke:#858d89; stroke-width:3; marker-end:url(#ssh-auth-arrow); }
-      .private { fill:#cb261b; }
-      .public { fill:#398a47; }
+      .panel { fill:#f7f9f8; }
+      .box { fill:white; stroke:#cbcfcd; stroke-width:2; }
+      .signed { fill:#e6f4fe; stroke:#0090ff; stroke-width:2; }
+      .verified { fill:#e6f6eb; stroke:#218358; stroke-width:2; }
+      .divider { stroke:#d7dad9; stroke-width:1; }
+      .arrow { fill:none; stroke:#868e8b; stroke-width:3; marker-end:url(#ssh-auth-arrow); }
+      .private { fill:#d13415; }
+      .public { fill:#218358; }
       .emphasis { font-weight:700; }
     }
   ]]></style>

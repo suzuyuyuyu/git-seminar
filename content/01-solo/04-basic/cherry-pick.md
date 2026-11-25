@@ -1,20 +1,27 @@
 ---
 id: "cherry-pick"
-title: "必要な変更だけを別の枝へ適用する"
+title: "cherry-pick"
 state: "cherry-pick"
-diagram: "assets/recovery.svg"
+diagram: "assets/commands/basic-cherry-pick.svg"
 ---
 
 別ブランチの特定コミットの変更だけが必要な場合、cherry-pickで現在のブランチへ適用できます。元のコミットを移動するのではなく、通常は別IDの新しいコミットを作ります。
 
-対象のIDと差分、適用先ブランチを確認して使います。依存する変更が別コミットにあれば、1つだけ取っても動くとは限りません。競合時は解消してadd後に --continue、取りやめるなら --abort です。
+適用先のブランチで実行します。使用例のCOMMIT_HASHを実際のIDに置き換え、差分を確認して使います。依存する変更が別コミットにあれば、1つだけ取っても動くとは限りません。競合時は解消してadd後に --continue、取りやめるなら --abort です。
+
+## スライド説明
+
+指定したcommitの変更を現在のブランチへ適用し、通常は別IDのcommitを作ります。
+
+別ブランチの修正を、一つだけ選んで取り込みたいときに使います。
+
+`--no-commit` はcommitせず適用します。競合解消後は`--continue`、中止する場合は`--abort`です。
 
 ## コマンド
 
 ```sh
-git switch release
-git show abc1234
-git cherry-pick abc1234
+git show COMMIT_HASH
+git cherry-pick COMMIT_HASH
 ```
 
 ## 要点

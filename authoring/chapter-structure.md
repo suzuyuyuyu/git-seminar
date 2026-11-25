@@ -11,7 +11,7 @@
 | はじめに | 学習の準備 → まずは結論 |
 | 個人開発を管理しよう | Git導入のモチベーション → Git管理の流れ → Gitコマンド（超基本）絶対に覚える → Gitコマンド（基本）調べながら使えるようにしておく → Gitを試してみよう → 前半のまとめ |
 | Gitの難関 “branch” を理解する | Gitの仕組みを知ろう → commit/branch/HEADとはなにか？ → detached HEADについて知ろう → まとめ |
-| 共同開発を管理しよう | Markdownを書こう → Issueを立てよう → ハンズオン（Pull request、merge、Conflict） → Gitコマンド（標準・ブランチ周辺） |
+| 共同開発を管理しよう | Markdownを書こう → Issueを立てよう → ハンズオン（Pull request、merge、Conflict） → Gitコマンド（標準・ブランチ周辺） → 00〜03の全まとめ |
 | その他Tipsから少しむずかしいところまで | worktree → submodule → conflict周辺のいろいろ → Git管理していてもコードが消えてしまうケース → Git configエイリアスの設定とシェルスクリプトのエイリアス → Gitコマンド（応用） → ghコマンド |
 
 Sectionは依頼された主題・順序に対応する。標準コマンドのSection内ではbranch・checkout/switch・rebase・restoreの順にStepを並べる。応用コマンドのSection内ではlog・diff・show・blame、remote・fetch、revert・reflog、tag・相対参照、bisectを扱う。今回移動したページの旧URLも `redirects` で新しいStepへ転送する。見出しの正本は各 `chapter.json` と `section.json` に置く。
@@ -49,5 +49,7 @@ SSH認証はPPT 15の暗号化・復号図をそのまま写さず、公開鍵�
 執筆手順は [content/README.md](../content/README.md)、生成・公開は [DEVELOPMENT.md](../DEVELOPMENT.md) を参照する。過去のPDF図の対応は [source-alignment.md](./source-alignment.md)、図の再調整記録は [diagram-refinement.md](./diagram-refinement.md) に残す。これらにある旧Chapter名・旧ファイル構成・検証件数は当時の記録として読む。
 
 ## 検証記録
+
+03末尾に00〜03の全まとめを追加した現在の構成は、5章・24 Section・116 Step。新しいまとめは全体像、記録と共有、commit・branch・HEAD、共同開発の一巡、状態・差分・履歴の確認の5枚で構成する。
 
 schema v2テストと整合性検証では、5章・23 Section・111 StepのID・順序・ファイル・転送先・SVG状態・graph参照を確認する。目視確認は別途必要であり、この記録だけで全Stepの視覚的な完成を示すものではない。

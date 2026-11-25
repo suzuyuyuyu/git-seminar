@@ -5,6 +5,7 @@ const { buildCourse } = require('./build-content.cjs');
 buildCourse();
 const root = path.resolve(__dirname, '../docs');
 const basePath = '/git-seminar/';
+const port = Number(process.env.PORT || 4173);
 const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml' };
 http.createServer((req, res) => {
   let urlPath;
@@ -27,4 +28,4 @@ http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': types[path.extname(filename)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
     res.end(bytes);
   });
-}).listen(4173, '127.0.0.1', () => console.log('Local: http://127.0.0.1:4173/git-seminar/'));
+}).listen(port, '127.0.0.1', () => console.log(`Local: http://127.0.0.1:${port}/git-seminar/`));

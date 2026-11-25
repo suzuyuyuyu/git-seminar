@@ -55,24 +55,24 @@ const result=`<svg xmlns="http://www.w3.org/2000/svg" class="curriculum-guide" v
 <title id="curriculum-title">Git教材の追加説明図</title>
 <desc id="curriculum-desc">現在のStepに対応する説明図です。3つの枠で対象や操作の違いを整理します。4領域の流れではadd・commit・pushを、履歴図ではHEADとほかの参照から到達するcommitの違いを示します。丸はcommit、実線は親子関係です。</desc>
 <style><![CDATA[
-svg.curriculum-guide {background:#fbfcf9;font-family:"Noto Sans JP","Yu Gothic",Meiryo,sans-serif;}
-svg.curriculum-guide text {fill:#24352e;font-size:28px;white-space:pre;}
+svg.curriculum-guide {background:#fbfdfc;font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",Meiryo,sans-serif;}
+svg.curriculum-guide text {fill:#1a211e;font-size:28px;white-space:pre;}
 svg.curriculum-guide .heading {font-size:30px;font-weight:700;}
-svg.curriculum-guide .strong {fill:#31664b;font-weight:700;}
+svg.curriculum-guide .strong {fill:#218358;font-weight:700;}
 svg.curriculum-guide .small {font-size:24px;}
 svg.curriculum-guide .tiny {font-size:21px;}
 svg.curriculum-guide .footer {font-size:22px;}
 svg.curriculum-guide .mono {font-family:Consolas,monospace;}
-svg.curriculum-guide .muted {fill:#65736a;}
-svg.curriculum-guide .blue {fill:#486d9b;}
-svg.curriculum-guide .card {fill:#edf3eb;stroke:#c4d3c5;stroke-width:2;}
-svg.curriculum-guide .blue-card {fill:#eef2f8;stroke:#a7bad4;}
-svg.curriculum-guide .divider {fill:none;stroke:#d8dfd6;stroke-width:1.5;}
-svg.curriculum-guide .edge {fill:none;stroke:#a2ada5;stroke-width:3;}
-svg.curriculum-guide .action {fill:none;stroke:#31664b;stroke-width:2.5;}
-svg.curriculum-guide .commit {fill:#6f9e78;stroke:#31664b;stroke-width:2;}
-svg.curriculum-guide .faded {fill:#f1f3f0;stroke:#b9c2ba;stroke-dasharray:3 3;}
-svg.curriculum-guide .reference {fill:none;stroke:#31664b;stroke-width:2.5;}
+svg.curriculum-guide .muted {fill:#5f6563;}
+svg.curriculum-guide .blue {fill:#0d74ce;}
+svg.curriculum-guide .card {fill:#f7f9f8;stroke:#cbcfcd;stroke-width:2;}
+svg.curriculum-guide .blue-card {fill:#e6f4fe;stroke:#acd8fc;}
+svg.curriculum-guide .divider {fill:none;stroke:#d7dad9;stroke-width:1.5;}
+svg.curriculum-guide .edge {fill:none;stroke:#868e8b;stroke-width:3;}
+svg.curriculum-guide .action {fill:none;stroke:#218358;stroke-width:2.5;}
+svg.curriculum-guide .commit {fill:#30a46c;stroke:#218358;stroke-width:2;}
+svg.curriculum-guide .faded {fill:#f7f9f8;stroke:#b8bcba;stroke-dasharray:3 3;}
+svg.curriculum-guide .reference {fill:none;stroke:#218358;stroke-width:2.5;}
 svg.curriculum-guide > g[data-state] {display:none;}
 ${selectors} {display:block;}
 ]]></style>

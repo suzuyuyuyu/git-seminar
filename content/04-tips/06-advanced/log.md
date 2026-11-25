@@ -1,13 +1,21 @@
 ---
 id: "log"
-title: "commitのつながりを読む"
+title: "log"
 state: "log"
-diagram: "assets/foundations-inspect.svg"
+diagram: "assets/commands/advanced-log.svg"
 ---
 
 logは記録済みのcommitを表示します。--onelineで1件を短く、--graphで親子関係を線で、--decorateでbranchなどの目印を表示します。
 
 --allを付けると、複数のbranchなどの参照からたどれる履歴をまとめて見られます。未commitの編集はこの図には出ません。HEADやbranchの関係は「Gitの難関 “branch” を理解する」のまとめでも確認できます。
+
+## スライド説明
+
+記録済みcommitのメッセージと親子関係を表示します。未commitの編集は表示しません。
+
+変更の経緯や、ブランチの分岐・統合を確認するときに使います。
+
+`--oneline` は1行表示、`--graph` は親子関係、`--decorate` は参照名、`--all` は各参照からたどれる履歴を表示します。
 
 ## コマンド
 

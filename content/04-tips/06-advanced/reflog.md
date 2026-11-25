@@ -1,20 +1,27 @@
 ---
 id: "reflog"
-title: "見失ったコミットは、参照の履歴から探す"
+title: "reflog"
 state: "reflog"
-diagram: "assets/recovery.svg"
+diagram: "assets/commands/advanced-reflog.svg"
 ---
 
 reflogは、このローカルリポジトリでHEADやブランチなどの参照が動いた記録です。resetやdetached HEADで見失ったコミットが残っていれば、IDを確認して救済用ブランチを付けられます。
 
-git reflogで候補を見て、git showで内容を確認し、実際のIDに置き換えてgit branch rescueを作ります。先にreset --hardで上書きする必要はありません。
+git reflogで候補を見て、git showで内容を確認し、実際のIDに置き換えてgit branch rescue COMMIT_HASHで救済用の名前を付けます。先にreset --hardで上書きする必要はありません。
+
+## スライド説明
+
+このリポジトリでHEADやブランチなどの参照が動いた記録を表示します。
+
+reset後などに見失ったcommitのIDを探すときに使います。
+
+`show main` はmainの記録を表示します。記録には保存期限があり、未commitの編集の復元は保証しません。
 
 ## コマンド
 
 ```sh
 git reflog
-git show abc1234
-git branch rescue abc1234
+git show COMMIT_HASH
 ```
 
 ## 要点

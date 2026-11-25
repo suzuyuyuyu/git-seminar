@@ -7,6 +7,14 @@ const { buildCourse, parseStep } = require('./build-content.cjs');
 
 const step = (id = 'first') => `---\nid: ${id}\ntitle: 例\nstate: stage\n---\n\n**本文**\n\n## コマンド\n\n\`\`\`\`sh\n## 要点\n\`\`\`sh\nhello\n\`\`\`\n\`\`\`\`\n\n## 要点\n\n要点です。\n\n## 付箋\n\n### detail\n\n自学習用。\n\n### explanation [講義]\n\n講義用。\n`;
 const writeJSON = (file, value) => fs.writeFileSync(file, JSON.stringify(value));
+test('スライド説明を本文・コードと分けて保持する', () => {
+  const source = step().replace('## コマンド', '## スライド説明\n\n### 何をするか\n\n短い説明。\n\n## コマンド');
+  const result = parseStep(source);
+  assert.equal(result.slideDescription, '### 何をするか\n\n短い説明。');
+  assert.doesNotMatch(result.body[0], /短い説明/);
+  assert.match(result.command, /hello/);
+  assert.equal(parseStep(step()).slideDescription, undefined);
+});
 function fixture(run) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'git-seminar-content-'));
   try {
@@ -137,7 +145,7 @@ test('実教材は指定された5 ChapterとSection順を保つ', () => {
     intro: ['preparation', 'conclusion'],
     solo: ['motivation', 'flow', 'essential', 'basic', 'practice', 'summary'],
     branches: ['internals', 'concepts', 'detached', 'summary'],
-    collaboration: ['markdown', 'issues', 'hands-on', 'branch-commands'],
+    collaboration: ['markdown', 'issues', 'hands-on', 'branch-commands', 'summary'],
     tips: ['worktree', 'submodule', 'conflicts', 'data-loss', 'aliases', 'advanced', 'gh'],
   };
   assert.deepEqual(data.chapters.map(chapter => chapter.id), Object.keys(expected));
@@ -154,7 +162,7 @@ test('実教材は指定された5 ChapterとSection順を保つ', () => {
   assert.deepEqual(standard.steps.map(step => step.id), ['branch', 'checkout-switch', 'rebase', 'restore-worktree', 'restore-index']);
   const advanced = data.sections.find(section => section.route === 'tips/advanced');
   assert.equal(advanced.steps.length, 12);
-  assert.equal(data.sections.reduce((sum, section) => sum + section.steps.length, 0), 111);
+  assert.equal(data.sections.reduce((sum, section) => sum + section.steps.length, 0), 116);
   assert.equal(data.redirects['branch-commands/rebase/rebase'], 'collaboration/branch-commands/rebase');
   assert.equal(data.redirects['advanced/bisect/bisect-start'], 'tips/advanced/bisect-start');
   const routes = new Set(data.sections.flatMap(section => section.steps.map(step => `${section.route}/${step.id}`)));

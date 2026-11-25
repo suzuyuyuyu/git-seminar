@@ -157,12 +157,10 @@
         title.href = `#study/${sectionPath(section)}`;
         heading.append(title, element('span', 'section-step-count', `${section.steps.length} Step${section.steps.length === 1 ? "" : "s"}`));
         const links = element('div', 'chapter-links');
-        for (const [displayMode, label] of [['study', '自学習'], ['present', '講義']]) {
-          const link = element('a', '', label);
-          link.href = `#${displayMode}/${sectionPath(section)}`;
-          link.setAttribute('aria-label', `${section.title}を${label}で開く`);
-          links.append(link);
-        }
+        const lecture = element('a', '', '講義');
+        lecture.href = `#present/${sectionPath(section)}`;
+        lecture.setAttribute('aria-label', `${section.title}を講義で開く`);
+        links.append(lecture);
         item.append(heading, links);
         sections.append(item);
       }
@@ -171,7 +169,7 @@
       list.append(row);
     }
     const steps = data.sections.reduce((total, section) => total + section.steps.length, 0);
-    byId('course-status').textContent = `${data.chapters.length} Chapters・${data.sections.length} Sections・${steps} Steps。Sectionごとにページを開き、図と説明を順に確かめます。`;
+    byId('course-status').textContent = `全${data.chapters.length}章、${data.sections.length}節、${steps} Step`;
   }
 
   function renderStudy(lesson) {
@@ -214,6 +212,7 @@
       const anchor = element('a', 'step-anchor', 'このStepへのリンク');
       anchor.href = `#study/${sectionPath(lesson, section)}`;
       copy.append(element('span', 'step-number', `Step ${String(index + 1).padStart(2, '0')}`), heading);
+      if (section.slideDescription) copy.append(window.GitSeminarMarkdown.render(section.slideDescription));
       for (const text of section.body) copy.append(window.GitSeminarMarkdown.render(text));
       if (section.command) {
         const pre = element('pre', 'command-block');
@@ -274,6 +273,10 @@
 
   function renderPresentation() {
     const section = activeSection.steps[activeStep];
+    byId('present-view').classList.toggle('command-slide', Boolean(section.slideDescription));
+    const description = byId('present-description');
+    description.replaceChildren();
+    if (section.slideDescription) description.append(window.GitSeminarMarkdown.render(section.slideDescription));
     byId('present-title').textContent = section.title;
     byId('present-takeaway').textContent = section.takeaway;
     const command = section.command || '';
@@ -306,7 +309,6 @@
     next.title = next.getAttribute('aria-label');
     byId('back-to-study').href = `#study/${sectionPath(activeSection, section)}`;
     renderBreadcrumbs('present');
-    renderSectionNavigation(byId('present-section-navigation'), 'present');
   }
 
   function changePresentationStep(delta) {

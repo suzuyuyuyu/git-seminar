@@ -1,22 +1,28 @@
 ---
 id: "init"
-title: "新しい練習場所を作る"
+title: "init"
 state: "init"
-diagram: "assets/foundations-practice.svg"
+diagram: "assets/commands/basic-init.svg"
 ---
 
-既存のリポジトリの外にある、書き込み可能な親フォルダーへ移動して始めます。pwdで場所を確認し、新しいgit-seminar-practiceを作成して中に入ります。同名のものがあれば別名を使います。
+既存のリポジトリの外にある、書き込み可能な親フォルダーへ移動して始めます。pwdで場所を確認し、新しいmy-projectを作成して中に入ります。同名のものがあれば別名を使います。
 
 git init -b mainで、最初のbranch名をmainとしてGit管理を始めます。.gitに管理情報が作られますが、この時点ではまだcommitはありません。-bが使えない古いGitは、事前に更新します。
+
+## スライド説明
+
+現在のフォルダーに.gitを作り、Gitによる管理を始めます。履歴はまだ空です。
+
+既存リポジトリを複製せず、新しいプロジェクトを手元で始めるときに使います。
+
+`-b main` は最初のブランチ名を指定します。既存のリポジトリの外で実行します。
 
 ## コマンド
 
 ```sh
-pwd
-mkdir git-seminar-practice
-cd git-seminar-practice
+mkdir my-project
+cd my-project
 git init -b main
-git status
 ```
 
 ## 要点

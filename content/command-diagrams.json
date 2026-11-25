@@ -1,0 +1,1202 @@
+{
+  "essential-clone": {
+    "title": "clone",
+    "source": {
+      "pptSlides": [
+        25
+      ],
+      "pdfPages": [
+        25
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git clone <repository link>"
+    ],
+    "paragraphs": [
+      "<repository link> のリポジトリをローカルに持ってくる。",
+      "SSH URLの例：git@github.com:username/repository_name.git"
+    ],
+    "groups": [
+      {
+        "heading": "Options",
+        "rows": [
+          [
+            "--recursive",
+            "サブモジュールを含めてリポジトリをcloneする。"
+          ],
+          [
+            "--depth <n>",
+            "取得する履歴を、直近から指定した深さに制限する。"
+          ],
+          [
+            "-b <branch name>",
+            "最初に開くブランチを指定してcloneする。"
+          ]
+        ]
+      }
+    ]
+  },
+  "essential-stage": {
+    "title": "add",
+    "source": {
+      "pptSlides": [
+        26
+      ],
+      "pdfPages": [
+        26
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git add <file path>"
+    ],
+    "paragraphs": [
+      "<file path> の内容をindexに反映する。",
+      "git add . でカレントディレクトリ以下を追加する。",
+      "git add ./*.py で該当するPythonファイルを追加する。"
+    ],
+    "groups": [
+      {
+        "heading": "Options",
+        "rows": [
+          [
+            "-A / --all",
+            "すべての変更をaddする。未追跡・変更・削除を含む。"
+          ],
+          [
+            "-u / --update",
+            "追跡済みファイルの変更・削除をaddする。"
+          ],
+          [
+            "-p / --patch",
+            "変更箇所を部分的に選びながらaddする。"
+          ]
+        ]
+      }
+    ],
+    "figure": "add"
+  },
+  "essential-commit": {
+    "title": "commit",
+    "source": {
+      "pptSlides": [
+        27
+      ],
+      "pdfPages": [
+        27
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git commit -m <commit message>"
+    ],
+    "paragraphs": [
+      "indexにあるファイルのスナップショットを記録する。",
+      "-m <commit message> で変更の内容や理由を記述する。",
+      "-mを省略すると、Vimなど設定されたエディターが開く。",
+      "メッセージに feat:、fix:、update: などのprefixを付ける運用もある。"
+    ],
+    "groups": [
+      {
+        "heading": "Options",
+        "rows": [
+          [
+            "--amend",
+            "直前のcommitを新しいcommitで置き換える。メッセージや記録する内容を修正できる。"
+          ],
+          [
+            "--verbose",
+            "メッセージ編集時に、commitする変更の差分も表示する。"
+          ]
+        ]
+      }
+    ]
+  },
+  "essential-push": {
+    "title": "push",
+    "source": {
+      "pptSlides": [
+        28
+      ],
+      "pdfPages": [
+        28
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git push <repository> <local ref>:<remote ref>",
+      "git push origin main:main"
+    ],
+    "paragraphs": [
+      "手元の記録済みcommitを送信し、リモートの参照を更新する。"
+    ],
+    "groups": [
+      {
+        "heading": "Args",
+        "rows": [
+          [
+            "<repository>",
+            "送信先のURLや名前。例ではoriginを指定する。"
+          ],
+          [
+            "<local ref>",
+            "送信元のブランチなどの参照。例ではmain。"
+          ],
+          [
+            "<remote ref>",
+            "送信先で更新する参照。例ではmain。"
+          ]
+        ]
+      },
+      {
+        "heading": "Options",
+        "rows": [
+          [
+            "-u / --set-upstream",
+            "送信したローカルブランチに、リモート側の追跡先を設定する。"
+          ],
+          [
+            "-f / --force",
+            "通常の履歴更新の保護を外して送信する。共有履歴を上書きし得る。"
+          ],
+          [
+            "--force-with-lease",
+            "リモート参照が期待した値のままの場合に限り、強制更新する。"
+          ]
+        ]
+      }
+    ],
+    "footnote": "引数を省略したときの送信先・参照は設定にも依存する。"
+  },
+  "essential-pull": {
+    "title": "pull",
+    "source": {
+      "pptSlides": [
+        30
+      ],
+      "pdfPages": [
+        30
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git pull"
+    ],
+    "paragraphs": [
+      "リモートの更新を取得し、現在のブランチへ取り込む。",
+      "mergeによる取り込みは、fetchに続けてmerge FETCH_HEADを実行する流れになる。"
+    ],
+    "groups": [],
+    "figure": "pull",
+    "footnote": "統合方法は指定や設定による。この教材の使用例では --ff-only を明示する。"
+  },
+  "essential-status": {
+    "title": "status",
+    "source": {
+      "pptSlides": [
+        31
+      ],
+      "pdfPages": [
+        31
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git status"
+    ],
+    "paragraphs": [
+      "working tree / index / local branch の状態を表示する。",
+      "例：On branch main / Your branch is up to date with origin/main."
+    ],
+    "groups": [
+      {
+        "heading": "ブランチの情報",
+        "rows": [
+          [
+            "up to date",
+            "手元の追跡先と同じ位置にある。"
+          ],
+          [
+            "behind",
+            "追跡先の方が進んでいる。"
+          ],
+          [
+            "ahead",
+            "ローカルの方が進んでいる。"
+          ]
+        ]
+      },
+      {
+        "heading": "変更のある領域",
+        "rows": [
+          [
+            "Changes not staged for commit",
+            "working treeに、まだindexへ反映していない変更がある。"
+          ],
+          [
+            "Changes to be committed",
+            "indexに変更が反映され、commitを待っている。"
+          ]
+        ]
+      },
+      {
+        "heading": "ファイルの状態",
+        "rows": [
+          [
+            "Untracked / new file",
+            "未追跡の新規ファイル / add済みの新規ファイル。"
+          ],
+          [
+            "modified / deleted",
+            "変更されたファイル / 削除されたファイル。"
+          ]
+        ]
+      }
+    ],
+    "footnote": "リモートの最新状態への問い合わせは行わない。"
+  },
+  "basic-init": {
+    "title": "init",
+    "source": {
+      "pptSlides": [
+        33
+      ],
+      "pdfPages": [
+        33
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git init"
+    ],
+    "paragraphs": [
+      "Git管理をローカル側から開始する。.gitディレクトリが作成される。",
+      ".gitには履歴や参照などの管理情報が保存される。"
+    ],
+    "groups": [],
+    "terminal": [
+      "$ ls -A",
+      "README.md  graph.py",
+      "$ git init",
+      "Initialized empty Git repository in /path/to/git-seminar/.git/",
+      "$ ls -A",
+      ".git  README.md  graph.py"
+    ]
+  },
+  "basic-reset": {
+    "title": "reset",
+    "source": {
+      "pptSlides": [
+        34
+      ],
+      "pdfPages": [
+        34
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git reset <option> <commit ID>",
+      "git reset <commit ID> -- <file path>"
+    ],
+    "paragraphs": [
+      "commit指定：現在のブランチの先端を指定したcommitへ移す。",
+      "<commit ID> はハッシュ値やHEADからの相対位置で指定する。"
+    ],
+    "groups": [
+      {
+        "heading": "Options：commitを指定する形式",
+        "rows": [
+          [
+            "--hard",
+            "先端・index・working treeを指定commitへ合わせる。未commitの変更を破棄する。"
+          ],
+          [
+            "--mixed",
+            "既定の動作。先端とindexを戻し、working treeの変更は残す。"
+          ],
+          [
+            "--soft",
+            "先端だけを戻し、indexとworking treeの変更は残す。"
+          ]
+        ]
+      },
+      {
+        "heading": "パスを指定する形式",
+        "rows": [
+          [
+            "<commit ID> -- <file path>",
+            "そのファイルのindexを指定commitへ戻す。working treeやブランチの位置は変えない。"
+          ]
+        ]
+      }
+    ],
+    "footnote": "パス指定で復元するのはindex。作業ファイルの復元はrestoreを使う。"
+  },
+  "basic-clean": {
+    "title": "clean",
+    "source": {
+      "pptSlides": [
+        35
+      ],
+      "pdfPages": [
+        35
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git clean <options>"
+    ],
+    "paragraphs": [
+      "untracked（未追跡）ファイルを削除する。",
+      "git reset --hard HEAD で通常は消えない未追跡ファイルが対象。"
+    ],
+    "groups": [
+      {
+        "heading": "Options",
+        "rows": [
+          [
+            "-f / --force",
+            "実際に削除する。既定の設定では、この指定が必要。"
+          ],
+          [
+            "-n / --dry-run",
+            "実際には削除せず、削除される候補だけを表示する。"
+          ]
+        ]
+      }
+    ],
+    "footnote": "履歴にないデータは削除後にGitから復元できない。"
+  },
+  "basic-stash": {
+    "title": "stash",
+    "source": {
+      "pptSlides": [
+        36
+      ],
+      "pdfPages": [
+        36
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git stash <subcommand> <option>"
+    ],
+    "paragraphs": [
+      "working treeやindexの途中の変更を、一時的に退避する。",
+      "pullや作業の切り替えの前に、手元の変更をいったん置いておく。"
+    ],
+    "groups": [
+      {
+        "heading": "Subcommands：退避と確認",
+        "rows": [
+          [
+            "save \"comment\"",
+            "説明付きで退避する従来の書き方。新しい例では push -m \"comment\" を使う。"
+          ],
+          [
+            "list",
+            "退避の一覧を表示する。"
+          ],
+          [
+            "apply",
+            "退避を作業ツリーへ適用する。退避は残る。"
+          ]
+        ]
+      },
+      {
+        "heading": "Subcommands：適用と削除",
+        "rows": [
+          [
+            "pop",
+            "退避を適用し、成功したら退避を削除する。"
+          ],
+          [
+            "show",
+            "退避に含まれる差分の要約を表示する。"
+          ],
+          [
+            "drop / clear",
+            "指定・最新の退避を削除する / すべての退避を削除する。"
+          ]
+        ]
+      },
+      {
+        "heading": "Options",
+        "rows": [
+          [
+            "-u",
+            "未追跡ファイルも退避する。"
+          ],
+          [
+            "-a",
+            "未追跡ファイルに加え、ignore対象のファイルも退避する。"
+          ]
+        ]
+      }
+    ],
+    "columns": true
+  },
+  "basic-stash-options": {
+    "title": "stash（操作一覧）",
+    "source": {
+      "pptSlides": [
+        36
+      ],
+      "pdfPages": [
+        36
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git stash <subcommand> <option>"
+    ],
+    "paragraphs": [
+      "working treeやindexの途中の変更を、一時的に退避する。",
+      "pullや作業の切り替えの前に、手元の変更をいったん置いておく。"
+    ],
+    "groups": [
+      {
+        "heading": "Subcommands：退避と確認",
+        "rows": [
+          [
+            "save \"comment\"",
+            "説明付きで退避する従来の書き方。新しい例では push -m \"comment\" を使う。"
+          ],
+          [
+            "list",
+            "退避の一覧を表示する。"
+          ],
+          [
+            "apply",
+            "退避を作業ツリーへ適用する。退避は残る。"
+          ]
+        ]
+      },
+      {
+        "heading": "Subcommands：適用と削除",
+        "rows": [
+          [
+            "pop",
+            "退避を適用し、成功したら退避を削除する。"
+          ],
+          [
+            "show",
+            "退避に含まれる差分の要約を表示する。"
+          ],
+          [
+            "drop / clear",
+            "指定・最新の退避を削除する / すべての退避を削除する。"
+          ]
+        ]
+      },
+      {
+        "heading": "Options",
+        "rows": [
+          [
+            "-u",
+            "未追跡ファイルも退避する。"
+          ],
+          [
+            "-a",
+            "未追跡ファイルに加え、ignore対象のファイルも退避する。"
+          ]
+        ]
+      }
+    ],
+    "columns": true
+  },
+  "basic-merge-model": {
+    "title": "merge",
+    "source": {
+      "pptSlides": [
+        37
+      ],
+      "pdfPages": [
+        37
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git merge <branch> <option>"
+    ],
+    "paragraphs": [
+      "<branch> の履歴をHEAD（現在のブランチ）へ統合する。",
+      "分岐した履歴の統合では、通常はmerge commitを作成する。",
+      "変更内容によってはconflictが発生する。"
+    ],
+    "groups": [
+      {
+        "heading": "Options / Args",
+        "rows": [
+          [
+            "-m \"message\"",
+            "作成するmerge commitのメッセージを指定する。"
+          ],
+          [
+            "--squash",
+            "統合結果をindex・working treeへ準備する。その後、別途commitして1つにまとめる。"
+          ],
+          [
+            "--ff",
+            "可能ならfast-forwardで統合する。"
+          ],
+          [
+            "--no-ff / --ff-only",
+            "merge commitを作成する / fast-forward可能な場合だけ統合する。"
+          ]
+        ]
+      }
+    ]
+  },
+  "basic-cherry-pick": {
+    "title": "cherry-pick",
+    "source": {
+      "pptSlides": [
+        38
+      ],
+      "pdfPages": [
+        38
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git cherry-pick <commit ID>"
+    ],
+    "paragraphs": [
+      "特定のcommitの変更だけを部分的に取り込む。",
+      "ブランチのすべてのcommitをmergeする必要がないときに使う。",
+      "複数のcommitを指定して、順に適用することもできる。"
+    ],
+    "groups": [
+      {
+        "heading": "Options / Args",
+        "rows": [
+          [
+            "--continue",
+            "競合を解消してaddした後、処理を続ける。"
+          ],
+          [
+            "--abort",
+            "処理を中止して開始前の状態へ戻す。"
+          ]
+        ]
+      }
+    ]
+  },
+  "branch-commands-branch": {
+    "title": "branch",
+    "source": {
+      "pptSlides": [
+        83
+      ],
+      "pdfPages": [
+        83
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git branch <branch name> <option>"
+    ],
+    "paragraphs": [
+      "ブランチを管理する。引数もオプションもなければ一覧を表示する。",
+      "名前だけ指定すると、そのブランチを作成する。作業先は切り替えない。",
+      "ブランチの作成は、commitに新しく目印を付ける操作。"
+    ],
+    "groups": [
+      {
+        "heading": "Options",
+        "rows": [
+          [
+            "-a / --all",
+            "ローカルとリモート追跡のブランチを、すべて一覧表示する。"
+          ],
+          [
+            "-r / --remotes",
+            "リモート追跡ブランチだけを表示する。"
+          ],
+          [
+            "-d / --delete",
+            "統合済みか確認してローカルブランチを削除する。"
+          ],
+          [
+            "-u <upstream>",
+            "ローカルブランチの追跡先（upstream）を設定する。"
+          ]
+        ]
+      }
+    ]
+  },
+  "branch-commands-checkout-switch": {
+    "title": "switch / checkout",
+    "source": {
+      "pptSlides": [
+        84
+      ],
+      "pdfPages": [
+        84
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git checkout <commit ID>",
+      "git switch <branch name>"
+    ],
+    "paragraphs": [
+      "checkoutはブランチ・commitへの移動と、ファイルの復元を扱う。",
+      "switchはブランチ操作に用途を絞ったコマンド。"
+    ],
+    "groups": [
+      {
+        "heading": "checkout",
+        "rows": [
+          [
+            "<branch>",
+            "指定したブランチへ切り替える。"
+          ],
+          [
+            "-b <branch>",
+            "ブランチを作成して切り替える。"
+          ],
+          [
+            "-",
+            "直前にいたブランチへ戻る。"
+          ],
+          [
+            "<commit ID>",
+            "指定したcommitへ移動する（detached HEAD）。"
+          ],
+          [
+            "<commit ID> -- <file>",
+            "指定commitのファイルをindexとworking treeへ復元する。"
+          ],
+          [
+            "-- .",
+            "カレントディレクトリ以下の未ステージ変更を取り消す。"
+          ]
+        ]
+      },
+      {
+        "heading": "switch",
+        "rows": [
+          [
+            "<branch>",
+            "指定したブランチへ切り替える。"
+          ],
+          [
+            "-c <branch>",
+            "ブランチを作成して切り替える。"
+          ],
+          [
+            "-",
+            "直前にいたブランチへ戻る。"
+          ],
+          [
+            "--detach <commit ID>",
+            "指定したcommitを直接開く。"
+          ]
+        ]
+      }
+    ],
+    "columns": true,
+    "footnote": "checkoutによるファイル復元は未commitの編集を上書きする。実行前に対象を確認する。"
+  },
+  "branch-commands-rebase": {
+    "title": "rebase",
+    "source": {
+      "pptSlides": [
+        85
+      ],
+      "pdfPages": [
+        85
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git rebase <branch>"
+    ],
+    "paragraphs": [
+      "ブランチの変更を、指定した別の履歴の先端へ乗せ直す。",
+      "mergeは元の履歴をつなぐ。rebaseは適用し直して履歴を1本につなぐ。"
+    ],
+    "groups": [],
+    "figure": "rebase",
+    "footnote": "mainで比較する例。未共有の練習用履歴だけで扱う。2つの操作は代替案。"
+  },
+  "branch-commands-restore-worktree": {
+    "title": "restore",
+    "source": {
+      "pptSlides": [
+        86
+      ],
+      "pdfPages": [
+        86
+      ],
+      "kind": "source-adaptation"
+    },
+    "syntax": [
+      "git restore -- <file path>"
+    ],
+    "paragraphs": [
+      "Git管理されているファイルを、誤って削除したときに復元する。",
+      "git statusで削除されたファイルのパスや名前を確認してから実行する。"
+    ],
+    "groups": [
+      {
+        "heading": "確認と復元",
+        "rows": [
+          [
+            "git status",
+            "削除した追跡ファイルが deleted: と表示されることを確認する。"
+          ],
+          [
+            "git restore -- hello.py",
+            "indexに残っている内容を、working treeへ戻す。"
+          ]
+        ]
+      }
+    ],
+    "footnote": "削除をまだステージしていない場合。削除をステージ済みの場合は次のスライドを参照。"
+  },
+  "branch-commands-restore-index": {
+    "title": "restore --staged",
+    "source": {
+      "kind": "source-extension",
+      "pptSlides": [
+        86
+      ],
+      "pdfPages": [
+        86
+      ]
+    },
+    "syntax": [
+      "git restore --staged -- <file path>"
+    ],
+    "paragraphs": [
+      "削除をすでにステージした場合の補足。まずindexをHEADへ戻す。",
+      "その後、通常のrestoreでworking treeのファイルを復元する。"
+    ],
+    "groups": [
+      {
+        "heading": "2段階で復元する",
+        "rows": [
+          [
+            "restore --staged -- hello.py",
+            "HEADの内容でindexを復元する。"
+          ],
+          [
+            "restore -- hello.py",
+            "復元したindexからworking treeへファイルを戻す。"
+          ]
+        ]
+      }
+    ]
+  },
+  "advanced-diff": {
+    "title": "diff",
+    "source": {
+      "kind": "supplement"
+    },
+    "syntax": [
+      "git diff [options] [-- <file>]"
+    ],
+    "paragraphs": [
+      "二つの状態を比べ、追加・削除された行を表示する。"
+    ],
+    "groups": [
+      {
+        "heading": "比較する対象",
+        "rows": [
+          [
+            "git diff",
+            "indexとworking treeを比較する（未ステージの変更）。"
+          ],
+          [
+            "git diff --staged",
+            "HEADとindexを比較する（次のcommitに入る変更）。"
+          ],
+          [
+            "--stat",
+            "ファイルごとの変更量を要約する。"
+          ],
+          [
+            "-- <file>",
+            "比較対象のファイルを絞る。"
+          ]
+        ]
+      }
+    ]
+  },
+  "advanced-log": {
+    "title": "log",
+    "source": {
+      "kind": "supplement"
+    },
+    "syntax": [
+      "git log [options]"
+    ],
+    "paragraphs": [
+      "記録済みcommitの説明と、親子関係を表示する。未commitの編集は含まない。"
+    ],
+    "groups": [
+      {
+        "heading": "Options",
+        "rows": [
+          [
+            "--oneline",
+            "1件のcommitを、短いIDと説明の1行で表示する。"
+          ],
+          [
+            "--graph",
+            "commitの親子関係を線で表示する。"
+          ],
+          [
+            "--decorate",
+            "ブランチやタグなどの参照名を表示する。"
+          ],
+          [
+            "--all",
+            "各参照からたどれる履歴をまとめて表示する。"
+          ]
+        ]
+      }
+    ]
+  },
+  "advanced-show-and-blame": {
+    "title": "show / blame",
+    "source": {
+      "kind": "supplement"
+    },
+    "syntax": [
+      "git show <commit ID>",
+      "git blame [options] <file>"
+    ],
+    "paragraphs": [
+      "showはcommitの説明と差分を、blameは各行を最後に変更したcommitを表示する。"
+    ],
+    "groups": [
+      {
+        "heading": "調べる流れ",
+        "rows": [
+          [
+            "git blame README.md",
+            "気になる行に対応するcommit IDを探す。"
+          ],
+          [
+            "-L 10,20",
+            "blameの対象を10〜20行に絞る。"
+          ],
+          [
+            "git show <commit ID>",
+            "見つけたcommitの差分と説明を読む。"
+          ]
+        ]
+      }
+    ]
+  },
+  "advanced-fetch": {
+    "title": "fetch",
+    "source": {
+      "kind": "supplement"
+    },
+    "syntax": [
+      "git fetch [options] <remote>"
+    ],
+    "paragraphs": [
+      "共有先から履歴を取得し、origin/mainなどのリモート追跡参照を更新する。",
+      "fetchだけでは、現在のローカルブランチや作業ファイルを切り替えない。"
+    ],
+    "groups": [
+      {
+        "heading": "Options / 確認例",
+        "rows": [
+          [
+            "--prune",
+            "リモートで削除されたブランチの追跡参照を整理する。"
+          ],
+          [
+            "git fetch origin",
+            "originから履歴を取得する。"
+          ],
+          [
+            "git log --oneline --all --graph",
+            "取得した履歴と手元の履歴を見比べる。"
+          ]
+        ]
+      }
+    ]
+  },
+  "advanced-remote-and-tracking": {
+    "title": "remote / branch -vv",
+    "source": {
+      "kind": "supplement"
+    },
+    "syntax": [
+      "git remote -v",
+      "git branch -vv"
+    ],
+    "paragraphs": [
+      "originは接続先の名前。upstreamは各ローカルブランチの追跡先。"
+    ],
+    "groups": [
+      {
+        "heading": "確認と設定",
+        "rows": [
+          [
+            "remote -v",
+            "取得先と送信先のURLを表示する。"
+          ],
+          [
+            "branch -vv",
+            "ブランチごとの追跡先と位置を表示する。"
+          ],
+          [
+            "push -u origin <branch>",
+            "指定ブランチを送信し、追跡先も設定する。"
+          ]
+        ]
+      }
+    ]
+  },
+  "advanced-revert": {
+    "title": "revert",
+    "source": {
+      "kind": "supplement"
+    },
+    "syntax": [
+      "git revert <commit ID>"
+    ],
+    "paragraphs": [
+      "指定commitの変更を逆向きに適用し、打ち消すための新しいcommitを追加する。",
+      "共有済みの履歴を残したまま、変更を取り消したいときに使う。"
+    ],
+    "groups": [
+      {
+        "heading": "Options",
+        "rows": [
+          [
+            "--no-commit",
+            "打ち消す変更を準備し、commitは別途行う。"
+          ],
+          [
+            "--continue / --abort",
+            "競合解消後に続行する / 処理を中止する。"
+          ]
+        ]
+      }
+    ]
+  },
+  "advanced-reflog": {
+    "title": "reflog",
+    "source": {
+      "kind": "source-extension",
+      "pptSlides": [
+        101,
+        102,
+        103
+      ],
+      "pdfPages": []
+    },
+    "syntax": [
+      "git reflog"
+    ],
+    "paragraphs": [
+      "HEADやブランチなどの参照が、このリポジトリで動いた記録を表示する。",
+      "HEAD@{1}は、HEADの直前の記録を参照する指定。"
+    ],
+    "groups": [
+      {
+        "heading": "参照の移動を調べる",
+        "rows": [
+          [
+            "git reflog",
+            "移動前のcommit IDと操作を探す。"
+          ],
+          [
+            "git show 'HEAD@{1}'",
+            "候補のcommitの内容を確認する。"
+          ],
+          [
+            "git branch rescue <commit ID>",
+            "必要なcommitに救出用の名前を付ける。"
+          ]
+        ]
+      }
+    ],
+    "footnote": "記録には期限がある。未commitの編集を保存する仕組みではない。"
+  },
+  "advanced-rescue-branch": {
+    "title": "branch（commitの救出）",
+    "source": {
+      "kind": "source-extension",
+      "pptSlides": [
+        101,
+        102,
+        103
+      ],
+      "pdfPages": []
+    },
+    "syntax": [
+      "git branch rescue/work <commit ID>"
+    ],
+    "paragraphs": [
+      "reflogなどで見つけたcommitを、ブランチ名から参照できるようにする。",
+      "commit IDやHEAD@{1}で候補を確認し、救出用の名前を付ける。"
+    ],
+    "groups": [
+      {
+        "heading": "内容の確認と救出",
+        "rows": [
+          [
+            "git reflog",
+            "必要なcommitの候補を探す。"
+          ],
+          [
+            "git show <commit ID>",
+            "内容を確認する。"
+          ],
+          [
+            "git branch rescue/work <commit ID>",
+            "作業ファイルを切り替えず、commitに名前を付ける。"
+          ]
+        ]
+      }
+    ]
+  },
+  "advanced-revisions": {
+    "title": "リビジョン指定（~ / ^）",
+    "source": {
+      "kind": "source-extension",
+      "pptSlides": [
+        93,
+        94,
+        98,
+        99,
+        100
+      ],
+      "pdfPages": []
+    },
+    "syntax": [
+      "git show 'HEAD~2'",
+      "git show 'HEAD^2'"
+    ],
+    "paragraphs": [
+      "HEADからの相対位置で、参照するcommitを指定する。"
+    ],
+    "groups": [
+      {
+        "heading": "相対参照",
+        "rows": [
+          [
+            "HEAD^ / HEAD~",
+            "第一親を1回たどる。"
+          ],
+          [
+            "HEAD^^ / HEAD~~ / HEAD~2",
+            "第一親を2回たどる。"
+          ],
+          [
+            "HEAD^2",
+            "第二親を選ぶ。第二親のないcommitではエラーになる。"
+          ],
+          [
+            "HEAD~~^2~",
+            "第一親を2回、第二親を1回、さらに第一親を1回たどる。"
+          ]
+        ]
+      }
+    ]
+  },
+  "advanced-release-tag": {
+    "title": "tag",
+    "source": {
+      "kind": "supplement"
+    },
+    "syntax": [
+      "git tag -a <tag name> -m <message>"
+    ],
+    "paragraphs": [
+      "公開版などの特定commitに名前を付ける。",
+      "ブランチと違い、新しくcommitしても指す先は自動では進まない。"
+    ],
+    "groups": [
+      {
+        "heading": "作成と共有",
+        "rows": [
+          [
+            "-a / -m",
+            "注釈付きタグを作成し、説明を付ける。"
+          ],
+          [
+            "git show v1.0.0",
+            "タグが指す版と説明を確認する。"
+          ],
+          [
+            "git push origin v1.0.0",
+            "共有するタグを明示して送信する。"
+          ]
+        ]
+      }
+    ]
+  },
+  "advanced-bisect-start": {
+    "title": "bisect",
+    "source": {
+      "kind": "supplement"
+    },
+    "syntax": [
+      "git bisect start"
+    ],
+    "paragraphs": [
+      "正常な版と不具合のある版の間を二分探索し、原因候補を絞る。",
+      "どの版でも同じ条件で確認できる、再現手順を用意する。"
+    ],
+    "groups": [
+      {
+        "heading": "調査を始める",
+        "rows": [
+          [
+            "git bisect bad <commit ID>",
+            "不具合が出ると確認した版を指定する。"
+          ],
+          [
+            "git bisect good <commit ID>",
+            "正常と確認した版を指定する。"
+          ]
+        ]
+      }
+    ],
+    "footnote": "途中の版に作業ファイルが切り替わる。作業中の変更は先に保存する。"
+  },
+  "advanced-bisect-finish": {
+    "title": "bisect（判定・終了）",
+    "source": {
+      "kind": "supplement"
+    },
+    "syntax": [
+      "git bisect good / bad / skip"
+    ],
+    "paragraphs": [
+      "選ばれた版を確認し、判定を繰り返す。原因候補のIDを控えて終了する。"
+    ],
+    "groups": [
+      {
+        "heading": "判定と終了",
+        "rows": [
+          [
+            "good / bad",
+            "正常 / 不具合あり、と判定する。"
+          ],
+          [
+            "skip",
+            "その版では判定できないと伝える。"
+          ],
+          [
+            "git bisect reset",
+            "調査を終了し、調査開始前の位置へ戻る。"
+          ]
+        ]
+      }
+    ]
+  }
+}

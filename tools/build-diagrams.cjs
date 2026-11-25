@@ -22,33 +22,33 @@ function svg(name, title, description, states) {
 <title id="${name}-title">${esc(title)}</title>
 <desc id="${name}-desc">${esc(description)}</desc>
 <style><![CDATA[
-svg.${name} {background:#fbfcf9;font-family:"Noto Sans JP","Yu Gothic",Meiryo,sans-serif;}
-svg.${name} text {fill:#24352e;font-size:28px;white-space:pre;}
+svg.${name} {background:#fbfdfc;font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",Meiryo,sans-serif;}
+svg.${name} text {fill:#1a211e;font-size:28px;white-space:pre;}
 svg.${name} .heading {font-size:32px;font-weight:700;}
-svg.${name} .strong {fill:#31664b;font-weight:700;}
+svg.${name} .strong {fill:#218358;font-weight:700;}
 svg.${name} .small {font-size:24px;}
 svg.${name} .tiny {font-size:21px;}
 svg.${name} .mono {font-family:Consolas,"Yu Gothic",monospace;}
-svg.${name} .muted {fill:#65736a;}
-svg.${name} .red {fill:#a74238;}
-svg.${name} .blue {fill:#486d9b;}
-svg.${name} .link {fill:none;stroke:#a2ada5;stroke-width:3;}
-svg.${name} .divider {fill:none;stroke:#d8dfd6;stroke-width:1.5;}
-svg.${name} .arrow, svg.${name} .ref {fill:none;stroke:#31664b;stroke-width:2.5;}
-svg.${name} .head-arrow {fill:none;stroke:#a74238;stroke-width:2.5;}
-svg.${name} .commit {fill:#6f9e78;stroke:#31664b;stroke-width:2;}
-svg.${name} .incoming {fill:#b5c8df;stroke:#486d9b;}
-svg.${name} .marker {fill:none;stroke:#31664b;stroke-width:2.5;}
-svg.${name} .wrong {fill:#f1d5ce;fill-opacity:.5;stroke:#a74238;stroke-width:2;}
-svg.${name} .card {fill:#edf3eb;stroke:#c4d3c5;stroke-width:2;}
-svg.${name} .label-box {fill:#e6f0e7;stroke:#b4c8b7;stroke-width:1.5;}
-svg.${name} .blue-card {fill:#eef2f8;stroke:#a7bad4;stroke-width:2;}
-svg.${name} .note {fill:#f5eac8;stroke:#dfd2a4;stroke-width:1.5;}
-svg.${name} .planned {fill:#f5eac8;stroke:#b59842;stroke-width:2.5;stroke-dasharray:7 6;}
-svg.${name} .planned-link {fill:none;stroke:#b59842;stroke-width:2.5;stroke-dasharray:7 6;}
-svg.${name} .terminal {fill:#303d35;}
-svg.${name} .terminal-text {fill:#faf9f4;font-family:Consolas,"Yu Gothic",monospace;font-size:24px;}
-svg.${name} .terminal-error {fill:#ffcfb3;font-family:Consolas,monospace;font-size:24px;}
+svg.${name} .muted {fill:#5f6563;}
+svg.${name} .red {fill:#d13415;}
+svg.${name} .blue {fill:#0d74ce;}
+svg.${name} .link {fill:none;stroke:#868e8b;stroke-width:3;}
+svg.${name} .divider {fill:none;stroke:#d7dad9;stroke-width:1.5;}
+svg.${name} .arrow, svg.${name} .ref {fill:none;stroke:#218358;stroke-width:2.5;}
+svg.${name} .head-arrow {fill:none;stroke:#d13415;stroke-width:2.5;}
+svg.${name} .commit {fill:#30a46c;stroke:#218358;stroke-width:2;}
+svg.${name} .incoming {fill:#acd8fc;stroke:#0d74ce;}
+svg.${name} .marker {fill:none;stroke:#218358;stroke-width:2.5;}
+svg.${name} .wrong {fill:#feebe7;fill-opacity:.5;stroke:#d13415;stroke-width:2;}
+svg.${name} .card {fill:#f7f9f8;stroke:#cbcfcd;stroke-width:2;}
+svg.${name} .label-box {fill:#e6f6eb;stroke:#cbcfcd;stroke-width:1.5;}
+svg.${name} .blue-card {fill:#e6f4fe;stroke:#acd8fc;stroke-width:2;}
+svg.${name} .note {fill:#fefbe9;stroke:#f3d673;stroke-width:1.5;}
+svg.${name} .planned {fill:#fefbe9;stroke:#ab6400;stroke-width:2.5;stroke-dasharray:7 6;}
+svg.${name} .planned-link {fill:none;stroke:#ab6400;stroke-width:2.5;stroke-dasharray:7 6;}
+svg.${name} .terminal {fill:#1a211e;}
+svg.${name} .terminal-text {fill:#fbfdfc;font-family:Consolas,"Yu Gothic",monospace;font-size:24px;}
+svg.${name} .terminal-error {fill:#fdbdaf;font-family:Consolas,monospace;font-size:24px;}
 svg.${name} > g[data-state] {display:none;}
 ${selectors} {display:block;}
 ]]></style>

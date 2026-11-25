@@ -1,0 +1,8 @@
+{
+  "id": "summary",
+  "title": "00〜03の全まとめ",
+  "description": "準備、個人の記録、ブランチ、共同開発を一つの流れで振り返ります。",
+  "diagram": { "type": "svg", "src": "assets/course-overview.svg" },
+  "sources": [],
+  "steps": ["overview.md", "record.md", "branches.md", "workflow.md", "review.md"]
+}

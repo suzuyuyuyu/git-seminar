@@ -2,7 +2,7 @@
 id: "copies"
 title: "変更ごとにファイルを残す方法"
 state: "copies"
-diagram: "assets/version-history.svg"
+diagram: "assets/version-copies-source.svg"
 ---
 
 バージョン管理は変更の履歴を記録することです。まず「挨拶.txt」に「おはようございます」「こんにちわ」の2行を書いたとします。これを残したまま、編集した版を別名で保存する方法も、素朴なバージョン管理です。

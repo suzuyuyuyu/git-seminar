@@ -1,23 +1,29 @@
 ---
 id: "restore-worktree"
-title: "削除した追跡ファイルを復元する"
+title: "restore"
 state: "restore-worktree"
-diagram: "assets/recovery.svg"
+diagram: "assets/commands/branch-commands-restore-worktree.svg"
 ---
 
-原資料の例は、Gitで管理していたファイルを誤って削除した場合です。hello.pyを作業フォルダーで削除しても、まだ削除をステージしていなければ、インデックスには記録した内容が残っています。git statusでdeleted: hello.pyと表示されることを確認します。
+Gitで管理していたファイルを誤って削除した場合を考えます。hello.pyを作業フォルダーで削除しても、まだ削除をステージしていなければ、インデックスには記録した内容が残っています。git statusでdeleted: hello.pyと表示されることを確認します。
 
 git restore -- hello.pyで、インデックスの内容を使って作業ツリーへファイルを戻せます。ここでは削除コマンドを実行する練習にはせず、誤って削除した状況からの復元手順を示します。HEADやブランチの位置は変わりません。
 
 削除をすでにステージした場合は、通常のrestoreだけでは同じ復元元がありません。次の節の--stagedでインデックスをHEADへ戻し、その後に作業ツリーを復元する、という対象の違いを確かめます。
 
+## スライド説明
+
+指定した追跡ファイルを復元します。既定の復元元はindex、変更する場所は作業ツリーです。
+
+まだステージしていない編集を取り消すときや、誤って削除した追跡ファイルを戻すときに使います。
+
+`--source=版` は復元元を指定します。未commitの編集を上書きするため、先にdiffで内容を確認します。
+
 ## コマンド
 
 ```sh
-git status
 git diff -- hello.py
 git restore -- hello.py
-git status
 ```
 
 ## 要点
@@ -32,4 +38,4 @@ statusで削除したパスを確かめ、追跡ファイルを復元する。
 
 ### restore-worktree-study
 
-PDF86は削除したGit管理ファイルの復旧を説明しています。restoreは編集の取り消しにも使えますが、未コミットの編集を上書きします。過去版を明示する例は git restore --source=v1.0 -- hello.py。残したい変更は先に保存・退避します。
+restoreは編集の取り消しにも使えますが、未コミットの編集を上書きします。過去版を明示する例は git restore --source=v1.0 -- hello.py。残したい変更は先に保存・退避します。

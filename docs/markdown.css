@@ -4,31 +4,32 @@
   overflow-wrap: anywhere;
 
   & p { white-space: normal; }
-  & h2, & h3, & h4 { line-height: 1.6; margin-block: 1.5em 0.6em; }
-  & h2 { font-size: 1.25em; }
-  & h3 { font-size: 1.125em; }
-  & h4 { font-size: 1em; }
+  & h2, & h3, & h4 { font-size: inherit; font-weight: 700; line-height: 1.6; margin-block: 1.5em 0.6em; }
+
+
+
   & ul, & ol { padding-left: 1.5em; margin-block: 0.8em; }
   & li + li { margin-top: 0.3em; }
   & blockquote {
     margin: 1em 0;
     padding: 0.4em 1em;
-    border-left: 3px solid var(--line, #d8e1da);
-    color: var(--muted, #526357);
+    border: 0;
+    background: var(--soft);
+    color: var(--muted);
   }
-  & code { font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.9em; }
+  & code { font-family: var(--font-mono, ui-monospace, monospace); font-size: inherit; }
   & :not(pre) > code {
     padding: 0.1em 0.3em;
-    border-radius: 3px;
-    background: var(--code-bg, #edf2ec);
+    border-radius: 4px;
+    background: var(--code-bg);
   }
   & pre {
     max-width: 100%;
     overflow-x: auto;
     padding: 1em;
-    border: 1px solid var(--line, #d8e1da);
+    border: 0.5px solid var(--line);
     border-radius: 4px;
-    background: var(--code-bg, #edf2ec);
+    background: var(--code-bg);
     white-space: pre;
     overflow-wrap: normal;
 

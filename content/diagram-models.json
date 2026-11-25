@@ -943,5 +943,59 @@
         ]
       }
     ]
+  },
+  "collaboration-summary-workflow": {
+    "title": "共同開発の一巡",
+    "takeaway": "目的を共有し、変更を確かめて統合した後、手元のmainも更新する。",
+    "cards": [
+      {
+        "title": "1. Issue",
+        "lines": [
+          "目的を共有する",
+          "完了条件をそろえる"
+        ]
+      },
+      {
+        "title": "2. 作業ブランチ",
+        "lines": [
+          "変更を小さく作る",
+          "commitしてpush"
+        ]
+      },
+      {
+        "title": "3. Pull Request",
+        "lines": [
+          "差分と動作を確認",
+          "レビューして統合"
+        ]
+      }
+    ]
+  },
+  "collaboration-summary-review": {
+    "title": "迷ったときに確かめる情報",
+    "takeaway": "操作する前に、状態・差分・履歴を読み分ける。",
+    "cards": [
+      {
+        "title": "status",
+        "lines": [
+          "いまのbranch",
+          "記録前の変更状態"
+        ]
+      },
+      {
+        "title": "diff",
+        "lines": [
+          "何が変わったか",
+          "次に記録する差分"
+        ]
+      },
+      {
+        "title": "log",
+        "lines": [
+          "記録済みのcommit",
+          "履歴の分岐と統合"
+        ]
+      }
+    ]
   }
 }

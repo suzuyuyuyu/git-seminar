@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" role="img" aria-labelledby="overview-title overview-desc">
+<title id="overview-title">00〜03：準備から共同開発まで</title>
+<desc id="overview-desc">00は環境・作者情報・認証の準備。01は編集からadd・commit・pushによる記録と共有。02はcommit・branch・HEADと履歴の読み方。03はIssue・作業ブランチ・PR・競合解消・統合後の更新。</desc>
+<style>
+.overview-copy {font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",Meiryo,sans-serif;fill:#1a211e;font-size:28px;}
+.overview-title {fill:#218358;font-weight:700;font-size:32px;}
+.overview-number {fill:#218358;font-size:40px;font-weight:700;}
+.overview-detail {font-size:25px;}
+</style>
+<g class="overview-copy">
+<rect x="28" y="24" width="1064" height="140" rx="8" fill="#f7f9f8"/>
+<text x="57" y="80" class="overview-number">00</text>
+<text x="145" y="77" class="overview-title">使うための準備</text>
+<text x="145" y="122" class="overview-detail">環境を整える　　作者情報を設定する　　SSH接続を確かめる</text>
+<rect x="28" y="188" width="1064" height="140" rx="8" fill="#f7f9f8"/>
+<text x="57" y="244" class="overview-number">01</text>
+<text x="145" y="241" class="overview-title">個人の変更を記録・共有する</text>
+<text x="145" y="286" class="overview-detail">編集して確認する　　addで選ぶ　　commitで記録する　　pushで送る</text>
+<rect x="28" y="352" width="1064" height="140" rx="8" fill="#f7f9f8"/>
+<text x="57" y="408" class="overview-number">02</text>
+<text x="145" y="405" class="overview-title">履歴とブランチを読む</text>
+<text x="145" y="450" class="overview-detail">commitは記録　　branchは目印　　HEADは現在地</text>
+<rect x="28" y="516" width="1064" height="140" rx="8" fill="#e6f4fe"/>
+<text x="57" y="572" class="overview-number">03</text>
+<text x="145" y="569" class="overview-title">ほかの人と変更をつなぐ</text>
+<text x="145" y="614" class="overview-detail">Issueで目的を共有する　　作業ブランチで変更する　　PRで確認・統合する</text>
+</g>
+</svg>
